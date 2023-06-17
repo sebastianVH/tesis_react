@@ -59,8 +59,10 @@ export function App(){
             <nav className="nav-menu">
               <ul className="list-unstyled components justify-content-center">
                 <li><Link to="/">Inicio</Link></li>
-                <li><Link to="/mascotas">Perdidos</Link></li>
-                <li><Link to="/mascotas">Encontrados</Link></li>
+                {/* <li><Link to="/mascotas">Perdidos</Link></li>
+                <li><Link to="/mascotas">Encontrados</Link></li> */}
+                <li><Link to="/mascotas/perdidos" >Perdidos</Link></li>
+                <li> <Link to="/mascotas/encontrados">Encontrados</Link></li>
                 
               </ul>
             </nav>

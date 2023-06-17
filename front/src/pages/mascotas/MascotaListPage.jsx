@@ -1,9 +1,9 @@
 import MascotaList from "../../MascotaList"
 
-function MascotaListPage(){
+function MascotaListPage({categoria}){
     return (
      <>
-      <MascotaList />
+      <MascotaList categoria={categoria} />
      </>
     )
 }
