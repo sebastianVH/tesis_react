@@ -23,7 +23,7 @@ function getMascotaById(req, res) {
 }
 
 function createMascota(req, res) {
-  service.createMascota(req.body).then(function (mascota) {
+  service.createMascota(req.body, req.account._id).then(function (mascota) {
     return res.status(201).json(mascota);
   });
 }

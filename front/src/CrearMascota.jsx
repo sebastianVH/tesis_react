@@ -5,18 +5,8 @@ import CreadoConExito from "./microcomponents/CreadoConExito";
 
 function CrearMascota() {
   const [mascota, setMascota] = useState({});
-  const [formData, setFormData] = useState({});
   const [success, setSuccess] = useState(false);
-
-  /*useEffect(() => {
-    fetch(`http://localhost:2023/api/mascotas/${idMascota}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          setMascota(data);
-        }
-      });
-  }, [idMascota]);*/
+  const [formData, setFormData] = useState({});
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -29,6 +19,7 @@ function CrearMascota() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify(formData),
     })

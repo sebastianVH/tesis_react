@@ -3,6 +3,13 @@ import { MongoClient, ObjectId } from "mongodb";
 const client = new MongoClient("mongodb://127.0.0.1:27017");
 const db = client.db("testTesis1");
 
+async function getMascotasDeUsuario(idAccount) {
+  await client.connect();
+  const filterMongo = { deleted: { $ne: true }, account: idAccount };
+
+  return db.collection("mascotas").find(filterMongo).toArray();
+}
+
 async function getMascotas(filter = {}) {
   await client.connect();
 
@@ -17,6 +24,10 @@ async function getMascotas(filter = {}) {
     filterMongo.categoria = filter.categoria;
   }
 
+  if (filter?.account) {
+    filterMongo.account = filter.account;
+  }
+
   return db.collection("mascotas").find(filterMongo).toArray();
 }
 
@@ -25,9 +36,9 @@ async function getMascotaById(id) {
   return db.collection("mascotas").findOne({ _id: new ObjectId(id) });
 }
 
-async function createMascota(mascota) {
+async function createMascota(mascota, account) {
   await client.connect();
-  await db.collection("mascotas").insertOne(mascota);
+  await db.collection("mascotas").insertOne({ ...mascota, account });
   return mascota;
 }
 
@@ -68,4 +79,5 @@ export {
   editMascota,
   deleteMascota,
   replaceMascota,
+  getMascotasDeUsuario,
 };

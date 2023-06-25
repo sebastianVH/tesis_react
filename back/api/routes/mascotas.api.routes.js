@@ -4,12 +4,17 @@ import {
   validateMascota,
   validateEditMascota,
 } from "../../middlewares/mascotas.validate.middlewares.js";
+import { tokenVerify } from "../../middlewares/token.validate.middleware.js";
 
 const route = Router();
 
 route.get("/mascotas", controller.getMascotas);
 route.get("/mascotas/:idMascota", controller.getMascotaById);
-route.post("/mascotas", [validateMascota], controller.createMascota);
+route.post(
+  "/mascotas",
+  [tokenVerify, validateMascota],
+  controller.createMascota
+);
 route.patch(
   "/mascotas/:idMascota",
   [validateEditMascota],

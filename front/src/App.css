@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
 :root {
   font-size: 24px;
 }
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 body {
   font-family: "Poppins", sans-serif;
@@ -44,6 +46,20 @@ input {
   border-radius: 10px;
 }
 
+/* .App :nth-child(2),
+.App :nth-of-type(2), */
+.App > div,
+.App > section {
+  margin-top: 100px !important;
+}
+
+.light {
+  font-weight: 300 !important;
+}
+.lowercase {
+  text-transform: initial !important;
+}
+
 /*--------------------------------------------------------------
 # Secciones General
 --------------------------------------------------------------*/
@@ -71,7 +87,7 @@ section {
   font-size: 25px;
   font-family: "Poppins", sans-serif;
   font-weight: 800;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   margin-bottom: 15px;
   padding-bottom: 20px;
   position: relative;
@@ -144,6 +160,14 @@ success crear perrito
 .btn-azul {
   background-color: #3cc5e7 !important;
   color: white !important;
+  opacity: 1;
+  transition: all ease-in-out 0.3s;
+}
+
+.btn-azul:hover {
+  background-color: #3cc5e7 !important;
+  color: white !important;
+  opacity: 0.8;
 }
 
 .naranja {
@@ -182,6 +206,10 @@ success crear perrito
   line-height: 1.7em;
 }
 
+.bi-plus {
+  font-weight: 800 !important;
+}
+
 .boton-color {
   background-color: #be8400;
   border-color: #be8400;
@@ -217,14 +245,15 @@ success crear perrito
   transition: all 0.5s;
   z-index: 997;
   padding: 10px 0;
+  background: #fff;
+  box-shadow: 0px 2px 15px rgb(0 0 0 / 20%);
   /* box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);*/
 }
 
-#header.header-scrolled,
+/* #header.header-scrolled,
 #header.header-inner-pages {
-  background: #fff;
-  box-shadow: 0px 2px 15px rgb(0 0 0 / 20%);
-}
+
+} */
 
 #header .logo {
   font-size: 30px;
@@ -429,6 +458,27 @@ success crear perrito
 # perdidos y encontrados
 --------------------------------------------------------------*/
 
+.mascota-list__form {
+  font-size: 16px;
+  /* margin: 1rem; */
+  /* background-color: hsl(0, 0%, 66%); */
+  /* padding: 1rem; */
+  text-align: center;
+  color: #454545;
+}
+
+.mascota-list__form input {
+  /* margin-left: 15px;
+  margin-right: 15px; */
+  width: 70%;
+}
+
+.mascota-list__filter {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  /* font-size: 1rem; */
+}
+
 .rounded-img {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
@@ -486,9 +536,9 @@ success crear perrito
   color: #3cc5e7 !important;
 }
 
-.detalle-perrito {
+/* .detalle-perrito {
   padding-top: 40px;
-}
+} */
 
 .detalle-perrito .detalle-perrito-slider img {
   width: 100%;

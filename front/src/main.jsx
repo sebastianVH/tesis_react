@@ -8,18 +8,17 @@ import MascotaDetailsPage from "./pages/mascotas/MascotaDetailsPage";
 import CrearMascotaPage from "./pages/mascotas/CrearMascotaPage";
 import EditarMascotaPage from "./pages/mascotas/EditarMascotaPage";
 import EliminarMascotaPage from "./pages/mascotas/EliminarMascotaPage";
+import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage";
 
-import {
-  createBrowserRouter, // crea el contexto de la ruta
-  RouterProvider,
-} from "react-router-dom";
-// import CreadoConExito from "./microcomponents/CreadoConExito";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthProvider } from "./AuthContext";
+import { UserProvider } from "./UserContext";
 
-// preparamos el router
 const router = createBrowserRouter([
   {
-    path: "/", // la url de la pagina
-    element: <App />, // pagina
+    path: "/",
+    element: <App />,
     errorElement: <Error404 />,
     children: [
       {
@@ -55,6 +54,14 @@ const router = createBrowserRouter([
         path: "mascotas/perdidos/eliminar/:idMascota",
         element: <EliminarMascotaPage categoria="Perdido" />,
       },
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
+      },
       //  {
       //   path: "mascotas/nuevo",
       //   element: <CreadoConExito />,
@@ -70,6 +77,10 @@ const router = createBrowserRouter([
 // JSX
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
+    </AuthProvider>
   </React.StrictMode>
 );

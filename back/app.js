@@ -1,17 +1,19 @@
-import express from 'express'
-import MascotaRouteApi from './api/routes/mascotas.api.routes.js'
-import cors from 'cors'
+import express from "express";
+import MascotaRouteApi from "./api/routes/mascotas.api.routes.js";
+import AccountRouteApi from "./api/routes/account.api.routes.js";
+import cors from "cors";
 
-const app = express()
-app.use(cors()); 
+const app = express();
+app.use(cors());
 
-app.use(express.urlencoded({ extended: true })) 
-app.use('/api', express.json()) 
+app.use(express.urlencoded({ extended: true }));
+app.use("/api", express.json());
 
-app.use('/', express.static('public'))
+app.use("/", express.static("public"));
 
-app.use('/api', MascotaRouteApi)
+app.use("/api", MascotaRouteApi);
+app.use("/api", AccountRouteApi);
 
 app.listen(2023, function () {
-    console.log('Servidor levantado! http://localhost:2023')
-})
+  console.log("Servidor levantado! http://localhost:2023");
+});

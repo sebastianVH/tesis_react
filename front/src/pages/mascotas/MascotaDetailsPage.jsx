@@ -23,8 +23,8 @@ function MascotaDetailsPage() {
 
     // </div>
 
-    <section className="container detalle-perrito px-5 mx-5">
-      <div id="detalle-perdidos_body px-5 mx-5" className="container">
+    <section className="container detalle-perrito px-lg-5 mx-lg-5 pt-0">
+      <div id="detalle-perdidos_body px-lg-5 mx-lg-5" className="container">
         <div className="row">
           <div className="col-xs-6 col-md-6 col-lg-7">
             <img src={mascota?.imagen} className="w-100" alt="Perro perdido" />

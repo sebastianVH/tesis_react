@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./MascotaListItem.css";
+import { useContext } from "react";
+import { UserContext } from "./UserContext";
 
 function MascotaListItem({ mascota }) {
+  const { userData } = useContext(UserContext);
   return (
-    <div className="col-lg-3 col-6 d-flex align-items-stretch px-2 px-md-3 mb-4 ">
+    <div className="col-xl-3 col-md-4 col-6 d-flex align-items-stretch px-2 px-md-3 mb-4 ">
       <Link to={`/mascotas/${mascota._id}`} className="mascota-view">
         <div className="card-perro">
           <img src={mascota.imagen} className="img-fluid rounded-img" />
@@ -17,24 +20,30 @@ function MascotaListItem({ mascota }) {
                 {mascota.zona_perdida}
               </p>
             </div>
-            <div className="botones row">
-              <div className="col-6">
-                <Link
-                  to={`/mascotas/${mascota.categoria}s/eliminar/${mascota._id}`}
-                >
-                  <button className="btn btn-naranja btn-block">
-                    Eliminar
-                  </button>
-                </Link>
+            {userData && userData._id && userData._id == mascota.account ? (
+              <div className="botones row">
+                <div className="col-6 p-1">
+                  <Link
+                    to={`/mascotas/${mascota.categoria}s/eliminar/${mascota._id}`}
+                  >
+                    <button className="btn btn-naranja btn-block w-100 px-0 px-lg-1">
+                      <span className="d-none d-md-block">Eliminar</span>{" "}
+                      <i className="bi bi-trash-fill d-md-none"></i>
+                    </button>
+                  </Link>
+                </div>
+                <div className="col-6 p-1">
+                  <Link
+                    to={`/mascotas/${mascota.categoria}s/editar/${mascota._id}`}
+                  >
+                    <button className="btn btn-azul btn-block w-100 px-0 px-lg-1">
+                      <span className="d-none d-md-block">Editar</span>{" "}
+                      <i className="bi bi-pencil-fill d-md-none"></i>
+                    </button>
+                  </Link>
+                </div>
               </div>
-              <div className="col-6">
-                <Link
-                  to={`/mascotas/${mascota.categoria}s/editar/${mascota._id}`}
-                >
-                  <button className="btn btn-azul btn-block">Editar</button>
-                </Link>
-              </div>
-            </div>
+            ) : null}
           </div>
         </div>
       </Link>
@@ -44,6 +53,7 @@ function MascotaListItem({ mascota }) {
 
 MascotaListItem.propTypes = {
   mascota: PropTypes.object.isRequired,
+  account: PropTypes.string.isRequired,
 };
 
 export default MascotaListItem;
