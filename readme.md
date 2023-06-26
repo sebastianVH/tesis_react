@@ -9,6 +9,20 @@ encontraron.
 Back:
 
 ```
+npm install
+```
+
+Front:
+
+```
+npm install
+```
+
+# Correr el proyecto
+
+Back:
+
+```
 npm run server
 ```
 
