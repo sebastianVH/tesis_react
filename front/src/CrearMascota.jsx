@@ -2,6 +2,7 @@ import { useState } from "react";
 // import { useParams } from "react-router-dom";
 import CustomInput from "./microcomponents/CustomInput";
 import CreadoConExito from "./microcomponents/CreadoConExito";
+// import axios from "axios";
 
 function CrearMascota() {
   const [mascota, setMascota] = useState({});
@@ -39,7 +40,7 @@ function CrearMascota() {
         <div className="row form_carga">
           <div className="col-md-6 col-lg-4">
             <CustomInput
-              label="¿Se perdió tu mascota o la encontraste perdida?"
+              label="¿Se perdió tu mascota o la encontraste perdida? (obligatorio)"
               name="categoria"
               type="select"
               options={["Perdido", "Encontrado"]}
@@ -48,7 +49,7 @@ function CrearMascota() {
           </div>
           <div className="col-md-6 col-lg-4">
             <CustomInput
-              label="Especie <span>*obligatorio</span>"
+              label="Especie (obligatorio)"
               name="especie"
               type="select"
               options={["Perro", "Gato"]}
@@ -65,7 +66,7 @@ function CrearMascota() {
           </div>
           <div className="col-md-6 col-lg-4">
             <CustomInput
-              label="Tamaño <span>*obligatorio</span>"
+              label="Tamaño (obligatorio)"
               name="tamano"
               type="select"
               options={["Chico", "Mediano", "Grande"]}
@@ -74,7 +75,7 @@ function CrearMascota() {
           </div>
           <div className="col-md-6 col-lg-4">
             <CustomInput
-              label="Color <span>*obligatorio</span>"
+              label="Color (obligatorio)"
               name="color"
               type="text"
               onChange={handleInputChange}
@@ -82,7 +83,7 @@ function CrearMascota() {
           </div>
           <div className="col-md-6 col-lg-4">
             <CustomInput
-              label="Sexo <span>*obligatorio</span>"
+              label="Sexo (obligatorio)"
               name="sexo"
               type="select"
               options={["Macho", "Hembra"]}
@@ -120,7 +121,7 @@ function CrearMascota() {
           </div>
           <div className="col-md-6 col-lg-4">
             <CustomInput
-              label="Zona <span>*obligatorio</span>"
+              label="Zona (obligatorio)"
               name="zona_perdida"
               type="text"
               onChange={handleInputChange}
@@ -128,7 +129,7 @@ function CrearMascota() {
           </div>
           <div className="col-md-6 col-lg-4">
             <CustomInput
-              label="Fecha"
+              label="Fecha (obligatorio)"
               name="fecha"
               type="date"
               onChange={handleInputChange}
@@ -153,7 +154,7 @@ function CrearMascota() {
 
           <div className="col-md-6 col-lg-4">
             <CustomInput
-              label="Celular"
+              label="Celular (obligatorio)"
               name="celular"
               type="text"
               onChange={handleInputChange}
@@ -169,10 +170,16 @@ function CrearMascota() {
             />{" "}
           </div>
           <div className="col-md-6 col-lg-4">
-            <CustomInput
+            {/* <CustomInput
               label="Foto"
               name="imagen"
               type="image"
+              onChange={handleInputChange}
+            />{" "} */}
+            <CustomInput
+              label="URL a la foto (obligatorio)"
+              name="imagen"
+              type="text"
               onChange={handleInputChange}
             />{" "}
           </div>

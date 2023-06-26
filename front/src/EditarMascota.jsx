@@ -193,11 +193,11 @@ function EditarMascota({ idMascota }) {
           </div>
           <div className="col-md-6 col-lg-4">
             <CustomInput
-              label="Foto"
+              label="URL a la foto"
               name="imagen"
-              type="image"
+              type="text"
               onChange={handleInputChange}
-              // value={mascota.imagen}
+              initialValue={mascota.imagen}
             />{" "}
           </div>
         </div>

@@ -2,12 +2,12 @@
 // import React from "react";
 import { Link } from "react-router-dom";
 
-import appLogo from "../../public/logo_huellas_a_casa_color_horizontal.svg";
-import portadaPerdidosDesktop from "../../public/portadas-inicio-mascotas-perdidas-desktop.jpg";
-import portadaPerdidosMobile from "../../public/portadas-inicio-mascotas-perdidas-mobile.jpg";
-import portadaEncontradosDesktop from "../../public/portadas-inicio-mascotas-encontradas-desktop.jpg";
-import portadaEncontradosMobile from "../../public/portadas-inicio-mascotas-encontradas-mobile.jpg";
-import imgAcerca from "../../public/perro_sosteniendo_signo_de_pregunta.png";
+import appLogo from "../assets/img/logo_huellas_a_casa_color_horizontal.svg";
+import portadaPerdidosDesktop from "../assets/img/portadas-inicio-mascotas-perdidas-desktop.jpg";
+import portadaPerdidosMobile from "../assets/img/portadas-inicio-mascotas-perdidas-mobile.jpg";
+import portadaEncontradosDesktop from "../assets/img/portadas-inicio-mascotas-encontradas-desktop.jpg";
+import portadaEncontradosMobile from "../assets/img/portadas-inicio-mascotas-encontradas-mobile.jpg";
+import imgAcerca from "../assets/img/perro_sosteniendo_signo_de_pregunta.png";
 
 function InicioPage() {
   return (
