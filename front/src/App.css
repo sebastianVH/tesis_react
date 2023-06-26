@@ -118,6 +118,10 @@ section {
   margin-top: 0px !important;
 }
 
+.seccion-inicio section {
+  min-height: 0 !important;
+}
+
 .hero-mobile {
   background-color: #f4edde;
   margin-top: 0 !important;
