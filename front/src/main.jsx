@@ -10,6 +10,9 @@ import EditarMascotaPage from "./pages/mascotas/EditarMascotaPage";
 import EliminarMascotaPage from "./pages/mascotas/EliminarMascotaPage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
+import RegisterPage from "./pages/RegisterPage";
+import LogoutPage from "./pages/LogoutPage";
+import InicioPage from "./pages/InicioPage";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./AuthContext";
@@ -21,6 +24,10 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <Error404 />,
     children: [
+      {
+        path: "/",
+        element: <InicioPage />,
+      },
       {
         path: "mascotas/perdidos",
         element: <MascotaListPage categoria="Perdido" />,
@@ -61,6 +68,14 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <ProfilePage />,
+      },
+      {
+        path: "register",
+        element: <RegisterPage />,
+      },
+      {
+        path: "logout",
+        element: <LogoutPage />,
       },
       //  {
       //   path: "mascotas/nuevo",

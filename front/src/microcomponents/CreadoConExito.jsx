@@ -5,21 +5,27 @@ import PropTypes from "prop-types";
 
 function CreadoConExito({ especie, categoria }) {
   return (
-    <div className="hidden seccion-success-perdido">
-      <section className="py-0 success-perdido">
-        <div className="row justify-content-center align-items-center success">
-          <div className="col-10 text-center">
-            <i className="icofont-check-circled 5x naranja"></i>
-            <h2>
-              Tu {especie.toLowerCase()} {categoria.toLowerCase()} fue cargado
-              con éxito!{" "}
-            </h2>
-            <Link className="btn" to={`../mascotas/${categoria}s`}>
-              Volver al listado
-            </Link>
-          </div>
+    <div className="exito row justify-content-center py-3">
+      <div className="col-12 col-md-10 titulo-seccion text-center ">
+        <h3>
+          Tu {especie.toLowerCase()} {categoria.toLowerCase()} fue cargado con
+          éxito{" "}
+        </h3>
+        {categoria === "Perdido" ? (
+          <p>¡Esperamos que aparezca pronto!</p>
+        ) : (
+          <p>¡Esperamos que encuentres a sus dueños pronto!</p>
+        )}
+        <div className="check">
+          <i className="bi bi-check-circle"></i>
         </div>
-      </section>
+        <Link
+          className="btn btn-naranja w-100"
+          to={`../mascotas/${categoria}s`}
+        >
+          Volver al listado
+        </Link>
+      </div>
     </div>
   );
 }

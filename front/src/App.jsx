@@ -1,99 +1,111 @@
 import { Outlet, Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 
 import "minireset.css";
 import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.bundle.js";
 
 import appLogo from "./assets/img/logo_horizontal.png";
 
 import "./App.css";
 export function App() {
+  const { token } = useContext(AuthContext);
   return (
     <div className="App">
       <header id="header" className="fixed-top mb-5">
-        <div className="container-fluid px-lg-10 px-md-9 d-flex align-items-center">
-          <div className="row d-flex justify-content-between align-items-center">
-            <div className="col-3 d-md-none">
-              <div id="back-btn">
-                {/* <div id="back-btn" data-section="inicio"> */}
-                <i className="bx bx-left-arrow-alt"></i>
-              </div>
-            </div>
-
-            <h1 className="d-none">Huellas a Casa</h1>
-
-            <div className="col-6 col-md-3 nop text-center text-md-left x-2">
-              <Link to="/">
-                {" "}
-                <div className="logo mx-auto mx-lg-1 mr-lg-auto">
-                  <img
-                    src={appLogo}
-                    alt="Logo Hoggo"
-                    className="img-fluid"
-                    id="logo-header"
-                  />{" "}
-                </div>{" "}
-              </Link>
-            </div>
-
-            <div className="col-3 d-md-none text-left">
-              <nav className="nav-menu mx-1">
-                <ul className="list-unstyled components justify-content-end">
-                  <li className="pt-3 px-2">
-                    {/* Login */}
-                    <div>
-                      <i className="icofont-ui-user size-icons naranja"></i>
-                    </div>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-
-            <div className="d-none d-md-block col-md-6 text-center">
-              <nav className="nav-menu">
-                <ul className="list-unstyled components justify-content-center">
-                  <li>
-                    <Link to="/">Inicio</Link>
-                  </li>
-                  {/* <li><Link to="/mascotas">Perdidos</Link></li>
-                <li><Link to="/mascotas">Encontrados</Link></li> */}
+        <nav className="navbar navbar-expand-lg py-0 px-md-4">
+          <div className="container-fluid">
+            <Link to="/">
+              {" "}
+              <div className="logo mx-auto mx-lg-1 mr-lg-auto">
+                <img
+                  src={appLogo}
+                  alt="Logo Hoggo"
+                  className="img-fluid"
+                  id="logo-header"
+                />{" "}
+              </div>{" "}
+              <h1 className="d-none">Huellas a Casa</h1>
+            </Link>
+            <button
+              className="navbar-toggler navbar-dark"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse nav-menu" id="navbarNav">
+              <ul className="navbar-nav justify-content-center me-auto mb-2 mb-lg-0">
+                <li className="nav-item">
+                  <Link to="/">Inicio</Link>
+                </li>
+                <li className="nav-item">
                   <li>
                     <Link to="/mascotas/perdidos">Perdidos</Link>
                   </li>
-                  <li>
-                    {" "}
-                    <Link to="/mascotas/encontrados">Encontrados</Link>
-                  </li>
-                  <li>
-                    {" "}
-                    <Link to="/login">Iniciar sesión</Link>
-                  </li>
-                  <li>
-                    {" "}
-                    <Link to="/profile">Cuenta</Link>
-                  </li>
-                  <li>
-                    {" "}
-                    <Link to="/account">Registrate</Link>
-                  </li>
-                </ul>
-              </nav>
+                </li>
+                <li className="nav-item">
+                  {" "}
+                  <Link to="/mascotas/encontrados">Encontrados</Link>
+                </li>
+              </ul>
+              <ul className="navbar-nav justify-content-center ml-auto mb-2 mb-lg-0">
+                {token ? (
+                  <>
+                    <li className="nav-item">
+                      {" "}
+                      <Link to="/profile">Cuenta</Link>
+                    </li>
+                    <li className="nav-item">
+                      {" "}
+                      <Link to="/logout">Cerrar sesión</Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="nav-item">
+                      {" "}
+                      <Link to="/register">Registrate</Link>
+                    </li>
+                    <li className="nav-item">
+                      {" "}
+                      <Link to="/login">Iniciar sesión</Link>
+                    </li>
+                  </>
+                )}
+              </ul>
             </div>
-
-            <div className="d-none d-md-block col-md-3">
-              <nav className="nav-menu d-none d-md-block mx-2">
-                <ul className="list-unstyled components justify-content-end">
-                  <li>
-                    <div data-section="login">
-                      <i className="icofont-ui-user icofont-1x"></i>
-                    </div>
-                  </li>
-                </ul>
-              </nav>
+          </div>
+        </nav>
+      </header>
+      <Outlet />
+      {/* <script
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossOrigin="anonymous"
+      ></script>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+        integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+        crossOrigin="anonymous"
+      ></script> */}
+      <footer className="footer sticky-footer">
+        <div className="container footer-bottom">
+          <div className="row justify-content-center">
+            <div className="col-12 menosp">
+              <div className="text-center">
+                <p className="mb-0">Coutinho Lucia - DWM4AV</p>
+                <p>Proyecto Final</p>
+              </div>
             </div>
           </div>
         </div>
-      </header>
-      <Outlet />
+      </footer>
     </div>
   );
 }

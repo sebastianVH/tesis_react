@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import * as authService from "../services/auth.service";
 import { AuthContext } from "../AuthContext";
 import { UserContext } from "../UserContext";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
   const [userName, setUserName] = useState("");
@@ -13,19 +14,9 @@ function LoginPage() {
   const { setToken } = useContext(AuthContext);
   const { setUserData } = useContext(UserContext);
 
-  const onChangeUserName = useCallback(
-    (event) => {
-      setUserName(event.target.value);
-    },
-    [setUserName]
-  );
-
-  const onChangePassword = useCallback(
-    (event) => {
-      setPassword(event.target.value);
-    },
-    [setPassword]
-  );
+  const onChangeField = useCallback((event, setValue) => {
+    setValue(event.target.value);
+  }, []);
 
   const onSubmit = useCallback(
     (event) => {
@@ -41,43 +32,58 @@ function LoginPage() {
           })
             .then((response) => response.json())
             .then((data) => setUserData(data));
-          navigate("/mascotas/perdidos", { replace: true });
+          navigate("/profile", { replace: true });
         })
         .catch((err) => {
           console.log(err);
-          setError(err.error.message);
         });
     },
-    [setError, userName, password, setToken, navigate, setUserData]
+    [navigate, setError, userName, password, setToken, setUserData]
   );
 
   return (
     <div className="container login-page">
-      <form className="form-login" onSubmit={onSubmit}>
-        <h1 className="form-login__title">Inicio de sesión</h1>
-        <label className="col-12 form-login__field">
-          Nombre de usuario:
-          <input
-            className="form-login__username"
-            type="text"
-            onChange={onChangeUserName}
-            value={userName}
-          />
-        </label>
-        <label className="col-12 form-login__field">
-          Contraseña:
-          <input
-            className="form-login__password"
-            type="password"
-            onChange={onChangePassword}
-            value={password}
-          />
-        </label>
-        <p>{error}</p>
-        <button className="form-login__submit btn btn-color" type="submit">
-          Entrar
-        </button>
-      </form>
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-10 col-lg-7 caja-login">
+          <div className="col-12 titulo-seccion text-center pb-0">
+            <h2>Inicia sesión con tu cuenta</h2>
+          </div>
+          <form className="form-login" onSubmit={onSubmit}>
+            <label className="col-12 form-login__field">
+              Nombre de usuario:
+            </label>
+            <input
+              className="form-login__username w-100"
+              type="text"
+              onChange={(event) => onChangeField(event, setUserName)}
+              value={userName}
+            />
+
+            <label className="col-12 form-login__field">Contraseña:</label>
+            <input
+              className="form-login__password w-100"
+              type="password"
+              onChange={(event) => onChangeField(event, setPassword)}
+              value={password}
+            />
+
+            <p>{error}</p>
+            <p className="todavia">
+              ¿Todavía no tenés cuenta?{" "}
+              <Link className="registrate" to="/register">
+                Registrate
+              </Link>
+            </p>
+
+            <button
+              className="form-login__submit btn btn-naranja w-100"
+              type="submit"
+            >
+              Entrar
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

@@ -12,7 +12,7 @@ function MascotaListItem({ mascota }) {
         <div className="card-perro">
           <img src={mascota.imagen} className="img-fluid rounded-img" />
           <div className="card-perro-content pb-3 pt-2">
-            <h4>{mascota.nombre}</h4>
+            <h3>{mascota.nombre}</h3>
             <span>{mascota.raza}</span>
             <div className="div-ubicacion d-flex justify-content-around align-items-center">
               <p>
@@ -53,7 +53,7 @@ function MascotaListItem({ mascota }) {
 
 MascotaListItem.propTypes = {
   mascota: PropTypes.object.isRequired,
-  account: PropTypes.string.isRequired,
+  account: PropTypes.string,
 };
 
 export default MascotaListItem;

@@ -18,9 +18,17 @@ function ProfilePage() {
   }, [navigate]);
 
   return (
-    <div>
-      <h1>Bienvenido {profile.name}!</h1>
-      <MascotasList account={profile._id} />
+    <div className="cuenta-bg">
+      <div className="title-section cuenta px-3 px-md-5">
+        <h2>Tu cuenta</h2>
+        <h3>
+          ¡Hola <span>{profile.name}</span>!
+        </h3>
+        <p>Desde esta sección podrás ver y administrar tus publicaciones</p>
+      </div>
+      <div className="container">
+        <MascotasList account={profile._id} />
+      </div>
     </div>
   );
 }

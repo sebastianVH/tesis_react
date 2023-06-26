@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function MascotaDetailsPage() {
   const [mascota, setMascota] = useState({});
@@ -26,23 +27,43 @@ function MascotaDetailsPage() {
     <section className="container detalle-perrito px-lg-5 mx-lg-5 pt-0">
       <div id="detalle-perdidos_body px-lg-5 mx-lg-5" className="container">
         <div className="row">
+          <div className="col-12 pb-3">
+            <Link
+              to={`/mascotas/${mascota?.categoria?.toLowerCase()}s`}
+              className="naranja volver text-white"
+            >
+              <i className="bi bi-arrow-left"></i>Volver al listado de mascotas{" "}
+              {mascota?.categoria?.toLowerCase().slice(0, -1) + "as"}
+            </Link>
+          </div>
           <div className="col-xs-6 col-md-6 col-lg-7">
             <img src={mascota?.imagen} className="w-100" alt="Perro perdido" />
-            <div className="w-100 data">
-              {/* <a
-                href="https://wa.me/541138654651?text=Hola!%20Tengo%20información%20sobre%20tu%20perro%20perdido%20"
-                className="data-letra"
+            <div className="w-100 btn btn-naranja text-white py-2 my-2">
+              <Link
+                to={`https://wa.me/${
+                  mascota?.whatsapp
+                }?text=Hola!%20Tengo%20información%20sobre%20tu%20${mascota?.especie?.toLowerCase()}%20${mascota?.categoria?.toLowerCase()}%20${
+                  mascota?.nombre
+                }`}
                 target="_blank"
-              > */}
-              <i className="icofont-brand-whatsapp"></i>Tengo Información sobre{" "}
-              {mascota?.nombre}
-              {/* </a> */}
+                className="text-white"
+              >
+                <i className="bi bi-whatsapp"></i> Tengo Información sobre{" "}
+                {mascota?.nombre}
+              </Link>
             </div>
           </div>
 
           <div className="col-xs-6 col-md-6 col-lg-5">
             <div className="info-detalle-perrito">
-              <h3 className="mt-1">Información</h3>
+              <h2 className="mt-1">
+                Información del{" "}
+                <span className="naranja">
+                  {" "}
+                  {mascota?.especie?.toLowerCase()}{" "}
+                  {mascota?.categoria?.toLowerCase()}
+                </span>
+              </h2>
               <ul className="ml-0">
                 <li>
                   <strong>Nombre</strong>: {mascota?.nombre}

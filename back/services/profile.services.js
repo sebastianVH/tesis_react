@@ -1,6 +1,8 @@
 import { MongoClient, ObjectId } from "mongodb";
 
-const client = new MongoClient("mongodb://127.0.0.1:27017");
+const client = new MongoClient(
+  "mongodb+srv://luciacoutinho:SU7FOR3ddcQirAFg@testtesis1.kpk1ogf.mongodb.net/?retryWrites=true&w=majority"
+);
 const db = client.db("testTesis1");
 const profileCollection = db.collection("profile");
 

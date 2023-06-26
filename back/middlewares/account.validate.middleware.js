@@ -12,6 +12,18 @@ async function validateAccount(req, res, next) {
     });
 }
 
+async function validateLogin(req, res, next) {
+  return scheme.login
+    .validate(req.body, { abortEarly: false, stripUnknown: true })
+    .then((account) => {
+      req.body = account;
+      next();
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+}
+
 async function validateProfile(req, res, next) {
   return scheme.profile
     .validate(req.body, { abortEarly: false, stripUnknown: true })
@@ -24,4 +36,4 @@ async function validateProfile(req, res, next) {
     });
 }
 
-export { validateAccount, validateProfile };
+export { validateAccount, validateProfile, validateLogin };

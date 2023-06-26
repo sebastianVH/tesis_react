@@ -5,14 +5,22 @@ function EditarMascotaPage() {
   const { idMascota } = useParams();
   return (
     <>
-      <div className="container">
-        <div className="row">
-          <div className="col-xs-12">
-            <h1>Editar Mascota</h1>
+      <div className="header-section-bg">
+        <div className="header-section container-fluid mx-0">
+          <div className="row justify-content-center">
+            <div className="col-12 title-section px-md-5">
+              <h2>Modificar publicación</h2>
+              <h3>Editar Mascota</h3>
+              {/* <p>
+                Completá los datos para cargar una nueva mascota al listado de
+                búsqueda
+              </p> */}
+            </div>
           </div>
         </div>
-
-        <EditarMascota idMascota={idMascota} />
+        <div className="container">
+          <EditarMascota idMascota={idMascota} />
+        </div>
       </div>
     </>
   );
