@@ -14,7 +14,6 @@ const mascota = yup.object({
   celular: yup.string().required(),
   whatsapp: yup.string().optional(),
   categoria: yup.string().oneOf(["Perdido", "Encontrado"]).required(),
-  imagen: yup.string().required(),
   collar: yup
     .string()
     .oneOf([

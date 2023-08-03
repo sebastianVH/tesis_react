@@ -4,13 +4,18 @@ import "./MascotaListItem.css";
 import { useContext } from "react";
 import { UserContext } from "./UserContext";
 
+("C:/Users/lucia/Documents/Diseño Web/4to Cuatrimestre/Proyecto Final/Huellas a Casa- App programación/Desarrollo/Tesis 1_8");
+
 function MascotaListItem({ mascota }) {
   const { userData } = useContext(UserContext);
   return (
     <div className="col-xl-3 col-md-4 col-6 d-flex align-items-stretch px-2 px-md-3 mb-4 ">
       <Link to={`/mascotas/${mascota._id}`} className="mascota-view">
         <div className="card-perro">
-          <img src={mascota.imagen} className="img-fluid rounded-img" />
+          <img
+            src={`http://127.0.0.1:2023/${mascota.imagen}`}
+            className="img-fluid rounded-img"
+          />
           <div className="card-perro-content pb-3 pt-2">
             <h3>{mascota.nombre}</h3>
             <span>{mascota.raza}</span>

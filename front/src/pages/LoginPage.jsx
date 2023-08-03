@@ -4,6 +4,7 @@ import * as authService from "../services/auth.service";
 import { AuthContext } from "../AuthContext";
 import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
+import loginImg from "../assets/img/login2.png";
 
 function LoginPage() {
   const [userName, setUserName] = useState("");
@@ -42,9 +43,9 @@ function LoginPage() {
   );
 
   return (
-    <div className="container login-page">
-      <div className="row justify-content-center">
-        <div className="col-12 col-md-10 col-lg-7 caja-login">
+    <div className="container-fluid login-page">
+      <div className="row justify-content-between align-items-center h-100">
+        <div className="col-12 col-md-10 col-lg-6 col-xl-6 caja-login px-lg-5">
           <div className="col-12 titulo-seccion text-center pb-0">
             <h2>Inicia sesión con tu cuenta</h2>
           </div>
@@ -82,6 +83,9 @@ function LoginPage() {
               Entrar
             </button>
           </form>
+        </div>
+        <div className="col-6 d-none d-md-block login-img text-right pr-0">
+          <img src={loginImg} alt="Login page img" className="img-fluid" />
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", express.json());
 
 app.use("/", express.static("public"));
+app.use("/mascotas/img", express.static("content/img/mascotas"));
 
 app.use("/api", MascotaRouteApi);
 app.use("/api", AccountRouteApi);

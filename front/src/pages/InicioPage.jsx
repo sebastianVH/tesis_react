@@ -7,14 +7,14 @@ import portadaPerdidosDesktop from "../assets/img/portadas-inicio-mascotas-perdi
 import portadaPerdidosMobile from "../assets/img/portadas-inicio-mascotas-perdidas-mobile.jpg";
 import portadaEncontradosDesktop from "../assets/img/portadas-inicio-mascotas-encontradas-desktop.jpg";
 import portadaEncontradosMobile from "../assets/img/portadas-inicio-mascotas-encontradas-mobile.jpg";
-import imgAcerca from "../assets/img/perro_sosteniendo_signo_de_pregunta.png";
+import imgAcerca from "../assets/img/about.png";
 
 function InicioPage() {
   return (
     <>
       <div className="seccion-inicio">
         <section className="pt-0 pb-0 pb-md-3 hero">
-          <div className="hero-container d-none d-md-block">
+          <div className="hero-container d-none d-md-block align-items-center">
             <div className="container align-items-center">
               <div className="row justify-content-start align-items-center">
                 <div className="col-10 col-md-5 col-lg-5 py-3">
@@ -24,7 +24,7 @@ function InicioPage() {
                     className="img-fluid logo-hero"
                   />
                   <h2 className="">
-                    Publica mascotas
+                    Publicá mascotas
                     <br />
                     perdidas y encontradas
                   </h2>
@@ -42,7 +42,7 @@ function InicioPage() {
                     className="img-fluid logo-hero py-0 my-0"
                   />
                   <h2 className="text-center">
-                    Publica mascotas
+                    Publicá mascotas
                     <br />
                     perdidas y encontradas
                   </h2>

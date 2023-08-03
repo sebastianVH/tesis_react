@@ -1,8 +1,7 @@
 import { useState } from "react";
-// import { useParams } from "react-router-dom";
 import CustomInput from "./microcomponents/CustomInput";
 import CreadoConExito from "./microcomponents/CreadoConExito";
-// import axios from "axios";
+import axios from "axios";
 
 function CrearMascota() {
   const [mascota, setMascota] = useState({});
@@ -13,30 +12,50 @@ function CrearMascota() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0];
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      imagen: file,
+    }));
+  };
+
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    fetch("http://localhost:2023/api/mascotas", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setMascota(data);
-        setSuccess(true);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    const imagenInput = document.getElementById("imagen");
+    if (imagenInput.files.length > 0) {
+      formData.imagen = imagenInput.files[0];
+    }
+    console.log(formData);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:2023/api/mascotas",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+
+      setMascota(response.data);
+      setSuccess(true);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
     <div>
-      <form id="form-crear_encontrado" onSubmit={handleFormSubmit}>
+      <form
+        id="form-crear_encontrado"
+        onSubmit={handleFormSubmit}
+        encType="multipart/form-data"
+      >
         <div className="row form_carga">
           <div className="col-md-6 col-lg-4">
             <CustomInput
@@ -169,20 +188,12 @@ function CrearMascota() {
               onChange={handleInputChange}
             />{" "}
           </div>
-          <div className="col-md-6 col-lg-4">
-            {/* <CustomInput
-              label="Foto"
-              name="imagen"
-              type="image"
-              onChange={handleInputChange}
-            />{" "} */}
-            <CustomInput
-              label="URL a la foto (obligatorio)"
-              name="imagen"
-              type="text"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
+          <input
+            type="file"
+            name="imagen"
+            id="imagen"
+            onChange={handleFileInputChange}
+          />
         </div>
 
         {success ? (
