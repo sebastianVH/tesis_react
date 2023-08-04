@@ -8,8 +8,7 @@ import { tokenVerify } from "../../middlewares/token.validate.middleware.js";
 import { v4 as uuidv4 } from "uuid";
 
 import multer from "multer";
-import sharp from "sharp";
-import path from "path";
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public");
@@ -23,6 +22,7 @@ const upload = multer({ storage: storage });
 
 const route = Router();
 
+route.get("/mascotas/imagen/:imagen", controller.getImagenMascota)
 route.get("/mascotas", controller.getMascotas);
 route.get("/mascotas/:idMascota", controller.getMascotaById);
 // route.post(

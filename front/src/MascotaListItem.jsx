@@ -13,7 +13,7 @@ function MascotaListItem({ mascota }) {
       <Link to={`/mascotas/${mascota._id}`} className="mascota-view">
         <div className="card-perro">
           <img
-            src={`http://127.0.0.1:2023/${mascota.imagen}`}
+            src={`http://127.0.0.1:2023/api/mascotas/imagen/${mascota.imagen}`}
             className="img-fluid rounded-img"
           />
           <div className="card-perro-content pb-3 pt-2">

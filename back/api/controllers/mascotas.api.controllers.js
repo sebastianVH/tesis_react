@@ -1,4 +1,5 @@
 import * as service from "../../services/mascotas.services.js";
+import fs from 'fs'
 
 function getMascotas(req, res) {
   const filter = req.query;
@@ -20,6 +21,22 @@ function getMascotaById(req, res) {
       });
     }
   });
+}
+
+function getImagenMascota(req, res) {
+  const nombreImagen = req.params.imagen;
+  fs.exists('./public/' + nombreImagen, (existe) => {
+      if (!existe) {
+          res.status(500).json({
+              message: 'No existe la imgen'
+          })
+      } else {
+          fs.readFile('./public/' + nombreImagen, (err, content) => {
+              res.writeHead(200, {'Content-Type': 'image/jpeg'});
+              res.write(content)
+          });
+      }
+  })
 }
 
 function createMascota(req, res) {
@@ -61,6 +78,7 @@ export {
   getMascotas,
   createMascota,
   getMascotaById,
+  getImagenMascota,
   editMascota,
   deleteMascota,
 };
