@@ -3,10 +3,14 @@ import * as tokenService from "../../services/token.services.js";
 import * as profileService from "../../services/profile.services.js";
 import * as accountService from "../../services/account.services.js";
 import * as mascotaService from "../../services/mascotas.services.js";
+import { SendUserEmail } from "../../services/mail.services.js";
+
+
 
 async function createAccount(req, res) {
   return service
     .createAccount(req.body)
+    .then(()=>SendUserEmail(req.body.email))
     .then(() => {
       res.status(201).json({ message: "La cuenta fue creado correctamente" });
     })

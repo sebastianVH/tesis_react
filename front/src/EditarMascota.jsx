@@ -3,11 +3,16 @@ import CustomInput from "./microcomponents/CustomInput";
 import CreadoConExito from "./microcomponents/CreadoConExito";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
+import { Cloudinary } from "@cloudinary/url-gen";
+import CloudinaryUploadWidget from "./microcomponents/cloudinaryWidget";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 
 function EditarMascota({ idMascota }) {
   const [mascota, setMascota] = useState({});
   const [formData, setFormData] = useState({});
   const [success, setSuccess] = useState(false);
+  const [imgMascota, setImgMascota] = useState("");
+  const [previewMascota, setPreviewMascota] = useState("")
 
   useEffect(() => {
     fetch(`http://localhost:2023/api/mascotas/${idMascota}`)
@@ -25,6 +30,7 @@ function EditarMascota({ idMascota }) {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    if (imgMascota) setFormData({...formData, imagen:imgMascota})
 
     fetch(`http://localhost:2023/api/mascotas/${mascota._id}`, {
       method: "PATCH",
@@ -42,6 +48,14 @@ function EditarMascota({ idMascota }) {
         console.error("Error:", error);
       });
   };
+
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "huellasacasa"
+    }
+  });
+
+  const imgMascotaRender = cld.image(previewMascota)
 
   return (
     <div>
@@ -199,6 +213,15 @@ function EditarMascota({ idMascota }) {
               onChange={handleInputChange}
               initialValue={mascota.imagen}
             />{" "}
+            <p>O subir una nueva foto</p>
+            <CloudinaryUploadWidget setImgMascota={setImgMascota} setPreviewMascota={setPreviewMascota} />
+            <div style={{ width: "100px" }}>
+          {(previewMascota && <AdvancedImage
+                style={{ maxWidth: "100px" }}
+                cldImg={imgMascotaRender}
+                plugins={[responsive(), placeholder()]}
+              />) || <img src={mascota.imagen}></img>}
+            </div>
           </div>
         </div>
         {success ? (

@@ -2,34 +2,38 @@ import { useState } from "react";
 import CustomInput from "./microcomponents/CustomInput";
 import CreadoConExito from "./microcomponents/CreadoConExito";
 import axios from "axios";
+import { Cloudinary } from "@cloudinary/url-gen";
+import CloudinaryUploadWidget from "./microcomponents/cloudinaryWidget";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 
 function CrearMascota() {
   const [mascota, setMascota] = useState({});
   const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({});
+  const [imgMascota, setImgMascota] = useState("");
+  const [previewMascota, setPreviewMascota] = useState("")
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFileInputChange = (event) => {
-    const file = event.target.files[0];
+  // const handleFileInputChange = (event) => {
+  //   const file = event.target.files[0];
 
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      imagen: file,
-    }));
-  };
+  //   setFormData((prevFormData) => ({
+  //     ...prevFormData,
+  //     imagen: file,
+  //   }));
+  // };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const imagenInput = document.getElementById("imagen");
-    if (imagenInput.files.length > 0) {
-      formData.imagen = imagenInput.files[0];
+    if (imgMascota) {
+      formData.imagen = imgMascota;
     }
     console.log(formData);
-
+    
     try {
       const response = await axios.post(
         "http://localhost:2023/api/mascotas",
@@ -48,6 +52,14 @@ function CrearMascota() {
       console.error("Error:", error);
     }
   };
+
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "huellasacasa"
+    }
+  });
+
+  const imgMascotaRender = cld.image(previewMascota)
 
   return (
     <div>
@@ -188,12 +200,15 @@ function CrearMascota() {
               onChange={handleInputChange}
             />{" "}
           </div>
-          <input
-            type="file"
-            name="imagen"
-            id="imagen"
-            onChange={handleFileInputChange}
+          <CloudinaryUploadWidget setImgMascota={setImgMascota} setPreviewMascota={setPreviewMascota}/>
+
+        <div style={{ width: "100px" }}>
+          <AdvancedImage
+            style={{ maxWidth: "100px" }}
+            cldImg={imgMascotaRender}
+            plugins={[responsive(), placeholder()]}
           />
+      </div>
         </div>
 
         {success ? (

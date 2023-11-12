@@ -1,5 +1,6 @@
 import { MongoClient, ObjectId } from "mongodb";
 
+
 const client = new MongoClient(
   "mongodb+srv://luciacoutinho:SU7FOR3ddcQirAFg@testtesis1.kpk1ogf.mongodb.net/?retryWrites=true&w=majority"
 );

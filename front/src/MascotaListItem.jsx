@@ -14,7 +14,8 @@ function MascotaListItem({ mascota }) {
         <div className="card-perro">
           <img
           // TODO: Cambiar el url por el url posta (esto es re villero)
-            src={`http://127.0.0.1:2023/api/mascotas/imagen/${mascota.imagen}`}
+            //src={`http://127.0.0.1:2023/api/mascotas/imagen/${mascota.imagen}`}
+            src={mascota.imagen}
             className="img-fluid rounded-img"
           />
           <div className="card-perro-content pb-3 pt-2">
