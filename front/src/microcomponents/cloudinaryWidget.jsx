@@ -43,6 +43,7 @@ function CloudinaryUploadWidget({ setImgMascota ,setPreviewMascota}) {
           if (!error && result && result.event === "success") {
             setPreviewMascota(result.info.public_id)
             setImgMascota(result.info.secure_url);
+            
           }
         }
       );

@@ -30,7 +30,9 @@ function EditarMascota({ idMascota }) {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    if (imgMascota) setFormData({...formData, imagen:imgMascota})
+    if (imgMascota) {
+      formData.imagen = imgMascota;
+    }
 
     fetch(`http://localhost:2023/api/mascotas/${mascota._id}`, {
       method: "PATCH",

@@ -6,6 +6,7 @@ const mascota = yup.object({
   especie: yup.string().oneOf(["Perro", "Gato"]).required(),
   tamano: yup.string().oneOf(["Chico", "Mediano", "Grande"]).required(),
   color: yup.string().required(),
+  imagen: yup.string().optional(),
   raza: yup.string().optional(),
   edad: yup.string().optional(),
   zona_perdida: yup.string().required(),
