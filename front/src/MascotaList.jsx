@@ -182,7 +182,7 @@ function MascotasList({ categoria, account }) {
       </div>
 
       <div className="row justify-content-center justify-content-md-between text-center container-filtros px-lg-5">
-        <div className="col-12 col-md-9 px-0">
+        {/* <div className="col-12 col-md-9 px-0">
           <form className="mascota-list__form">
             Buscar:{" "}
             <input
@@ -193,15 +193,15 @@ function MascotasList({ categoria, account }) {
               placeholder="Escribí el nombre de la mascota"
             />
           </form>
-        </div>
+        </div> */}
 
         {userData && userData._id ? (
           <div className="col-4 col-md-3 col-lg-2">
             <Link
-              className="btn btn-azul d-none d-md-block"
+              className="btn btn-azul btn-flotante-desktop d-none d-md-block"
               to="/mascotas/nuevo"
             >
-              Agregar
+              Agregar mascota
             </Link>
 
             <Link
@@ -228,9 +228,21 @@ function MascotasList({ categoria, account }) {
             <div className="row justify-content-center">
               <div className="col-3 barra-filtros align-items-center justify-content-center py-4 text-left">
                 <p className="filtros-title">Filtros de búsqueda</p>
+                <div className="px-0 pb-4">
+                  <form className="mascota-list__form">
+                    Buscar:{" "}
+                    <input
+                      id="filtro"
+                      className="mascota-list__filter"
+                      type="text"
+                      onInput={onChangeFilter}
+                      placeholder="Escribí el nombre de la mascota"
+                    />
+                  </form>
+                </div>
                 <div className="filter-container text-left pb-4">
                   <p>Especie</p>
-                  <div className="btns-filters d-flex">
+                  <div className="btns-filters d-flex flex-wrap">
                     <div className="botones-choice">
                       <label className={getButtonClassName("perros")}>
                         <input
@@ -258,8 +270,8 @@ function MascotasList({ categoria, account }) {
 
                 <div className="filter-container text-left pb-4">
                   <p>Sexo</p>
-                  <div className="btns-filters d-flex">
-                    <div className="botones-choice">
+                  <div className="btns-filters d-flex flex-wrap">
+                    <div className="botones-choice px-1 pb-2">
                       <label className={getButtonClassName("machos")}>
                         <input
                           type="checkbox"
@@ -270,7 +282,7 @@ function MascotasList({ categoria, account }) {
                         Machos
                       </label>
                     </div>
-                    <div className="botones-choice px-2">
+                    <div className="botones-choice px-1 pb-2">
                       <label className={getButtonClassName("hembras")}>
                         <input
                           type="checkbox"
@@ -286,8 +298,8 @@ function MascotasList({ categoria, account }) {
 
                 <div className="filter-container text-left pb-4">
                   <p>Tamaño</p>
-                  <div className="btns-filters d-flex">
-                    <div className="botones-choice">
+                  <div className="btns-filters d-flex flex-wrap">
+                    <div className="botones-choice px-1 pb-2">
                       <label className={getButtonClassName("chicos")}>
                         <input
                           type="checkbox"
@@ -298,7 +310,7 @@ function MascotasList({ categoria, account }) {
                         Chicos
                       </label>
                     </div>
-                    <div className="botones-choice px-2">
+                    <div className="botones-choice px-1 pb-2">
                       <label className={getButtonClassName("medianos")}>
                         <input
                           type="checkbox"
@@ -309,7 +321,7 @@ function MascotasList({ categoria, account }) {
                         Medianos
                       </label>
                     </div>
-                    <div className="botones-choice px-2">
+                    <div className="botones-choice px-1">
                       <label className={getButtonClassName("grandes")}>
                         <input
                           type="checkbox"
@@ -323,45 +335,54 @@ function MascotasList({ categoria, account }) {
                   </div>
                 </div>
 
-                <div className="botones-choice px-2">
-                  <label
-                    className={getButtonClassName("Tiene collar con chapita")}
-                  >
-                    <input
-                      type="checkbox"
-                      name="collar"
-                      value="Tiene collar con chapita"
-                      checked={filtroCollar === "Tiene collar con chapita"}
-                      onChange={onCheckboxChange}
-                    />
-                    Con collar (chapa)
-                  </label>
-                </div>
-                <div className="botones-choice px-2">
-                  <label
-                    className={getButtonClassName("Tiene collar sin chapita")}
-                  >
-                    <input
-                      type="checkbox"
-                      name="collar"
-                      value="Tiene collar sin chapita"
-                      checked={filtroCollar === "Tiene collar sin chapita"}
-                      onChange={onCheckboxChange}
-                    />
-                    Con collar (sin chapa)
-                  </label>
-                </div>
-                <div className="botones-choice px-2">
-                  <label className={getButtonClassName("No tiene collar")}>
-                    <input
-                      type="checkbox"
-                      name="collar"
-                      value="No tiene collar"
-                      checked={filtroCollar === "No tiene collar"}
-                      onChange={onCheckboxChange}
-                    />
-                    Sin collar
-                  </label>
+                <div className="filter-container text-left pb-4">
+                  <p>Collar</p>
+                  <div className="btns-filters d-flex flex-wrap">
+                    <div className="botones-choice px-1 pb-2">
+                      <label
+                        className={getButtonClassName(
+                          "Tiene collar con chapita"
+                        )}
+                      >
+                        <input
+                          type="checkbox"
+                          name="collar"
+                          value="Tiene collar con chapita"
+                          checked={filtroCollar === "Tiene collar con chapita"}
+                          onChange={onCheckboxChange}
+                        />
+                        Con collar (chapa)
+                      </label>
+                    </div>
+                    <div className="botones-choice px-1 pb-2">
+                      <label
+                        className={getButtonClassName(
+                          "Tiene collar sin chapita"
+                        )}
+                      >
+                        <input
+                          type="checkbox"
+                          name="collar"
+                          value="Tiene collar sin chapita"
+                          checked={filtroCollar === "Tiene collar sin chapita"}
+                          onChange={onCheckboxChange}
+                        />
+                        Con collar (sin chapa)
+                      </label>
+                    </div>
+                    <div className="botones-choice px-1 pb-2">
+                      <label className={getButtonClassName("No tiene collar")}>
+                        <input
+                          type="checkbox"
+                          name="collar"
+                          value="No tiene collar"
+                          checked={filtroCollar === "No tiene collar"}
+                          onChange={onCheckboxChange}
+                        />
+                        Sin collar
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
 

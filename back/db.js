@@ -5,7 +5,7 @@ import { MongoClient } from "mongodb";
 const client = new MongoClient(
   "mongodb+srv://luciacoutinho:SU7FOR3ddcQirAFg@testtesis1.kpk1ogf.mongodb.net/?retryWrites=true&w=majority"
 );
-// const client = new MongoClient("mongodb://localhost:27017");
+//const client = new MongoClient("mongodb://localhost:27017");
 const db = client.db("testTesis1");
 
 client

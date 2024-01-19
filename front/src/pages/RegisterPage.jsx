@@ -55,6 +55,7 @@ function RegisterPage() {
           {success && (
             <div className="col-12 col-md-8 titulo-seccion text-center">
               <h3>Registrado con éxito</h3>
+              <p> Te hemos enviado un mail de bienvenida a {userName}</p>
               <Link className="btn btn-azul w-10" to="/login">
                 Iniciá sesión en tu cuenta
               </Link>

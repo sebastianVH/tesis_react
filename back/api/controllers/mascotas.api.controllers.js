@@ -42,10 +42,10 @@ function getImagenMascota(req, res) {
 function createMascota(req, res) {
   try {
     // Reemplazar las diagonales invertidas dobles por diagonales normales en la ruta de la imagen
-    const imagenPath = req.file.path.replace(/\\/g, "/");
+    //const imagenPath = req.file.path.replace(/\\/g, "/");
 
     service
-      .createMascota({ imagen: imagenPath, ...req.body }, req.account._id)
+      .createMascota( req.body , req.account._id)
       .then(function (mascota) {
         return res.status(201).json(mascota);
       })

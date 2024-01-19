@@ -558,6 +558,18 @@ success crear perrito
   font-family: "Poppins", sans-serif !important;
 }
 
+.btn-flotante-desktop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  border-radius: 15px;
+  /* width: 4em;
+  height: 4em; */
+  text-align: center;
+  line-height: 2.7em;
+  z-index: 1;
+  font-size: 20px;
+}
 .btn-flotante {
   position: fixed;
   bottom: 30px;
@@ -617,9 +629,9 @@ success crear perrito
 .botones-choice .bg-1 {
   border: #d3970f 1px solid;
   color: #d3970f;
-  padding: 12px 22px;
+  padding: 12px 18px;
   border-radius: 15px;
-  font-size: 18px;
+  font-size: 15px;
   transition: all 0.3s;
   cursor: pointer;
 }
@@ -629,9 +641,6 @@ success crear perrito
   background-color: #d3970f;
   border: #d3970f 1px solid;
   color: white;
-  padding: 12px 22px;
-  border-radius: 15px;
-  font-size: 18px;
 }
 
 .botones-choice .bg-1.active {
@@ -911,18 +920,18 @@ success crear perrito
 --------------------------------------------------------------*/
 
 .mascota-list__form {
-  font-size: 16px;
+  font-size: 18px;
   /* margin: 1rem; */
   /* background-color: hsl(0, 0%, 66%); */
   /* padding: 1rem; */
-  text-align: center;
+  /* text-align: center; */
   color: #454545;
 }
 
 .mascota-list__form input {
   /* margin-left: 15px;
   margin-right: 15px; */
-  width: 70%;
+  width: 95%;
 }
 
 .mascota-list__filter {
@@ -1136,6 +1145,9 @@ a.data-letra {
 
 .text-right {
   text-align: right !important;
+}
+.text-left {
+  text-align: left !important;
 }
 
 .form-login__field {

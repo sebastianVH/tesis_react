@@ -6,6 +6,7 @@ const mascota = yup.object({
   especie: yup.string().oneOf(["Perro", "Gato"]).required(),
   tamano: yup.string().oneOf(["Chico", "Mediano", "Grande"]).required(),
   color: yup.string().required(),
+  imagen: yup.string().optional(),
   raza: yup.string().optional(),
   edad: yup.string().optional(),
   zona_perdida: yup.string().required(),
@@ -13,6 +14,7 @@ const mascota = yup.object({
   descripcion: yup.string().optional(),
   celular: yup.string().required(),
   whatsapp: yup.string().optional(),
+  encontrado: yup.boolean().default(false),
   categoria: yup.string().oneOf(["Perdido", "Encontrado"]).required(),
   collar: yup
     .string()
