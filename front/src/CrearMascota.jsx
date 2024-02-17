@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomInput from "./microcomponents/CustomInput";
 import CreadoConExito from "./microcomponents/CreadoConExito";
 import axios from "axios";
 import { Cloudinary } from "@cloudinary/url-gen";
 import CloudinaryUploadWidget from "./microcomponents/cloudinaryWidget";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import GoogleMapComponent from "./GoogleMaps";
+
 
 function CrearMascota() {
   const [mascota, setMascota] = useState({});
   const [success, setSuccess] = useState(false);
+  const [provincias,setProvincias] = useState([])
   const [formData, setFormData] = useState({});
   const [imgMascota, setImgMascota] = useState("");
   const [previewMascota, setPreviewMascota] = useState("")
@@ -17,22 +20,18 @@ function CrearMascota() {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const handleFileInputChange = (event) => {
-  //   const file = event.target.files[0];
 
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     imagen: file,
-  //   }));
-  // };
+  const setCoordenadas = (coord) => {
+    formData.ubicacion = coord
+  }
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    return console.log(formData);
 
     if (imgMascota) {
       formData.imagen = imgMascota;
     }
-    console.log(formData);
     
     try {
       const response = await axios.post(
@@ -58,6 +57,15 @@ function CrearMascota() {
       cloudName: "huellasacasa"
     }
   });
+
+  useEffect(() => {
+    const getProvincias = async () => {
+      const {data} = await axios.get('https://apis.datos.gob.ar/georef/api/provincias')
+      const provinciasNombre = data.provincias.map( prov => prov.nombre)
+      setProvincias(provinciasNombre)
+    }
+    getProvincias()
+  },[])
 
   const imgMascotaRender = cld.image(previewMascota)
 
@@ -101,6 +109,15 @@ function CrearMascota() {
               name="tamano"
               type="select"
               options={["Chico", "Mediano", "Grande"]}
+              onChange={handleInputChange}
+            />{" "}
+          </div>
+          <div className="col-md-6 col-lg-4">
+            <CustomInput
+              label="Provincia (obligatorio)"
+              name="provincia"
+              type="select"
+              options={provincias}
               onChange={handleInputChange}
             />{" "}
           </div>
@@ -209,6 +226,7 @@ function CrearMascota() {
             plugins={[responsive(), placeholder()]}
           />
       </div>
+      <GoogleMapComponent setCoordenadas={setCoordenadas}/>
         </div>
 
         {success ? (
