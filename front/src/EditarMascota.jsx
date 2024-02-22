@@ -6,13 +6,15 @@ import PropTypes from "prop-types";
 import { Cloudinary } from "@cloudinary/url-gen";
 import CloudinaryUploadWidget from "./microcomponents/cloudinaryWidget";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import GoogleMapComponent from "./GoogleMaps";
 
 function EditarMascota({ idMascota }) {
   const [mascota, setMascota] = useState({});
+  const [provincias, setProvincias] = useState([]);
   const [formData, setFormData] = useState({});
   const [success, setSuccess] = useState(false);
   const [imgMascota, setImgMascota] = useState("");
-  const [previewMascota, setPreviewMascota] = useState("")
+  const [previewMascota, setPreviewMascota] = useState("");
 
   useEffect(() => {
     fetch(`http://localhost:2023/api/mascotas/${idMascota}`)
@@ -53,194 +55,270 @@ function EditarMascota({ idMascota }) {
 
   const cld = new Cloudinary({
     cloud: {
-      cloudName: "huellasacasa"
-    }
+      cloudName: "huellasacasa",
+    },
   });
 
-  const imgMascotaRender = cld.image(previewMascota)
+  useEffect(() => {
+    const getProvincias = async () => {
+      const { data } = await axios.get(
+        "https://apis.datos.gob.ar/georef/api/provincias"
+      );
+      const provinciasNombre = data.provincias.map((prov) => prov.nombre);
+      setProvincias(provinciasNombre);
+    };
+    getProvincias();
+  }, []);
+
+  const imgMascotaRender = cld.image(previewMascota);
 
   return (
-    <div>
-      <form id="form-crear_encontrado" onSubmit={handleFormSubmit}>
-        <div className="row form_carga">
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Categoria"
-              initialValue={mascota.categoria}
-              name="categoria"
-              type="select"
-              options={["Perdido", "Encontrado"]}
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Especie"
-              initialValue={mascota.especie}
-              name="especie"
-              type="select"
-              options={["Perro", "Gato"]}
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Nombre"
-              initialValue={mascota.nombre}
-              name="nombre"
-              type="text"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Tamaño"
-              initialValue={mascota.tamano}
-              name="tamano"
-              type="select"
-              options={["Chico", "Mediano", "Grande"]}
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Color"
-              initialValue={mascota.color}
-              name="color"
-              type="text"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Sexo"
-              initialValue={mascota.sexo}
-              name="sexo"
-              type="select"
-              options={["Macho", "Hembra"]}
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Edad"
-              initialValue={mascota.edad}
-              name="edad"
-              type="text"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Raza"
-              initialValue={mascota.raza}
-              name="raza"
-              type="text"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Collar"
-              initialValue={mascota.collar}
-              name="collar"
-              type="select"
-              options={[
-                "Tiene collar con chapita",
-                "Tiene collar sin chapita",
-                "No tiene collar",
-              ]}
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Zona"
-              initialValue={mascota.zona_perdida}
-              name="zona_perdida"
-              type="text"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Fecha"
-              initialValue={mascota.fecha}
-              name="fecha"
-              type="date"
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Descripción"
-              initialValue={mascota.descripcion}
-              name="descripcion"
-              type="textarea"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Email"
-              initialValue={mascota.email}
-              name="email"
-              type="text"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="Celular"
-              initialValue={mascota.celular}
-              name="celular"
-              type="text"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="WhatsApp"
-              initialValue={mascota.whatsapp}
-              name="whatsapp"
-              type="text"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="col-md-6 col-lg-4">
-            <CustomInput
-              label="URL a la foto"
-              name="imagen"
-              type="text"
-              onChange={handleInputChange}
-              initialValue={mascota.imagen}
-            />{" "}
-            <p>O subir una nueva foto</p>
-            <CloudinaryUploadWidget setImgMascota={setImgMascota} setPreviewMascota={setPreviewMascota} />
-            <div style={{ width: "100px" }}>
-          {(previewMascota && <AdvancedImage
-                style={{ maxWidth: "100px" }}
-                cldImg={imgMascotaRender}
-                plugins={[responsive(), placeholder()]}
-              />) || <img src={mascota.imagen}></img>}
+    <div className="row justify-content-center">
+      <div className="formulario-carga col-12 col-sm-10 col-md-10 col-lg-8">
+        <form id="form-crear_encontrado" onSubmit={handleFormSubmit}>
+          <div className="row form_carga justify-content-center seccion-form-carga">
+            <div className="col-lg-10">
+              <h4>1. Para empezar</h4>
+              <CustomInput
+                label="¿Se perdió tu mascota o la encontraste perdida? (obligatorio)"
+                initialValue={mascota.categoria}
+                name="categoria"
+                type="select"
+                options={["Perdido", "Encontrado"]}
+                onChange={handleInputChange}
+              />{" "}
             </div>
           </div>
-        </div>
-        {success ? (
-          <CreadoConExito
-            especie={mascota.especie}
-            categoria={mascota.categoria}
-          />
-        ) : (
-          <button
-            id="boton-crear_encontrado"
-            className="btn btn-primary redbtn float-right my-2 text-white text-center my-5 col-md-2 boton-color"
-            type="submit"
-          >
-            Editar
-          </button>
-        )}
-      </form>
+
+          {/* <div className="col-lg-10">
+              <CustomInput
+                label="Categoria"
+                initialValue={mascota.categoria}
+                name="categoria"
+                type="select"
+                options={["Perdido", "Encontrado"]}
+                onChange={handleInputChange}
+              />{" "}
+            </div> */}
+
+          <div className="row form_carga justify-content-center seccion-form-carga">
+            <div className="col-lg-10">
+              <h4>2. Datos de la mascota</h4>
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Especie (obligatorio)"
+                initialValue={mascota.especie}
+                name="especie"
+                type="select"
+                options={["Perro", "Gato"]}
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Nombre"
+                initialValue={mascota.nombre}
+                name="nombre"
+                type="text"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Tamaño (obligatorio)"
+                initialValue={mascota.tamano}
+                name="tamano"
+                type="select"
+                options={["Chico", "Mediano", "Grande"]}
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+
+            {/* <div className="col-lg-10">
+              <CustomInput
+                label="Color (obligatorio)"
+                name="color"
+                type="text"
+                onChange={handleInputChange}
+              />{" "}
+            </div> */}
+            <div className="col-lg-10">
+              <CustomInput
+                label="Sexo (obligatorio)"
+                initialValue={mascota.sexo}
+                name="sexo"
+                type="select"
+                options={["Macho", "Hembra"]}
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Edad"
+                initialValue={mascota.edad}
+                name="edad"
+                type="text"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Raza"
+                initialValue={mascota.raza}
+                name="raza"
+                type="text"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Collar"
+                initialValue={mascota.collar}
+                name="collar"
+                type="select"
+                options={[
+                  "Tiene collar con chapita",
+                  "Tiene collar sin chapita",
+                  "No tiene collar",
+                ]}
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10 mapa pt-4">
+              {/* <p>
+                ¿Nos compartis una foto de tu peludo? Seguro tenés un montón :)
+              </p>
+              <CloudinaryUploadWidget
+                setImgMascota={setImgMascota}
+                setPreviewMascota={setPreviewMascota}
+              />
+
+              <div className="foto-cloudinary">
+                <AdvancedImage
+                  // style={{ maxWidth: "100px" }}
+                  className="img-fluid"
+                  cldImg={imgMascotaRender}
+                  plugins={[responsive(), placeholder()]}
+                />
+              </div> */}
+              <p>Foto actual:</p>
+              <div className="foto-cloudinary">
+                {(previewMascota && (
+                  <AdvancedImage
+                    cldImg={imgMascotaRender}
+                    plugins={[responsive(), placeholder()]}
+                  />
+                )) || <img src={mascota.imagen}></img>}
+              </div>
+
+              <p>Subir una nueva foto:</p>
+              <CloudinaryUploadWidget
+                setImgMascota={setImgMascota}
+                setPreviewMascota={setPreviewMascota}
+              />
+            </div>
+          </div>
+
+          <div className="row form_carga justify-content-center seccion-form-carga">
+            <div className="col-lg-10">
+              <h4>3. Ubicación y fecha</h4>
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Fecha en la que se perdió o encontró la mascota (obligatorio)"
+                initialValue={mascota.fecha}
+                name="fecha"
+                type="date"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Descripción: ¿Cómo se perdió o encontró? (obligatorio)"
+                initialValue={mascota.descripcion}
+                name="descripcion"
+                type="textarea"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Provincia (obligatorio)"
+                initialValue={mascota.provincia}
+                name="provincia"
+                type="select"
+                options={provincias}
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Zona (obligatorio)"
+                initialValue={mascota.zona_perdida}
+                name="zona_perdida"
+                type="text"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="mapa col-lg-10 py-4">
+              <p>Marcá en el mapa donde se perdió o encontró la mascota</p>
+              <GoogleMapComponent />
+            </div>
+          </div>
+
+          <div className="row form_carga justify-content-center seccion-form-carga">
+            <div className="col-lg-10">
+              <h4>4. Datos de contacto</h4>
+            </div>
+
+            <div className="col-lg-10">
+              <CustomInput
+                label="Celular (obligatorio)"
+                initialValue={mascota.celular}
+                name="celular"
+                type="text"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+
+            <div className="col-lg-10">
+              <CustomInput
+                label="WhatsApp"
+                initialValue={mascota.whatsapp}
+                name="whatsapp"
+                type="text"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+
+            <div className="col-lg-10">
+              <CustomInput
+                label="Email"
+                initialValue={mascota.email}
+                name="email"
+                type="text"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+          </div>
+
+          {success ? (
+            <CreadoConExito
+              especie={mascota.especie}
+              categoria={mascota.categoria}
+            />
+          ) : (
+            <button
+              id="boton-crear_encontrado"
+              className="btn btn-primary redbtn float-right my-2 text-white text-center my-5 col-md-2 boton-color"
+              type="submit"
+            >
+              Editar
+            </button>
+          )}
+        </form>
+      </div>
     </div>
   );
 }
