@@ -1437,3 +1437,18 @@ section {
 .foto-cloudinary img {
   border-radius: 25px;
 }
+
+.select-provincias-filtro select {
+  font-size: 16px;
+  padding: 10px;
+  color: #d3970f;
+  /* color: #454545; */
+  border: #d3970f 1px solid;
+  width: 95%;
+  background-color: #f8f8f8df;
+  border-radius: 15px;
+}
+
+.select-provincias-filtro select option {
+  color: #454545 !important;
+}

@@ -11,9 +11,9 @@ import axios from "axios";
 function MascotasList({ categoria, account }) {
   const [mascotas, setMascotas] = useState([]);
   const [mascotasAll, setMascotasAll] = useState([]);
-  const [filtros,setFiltros] = useState({})
+  const [filtros, setFiltros] = useState({});
   const [filtroNombre, setFiltroNombre] = useState("");
-  const [provincias,setProvincias] = useState([])
+  const [provincias, setProvincias] = useState([]);
 
   const cambiarFiltro = (categoria, account) => {
     const filtro = categoria ? `categoria=${categoria}` : "";
@@ -28,12 +28,22 @@ function MascotasList({ categoria, account }) {
 
   const aplicarFiltros = () => {
     let mascotasFiltradas = mascotasAll.filter((mascota) => {
-      const nombreCoincide = !filtroNombre || mascota.nombre?.toLowerCase().includes(filtroNombre.toLowerCase())
-      const sexoCoincide = !filtros.sexo || mascota.sexo.toLowerCase() === filtros.sexo.toLowerCase();
-      const especieCoincide = !filtros.especie || mascota.especie.toLowerCase() === filtros.especie.toLowerCase();
-      const tamanioCoincide = !filtros.tamanio ||  mascota.tamano.toLowerCase() === filtros.tamanio.toLowerCase();
-      const collarCoincide = !filtros.collar ||   mascota.collar === filtros.collar
-      const provinciaCoincide = !filtros.provincia || mascota?.provincia === filtros.provincia
+      const nombreCoincide =
+        !filtroNombre ||
+        mascota.nombre?.toLowerCase().includes(filtroNombre.toLowerCase());
+      const sexoCoincide =
+        !filtros.sexo ||
+        mascota.sexo.toLowerCase() === filtros.sexo.toLowerCase();
+      const especieCoincide =
+        !filtros.especie ||
+        mascota.especie.toLowerCase() === filtros.especie.toLowerCase();
+      const tamanioCoincide =
+        !filtros.tamanio ||
+        mascota.tamano.toLowerCase() === filtros.tamanio.toLowerCase();
+      const collarCoincide =
+        !filtros.collar || mascota.collar === filtros.collar;
+      const provinciaCoincide =
+        !filtros.provincia || mascota?.provincia === filtros.provincia;
 
       return (
         nombreCoincide &&
@@ -54,23 +64,23 @@ function MascotasList({ categoria, account }) {
 
   const onCheckboxChange = (event) => {
     const { name, value } = event.target;
-    setFiltros({...filtros,[name]:(value == filtros[name])?"":value})
+    setFiltros({ ...filtros, [name]: value == filtros[name] ? "" : value });
     aplicarFiltros();
   };
 
   const handleInputChange = (name, value) => {
-    setFiltros({ ...filtros, [name]:(value == filtros[name])?"":value });
-    aplicarFiltros()
+    setFiltros({ ...filtros, [name]: value == filtros[name] ? "" : value });
+    aplicarFiltros();
   };
 
   useEffect(() => {
     const getProvincias = async () => {
       const { data } = await axios.get(
         "https://apis.datos.gob.ar/georef/api/provincias"
-        );
-        const provinciasNombre = data.provincias.map((prov) => prov.nombre);
-        setProvincias(provinciasNombre);
-      };
+      );
+      const provinciasNombre = data.provincias.map((prov) => prov.nombre);
+      setProvincias(provinciasNombre);
+    };
     cambiarFiltro(categoria, account);
     getProvincias();
   }, [categoria, account]);
@@ -82,14 +92,14 @@ function MascotasList({ categoria, account }) {
   const { userData } = useContext(UserContext);
 
   const getButtonClassName = (name) => {
-    switch (name){
+    switch (name) {
       case "perros":
         return filtros.especie === "Perro" ? "bg-1 active" : "bg-1";
       case "gatos":
         return filtros.especie === "Gato" ? "bg-1 active" : "bg-1";
-      case 'machos':
+      case "machos":
         return filtros.sexo === "Macho" ? "bg-1 active" : "bg-1";
-      case 'hembras':
+      case "hembras":
         return filtros.sexo === "Hembra" ? "bg-1 active" : "bg-1";
       case "chicos":
         return filtros.tamanio === "Chico" ? "bg-1 active" : "bg-1";
@@ -98,13 +108,17 @@ function MascotasList({ categoria, account }) {
       case "grandes":
         return filtros.tamanio === "Grande" ? "bg-1 active" : "bg-1";
       case "Tiene collar con chapita":
-        return filtros.collar === "Tiene collar con chapita" ? "bg-1 active" : "bg-1"
+        return filtros.collar === "Tiene collar con chapita"
+          ? "bg-1 active"
+          : "bg-1";
       case "Tiene collar sin chapita":
-        return filtros.collar === "Tiene collar sin chapita" ? "bg-1 active" : "bg-1"
+        return filtros.collar === "Tiene collar sin chapita"
+          ? "bg-1 active"
+          : "bg-1";
       case "No tiene collar":
-        return filtros.collar === "No tiene collar" ? "bg-1 active" : "bg-1"
+        return filtros.collar === "No tiene collar" ? "bg-1 active" : "bg-1";
       default:
-        return ""
+        return "";
     }
   };
 
@@ -205,15 +219,15 @@ function MascotasList({ categoria, account }) {
                 </div>
                 <div className="filter-container text-left pb-4">
                   <p>Ubicacion</p>
-                    <div className="btns-filters d-flex flex-wrap">
-                      <CustomInput
-                        name="provincia"
-                        type="select"
-                        options={provincias}
-                        onChange={handleInputChange}
-                      />{" "}
-                    </div>
+                  <div className="overflow-hidden btns-filters d-flex flex-wrap select-provincias-filtro">
+                    <CustomInput
+                      name="provincia"
+                      type="select"
+                      options={provincias}
+                      onChange={handleInputChange}
+                    />{" "}
                   </div>
+                </div>
                 <div className="filter-container text-left pb-4">
                   <p>Sexo</p>
                   <div className="btns-filters d-flex flex-wrap">
