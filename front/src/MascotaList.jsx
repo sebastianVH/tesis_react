@@ -5,15 +5,15 @@ import { UserContext } from "./UserContext";
 import MascotaListItem from "./MascotaListItem";
 import "./MascotaList.css";
 import GoogleMapComponent from "./GoogleMaps";
+import CustomInput from "./microcomponents/CustomInput";
+import axios from "axios";
 
 function MascotasList({ categoria, account }) {
   const [mascotas, setMascotas] = useState([]);
   const [mascotasAll, setMascotasAll] = useState([]);
+  const [filtros,setFiltros] = useState({})
   const [filtroNombre, setFiltroNombre] = useState("");
-  const [filtroSexo, setFiltroSexo] = useState("");
-  const [filtroEspecie, setFiltroEspecie] = useState("");
-  const [filtroTamano, setFiltroTamano] = useState("");
-  const [filtroCollar, setFiltroCollar] = useState("");
+  const [provincias,setProvincias] = useState([])
 
   const cambiarFiltro = (categoria, account) => {
     const filtro = categoria ? `categoria=${categoria}` : "";
@@ -28,36 +28,20 @@ function MascotasList({ categoria, account }) {
 
   const aplicarFiltros = () => {
     let mascotasFiltradas = mascotasAll.filter((mascota) => {
-      const nombreCoincide =
-        !filtroNombre ||
-        mascota.nombre.toLowerCase().includes(filtroNombre.toLowerCase());
-
-      const sexoCoincide =
-        !filtroSexo || mascota.sexo.toLowerCase() === filtroSexo.toLowerCase();
-
-      const especieCoincide =
-        !filtroEspecie ||
-        mascota.especie.toLowerCase() === filtroEspecie.toLowerCase();
-
-      const tamanoCoincide =
-        !filtroTamano ||
-        mascota.tamano.toLowerCase() === filtroTamano.toLowerCase();
-
-      const collarCoincide =
-        !filtroCollar ||
-        (filtroCollar === "Tiene collar con chapita" &&
-          mascota.collar.includes("Tiene collar con chapita")) ||
-        (filtroCollar === "Tiene collar sin chapita" &&
-          mascota.collar.includes("Tiene collar sin chapita")) ||
-        (filtroCollar === "No tiene collar" &&
-          mascota.collar.includes("No tiene collar"));
+      const nombreCoincide = !filtroNombre || mascota.nombre?.toLowerCase().includes(filtroNombre.toLowerCase())
+      const sexoCoincide = !filtros.sexo || mascota.sexo.toLowerCase() === filtros.sexo.toLowerCase();
+      const especieCoincide = !filtros.especie || mascota.especie.toLowerCase() === filtros.especie.toLowerCase();
+      const tamanioCoincide = !filtros.tamanio ||  mascota.tamano.toLowerCase() === filtros.tamanio.toLowerCase();
+      const collarCoincide = !filtros.collar ||   mascota.collar === filtros.collar
+      const provinciaCoincide = !filtros.provincia || mascota?.provincia === filtros.provincia
 
       return (
         nombreCoincide &&
         sexoCoincide &&
         especieCoincide &&
-        tamanoCoincide &&
-        collarCoincide
+        tamanioCoincide &&
+        collarCoincide &&
+        provinciaCoincide
       );
     });
 
@@ -69,108 +53,59 @@ function MascotasList({ categoria, account }) {
   };
 
   const onCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-
-    if (name === "perros") {
-      setFiltroEspecie(checked ? "Perro" : "");
-    }
-
-    if (name === "gatos") {
-      setFiltroEspecie(checked ? "Gato" : "");
-    }
-
-    if (name === "machos") {
-      setFiltroSexo(checked ? "Macho" : "");
-    }
-
-    if (name === "hembras") {
-      setFiltroSexo(checked ? "Hembra" : "");
-    }
-
-    if (name === "chicos") {
-      setFiltroTamano(checked ? "Chico" : "");
-    }
-
-    if (name === "medianos") {
-      setFiltroTamano(checked ? "Mediano" : "");
-    }
-
-    if (name === "grandes") {
-      setFiltroTamano(checked ? "Grande" : "");
-    }
-
-    if (name === "collar") {
-      return filtroCollar ? "bg-1 active" : "bg-1";
-    }
-
-    if (name === "Tiene collar con chapita") {
-      setFiltroCollar(checked ? "Tiene collar con chapita" : "");
-    }
-
-    if (name === "Tiene collar sin chapita") {
-      setFiltroCollar(checked ? "Tiene collar sin chapita" : "");
-    }
-
-    if (name === "No tiene collar") {
-      setFiltroCollar(checked ? "No tiene collar" : "");
-    }
-
+    const { name, value } = event.target;
+    setFiltros({...filtros,[name]:(value == filtros[name])?"":value})
     aplicarFiltros();
   };
 
+  const handleInputChange = (name, value) => {
+    setFiltros({ ...filtros, [name]:(value == filtros[name])?"":value });
+    aplicarFiltros()
+  };
+
   useEffect(() => {
+    const getProvincias = async () => {
+      const { data } = await axios.get(
+        "https://apis.datos.gob.ar/georef/api/provincias"
+        );
+        const provinciasNombre = data.provincias.map((prov) => prov.nombre);
+        setProvincias(provinciasNombre);
+      };
     cambiarFiltro(categoria, account);
+    getProvincias();
   }, [categoria, account]);
 
   useEffect(() => {
     aplicarFiltros();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filtroNombre, filtroSexo, filtroEspecie, filtroTamano, filtroCollar]);
+  }, [filtroNombre, filtros]);
 
   const { userData } = useContext(UserContext);
 
   const getButtonClassName = (name) => {
-    if (name === "perros") {
-      return filtroEspecie === "Perro" ? "bg-1 active" : "bg-1";
+    switch (name){
+      case "perros":
+        return filtros.especie === "Perro" ? "bg-1 active" : "bg-1";
+      case "gatos":
+        return filtros.especie === "Gato" ? "bg-1 active" : "bg-1";
+      case 'machos':
+        return filtros.sexo === "Macho" ? "bg-1 active" : "bg-1";
+      case 'hembras':
+        return filtros.sexo === "Hembra" ? "bg-1 active" : "bg-1";
+      case "chicos":
+        return filtros.tamanio === "Chico" ? "bg-1 active" : "bg-1";
+      case "medianos":
+        return filtros.tamanio === "Mediano" ? "bg-1 active" : "bg-1";
+      case "grandes":
+        return filtros.tamanio === "Grande" ? "bg-1 active" : "bg-1";
+      case "Tiene collar con chapita":
+        return filtros.collar === "Tiene collar con chapita" ? "bg-1 active" : "bg-1"
+      case "Tiene collar sin chapita":
+        return filtros.collar === "Tiene collar sin chapita" ? "bg-1 active" : "bg-1"
+      case "No tiene collar":
+        return filtros.collar === "No tiene collar" ? "bg-1 active" : "bg-1"
+      default:
+        return ""
     }
-
-    if (name === "gatos") {
-      return filtroEspecie === "Gato" ? "bg-1 active" : "bg-1";
-    }
-
-    if (name === "machos") {
-      return filtroSexo === "Macho" ? "bg-1 active" : "bg-1";
-    }
-
-    if (name === "hembras") {
-      return filtroSexo === "Hembra" ? "bg-1 active" : "bg-1";
-    }
-
-    if (name === "chicos") {
-      return filtroTamano === "Chico" ? "bg-1 active" : "bg-1";
-    }
-
-    if (name === "medianos") {
-      return filtroTamano === "Mediano" ? "bg-1 active" : "bg-1";
-    }
-
-    if (name === "grandes") {
-      return filtroTamano === "Grande" ? "bg-1 active" : "bg-1";
-    }
-
-    if (name === "Tiene collar con chapita") {
-      return filtroCollar ? "bg-1 active" : "bg-1";
-    }
-
-    if (name === "Tiene collar sin chapita") {
-      return filtroCollar ? "bg-1 active" : "bg-1";
-    }
-
-    if (name === "No tiene collar") {
-      return filtroCollar ? "bg-1 active" : "bg-1";
-    }
-
-    return "";
   };
 
   return (
@@ -248,8 +183,8 @@ function MascotasList({ categoria, account }) {
                       <label className={getButtonClassName("perros")}>
                         <input
                           type="checkbox"
-                          name="perros"
-                          checked={filtroEspecie === "Perro"}
+                          name="especie"
+                          value={"Perro"}
                           onChange={onCheckboxChange}
                         />
                         Perros
@@ -259,8 +194,8 @@ function MascotasList({ categoria, account }) {
                       <label className={getButtonClassName("gatos")}>
                         <input
                           type="checkbox"
-                          name="gatos"
-                          checked={filtroEspecie === "Gato"}
+                          name="especie"
+                          value={"Gato"}
                           onChange={onCheckboxChange}
                         />
                         Gatos
@@ -268,7 +203,17 @@ function MascotasList({ categoria, account }) {
                     </div>
                   </div>
                 </div>
-
+                <div className="filter-container text-left pb-4">
+                  <p>Ubicacion</p>
+                    <div className="btns-filters d-flex flex-wrap">
+                      <CustomInput
+                        name="provincia"
+                        type="select"
+                        options={provincias}
+                        onChange={handleInputChange}
+                      />{" "}
+                    </div>
+                  </div>
                 <div className="filter-container text-left pb-4">
                   <p>Sexo</p>
                   <div className="btns-filters d-flex flex-wrap">
@@ -276,8 +221,8 @@ function MascotasList({ categoria, account }) {
                       <label className={getButtonClassName("machos")}>
                         <input
                           type="checkbox"
-                          name="machos"
-                          checked={filtroSexo === "Macho"}
+                          name="sexo"
+                          value={"Macho"}
                           onChange={onCheckboxChange}
                         />
                         Machos
@@ -287,8 +232,8 @@ function MascotasList({ categoria, account }) {
                       <label className={getButtonClassName("hembras")}>
                         <input
                           type="checkbox"
-                          name="hembras"
-                          checked={filtroSexo === "Hembra"}
+                          name="sexo"
+                          value={"Hembra"}
                           onChange={onCheckboxChange}
                         />
                         Hembras
@@ -304,8 +249,8 @@ function MascotasList({ categoria, account }) {
                       <label className={getButtonClassName("chicos")}>
                         <input
                           type="checkbox"
-                          name="chicos"
-                          checked={filtroTamano === "Chico"}
+                          name="tamanio"
+                          value="Chico"
                           onChange={onCheckboxChange}
                         />
                         Chicos
@@ -315,8 +260,8 @@ function MascotasList({ categoria, account }) {
                       <label className={getButtonClassName("medianos")}>
                         <input
                           type="checkbox"
-                          name="medianos"
-                          checked={filtroTamano === "Mediano"}
+                          name="tamanio"
+                          value="Mediano"
                           onChange={onCheckboxChange}
                         />
                         Medianos
@@ -326,8 +271,8 @@ function MascotasList({ categoria, account }) {
                       <label className={getButtonClassName("grandes")}>
                         <input
                           type="checkbox"
-                          name="grandes"
-                          checked={filtroTamano === "Grande"}
+                          name="tamanio"
+                          value="Grande"
                           onChange={onCheckboxChange}
                         />
                         Grandes
@@ -349,7 +294,6 @@ function MascotasList({ categoria, account }) {
                           type="checkbox"
                           name="collar"
                           value="Tiene collar con chapita"
-                          checked={filtroCollar === "Tiene collar con chapita"}
                           onChange={onCheckboxChange}
                         />
                         Con collar (chapa)
@@ -365,7 +309,6 @@ function MascotasList({ categoria, account }) {
                           type="checkbox"
                           name="collar"
                           value="Tiene collar sin chapita"
-                          checked={filtroCollar === "Tiene collar sin chapita"}
                           onChange={onCheckboxChange}
                         />
                         Con collar (sin chapa)
@@ -377,7 +320,6 @@ function MascotasList({ categoria, account }) {
                           type="checkbox"
                           name="collar"
                           value="No tiene collar"
-                          checked={filtroCollar === "No tiene collar"}
                           onChange={onCheckboxChange}
                         />
                         Sin collar
@@ -386,10 +328,10 @@ function MascotasList({ categoria, account }) {
                   </div>
                 </div>
 
-                <div className="filter-container text-left pb-4">
+                {/* <div className="filter-container text-left pb-4">
                   <p>Ubicacion</p>
                   <GoogleMapComponent />
-                </div>
+                </div> */}
               </div>
 
               <div className="col-9 listado-perros px-lg-5 py-3">

@@ -6,7 +6,7 @@ const containerStyle = {
   height: "400px",
 };
 
-function GoogleMapComponent({ setCoordenadas }) {
+function GoogleMapComponent({ setCoordenadas,coordenadas }) {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyAysD0sRkRxVXhm0wsKiMFEoLqzWiaXyXU",
@@ -17,11 +17,18 @@ function GoogleMapComponent({ setCoordenadas }) {
   const [ubicacion, setUbicacion] = useState(null);
 
   const obtenerUbicacion = () => {
+    if (coordenadas) {
+      const {lat,lng} = coordenadas
+      setUbicacion({ lat: Number(lat), lng: Number(lng)});
+      setMarcadorPosition({ lat: Number(lat), lng: Number(lng)})
+      return null
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
           setUbicacion({ lat: latitude, lng: longitude });
+
         },
         (error) => {
           console.error("Error al obtener la ubicación:", error);
@@ -33,6 +40,7 @@ function GoogleMapComponent({ setCoordenadas }) {
   };
 
   const handleClick = (e) => {
+    if (coordenadas) return null
     setMarcadorPosition({
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
