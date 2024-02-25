@@ -87,8 +87,10 @@ function MascotaDetailsPage() {
                   <strong>Edad</strong>: {mascota?.edad}
                 </li>
                 <li>
-                  <strong>Zona en la que se perdió</strong>:{" "}
-                  {mascota?.zona_perdida}
+                  <strong>Provincia</strong>: {mascota?.provincia}
+                </li>
+                <li>
+                  <strong>Localidad</strong>: {mascota?.municipio}
                 </li>
                 <li>
                   <strong>Fecha en la que se perdió</strong>: {mascota?.fecha}

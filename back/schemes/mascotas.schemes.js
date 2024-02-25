@@ -24,6 +24,7 @@ const mascota = yup.object({
     ])
     .optional(),
   provincia: yup.string().required(),
+  municipio: yup.string().optional(),
   ubicacion: yup.object({
     lat: yup.string().optional(),
     lng: yup.string().optional(),

@@ -1452,3 +1452,9 @@ section {
 .select-provincias-filtro select option {
   color: #454545 !important;
 }
+
+.select-provincias-filtro label {
+  font-size: 15px;
+  /* padding: 10px; */
+  color: #454545a8;
+}

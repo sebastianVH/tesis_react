@@ -14,6 +14,7 @@ function MascotasList({ categoria, account }) {
   const [filtros, setFiltros] = useState({});
   const [filtroNombre, setFiltroNombre] = useState("");
   const [provincias, setProvincias] = useState([]);
+  const [municipios, setMunicipios] = useState([]);
 
   const cambiarFiltro = (categoria, account) => {
     const filtro = categoria ? `categoria=${categoria}` : "";
@@ -44,6 +45,8 @@ function MascotasList({ categoria, account }) {
         !filtros.collar || mascota.collar === filtros.collar;
       const provinciaCoincide =
         !filtros.provincia || mascota?.provincia === filtros.provincia;
+      const municipioCoincide =
+        !filtros.municipio || mascota?.municipio === filtros.municipio;
 
       return (
         nombreCoincide &&
@@ -51,7 +54,8 @@ function MascotasList({ categoria, account }) {
         especieCoincide &&
         tamanioCoincide &&
         collarCoincide &&
-        provinciaCoincide
+        provinciaCoincide &&
+        municipioCoincide
       );
     });
 
@@ -84,6 +88,27 @@ function MascotasList({ categoria, account }) {
     cambiarFiltro(categoria, account);
     getProvincias();
   }, [categoria, account]);
+
+  //quiero corregir el error de que no se muestre el listado de municipios segun la provincia seleccionada
+
+  useEffect(() => {
+    const getMunicipios = async (provincia) => {
+      const { data } = await axios.get(
+        `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&max=200`
+      );
+      const municipiosNombre = data.municipios.map((muni) => muni.nombre);
+      municipiosNombre.sort();
+
+      setMunicipios(municipiosNombre);
+    };
+
+    if (filtros.provincia) {
+      getMunicipios(filtros.provincia);
+    }
+
+    // cambiarFiltro(categoria, account);
+    // getMunicipios();
+  }, [categoria, account, filtros.provincia]);
 
   useEffect(() => {
     aplicarFiltros();
@@ -131,7 +156,7 @@ function MascotasList({ categoria, account }) {
         </h2>
       </div>
 
-      <div className="row justify-content-center justify-content-md-between text-center container-filtros px-lg-5">
+      <div className="row justify-content-center justify-content-md-between text-center container-filtros px-md-1 px-lg-2 px-xxl-5">
         {/* <div className="col-12 col-md-9 px-0">
           <form className="mascota-list__form">
             Buscar:{" "}
@@ -219,11 +244,21 @@ function MascotasList({ categoria, account }) {
                 </div>
                 <div className="filter-container text-left pb-4">
                   <p>Ubicacion</p>
-                  <div className="overflow-hidden btns-filters d-flex flex-wrap select-provincias-filtro">
+                  <div className="overflow-hidden btns-filters d-flex flex-wrap select-provincias-filtro py-1">
+                    <label>Provincia </label>
                     <CustomInput
                       name="provincia"
                       type="select"
                       options={provincias}
+                      onChange={handleInputChange}
+                    />{" "}
+                  </div>
+                  <div className="overflow-hidden btns-filters flex-wrap select-provincias-filtro py-1">
+                    <label>Localidad </label>
+                    <CustomInput
+                      name="municipio"
+                      type="select"
+                      options={municipios}
                       onChange={handleInputChange}
                     />{" "}
                   </div>
@@ -348,8 +383,8 @@ function MascotasList({ categoria, account }) {
                 </div> */}
               </div>
 
-              <div className="col-9 listado-perros px-lg-5 py-3">
-                <div className="perrosencontrados row mascota-list__list px-lg-5">
+              <div className="col-9 listado-perros px-lg-3 px-xl-4 px-xxl-5 py-3">
+                <div className="perrosencontrados row mascota-list__list px-xxl-5">
                   {mascotas.map((mascota) => (
                     <MascotaListItem
                       key={mascota._id}

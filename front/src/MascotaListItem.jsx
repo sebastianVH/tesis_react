@@ -9,11 +9,11 @@ import { UserContext } from "./UserContext";
 function MascotaListItem({ mascota }) {
   const { userData } = useContext(UserContext);
   return (
-    <div className="col-xl-3 col-md-4 col-6 d-flex align-items-stretch px-2 px-md-3 mb-4 ">
+    <div className="col-xl-3 col-md-4 col-6 d-flex align-items-stretch px-2 px-md-3 px-xl-2 mb-4 ">
       <Link to={`/mascotas/${mascota._id}`} className="mascota-view">
         <div className="card-perro">
           <img
-          // TODO: Cambiar el url por el url posta (esto es re villero)
+            // TODO: Cambiar el url por el url posta (esto es re villero)
             //src={`http://127.0.0.1:2023/api/mascotas/imagen/${mascota.imagen}`}
             src={mascota.imagen}
             className="img-fluid rounded-img"

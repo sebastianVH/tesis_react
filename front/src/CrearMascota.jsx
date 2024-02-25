@@ -11,6 +11,7 @@ function CrearMascota() {
   const [mascota, setMascota] = useState({});
   const [success, setSuccess] = useState(false);
   const [provincias, setProvincias] = useState([]);
+  const [municipios, setMunicipios] = useState([]);
   const [formData, setFormData] = useState({});
   const [imgMascota, setImgMascota] = useState("");
   const [previewMascota, setPreviewMascota] = useState("");
@@ -62,10 +63,29 @@ function CrearMascota() {
         "https://apis.datos.gob.ar/georef/api/provincias"
       );
       const provinciasNombre = data.provincias.map((prov) => prov.nombre);
+      provinciasNombre.sort();
       setProvincias(provinciasNombre);
     };
     getProvincias();
   }, []);
+
+  //quiero que se actualice cada vez que cambia el valor de formData.provincia
+  //quiero que se ordenen alfabeticamente
+
+  useEffect(() => {
+    const getMunicipios = async (provincia) => {
+      const { data } = await axios.get(
+        `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&max=200`
+      );
+      const municipiosNombre = data.municipios.map((muni) => muni.nombre);
+      municipiosNombre.sort();
+
+      setMunicipios(municipiosNombre);
+    };
+    if (formData.provincia) {
+      getMunicipios(formData.provincia);
+    }
+  }, [formData.provincia]);
 
   const imgMascotaRender = cld.image(previewMascota);
 
@@ -211,6 +231,15 @@ function CrearMascota() {
                 name="provincia"
                 type="select"
                 options={provincias}
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Localidad (obligatorio)"
+                name="municipio"
+                type="select"
+                options={municipios}
                 onChange={handleInputChange}
               />{" "}
             </div>
