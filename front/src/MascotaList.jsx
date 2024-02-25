@@ -384,15 +384,31 @@ function MascotasList({ categoria, account }) {
               </div>
 
               <div className="col-9 listado-perros px-lg-3 px-xl-4 px-xxl-5 py-3">
-                <div className="perrosencontrados row mascota-list__list px-xxl-5">
-                  {mascotas.map((mascota) => (
-                    <MascotaListItem
-                      key={mascota._id}
-                      mascota={mascota}
-                      account={account}
-                    />
-                  ))}
-                </div>
+                {mascotas.length === 0 ? (
+                  <div className="no-results text-center">
+                    <p>
+                      ¡Lo sentimos! No hay resultados para mostrar con estos
+                      parametros de búsqueda
+                    </p>
+                    <div className="img-sorry">
+                      <img
+                        src="https://res.cloudinary.com/huellasacasa/image/upload/v1708899250/huellasacasa/jtxzs8ejiqu2miyhygqi.png"
+                        alt=""
+                        className="img-fluid"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="perrosencontrados row mascota-list__list px-xxl-5">
+                    {mascotas.map((mascota) => (
+                      <MascotaListItem
+                        key={mascota._id}
+                        mascota={mascota}
+                        account={account}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>

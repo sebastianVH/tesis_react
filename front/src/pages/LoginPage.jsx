@@ -44,8 +44,8 @@ function LoginPage() {
 
   return (
     <div className="container-fluid login-page">
-      <div className="row justify-content-between align-items-center h-100">
-        <div className="col-12 col-md-10 col-lg-6 col-xl-6 caja-login px-lg-5">
+      <div className="row justify-content-center justify-content-lg-between align-items-center h-100">
+        <div className="col-12 col-md-10 col-lg-6 col-xl-6 caja-login px-lg-5 py-4 py-md-5 py-lg-2">
           <div className="col-12 titulo-seccion text-center pb-0">
             <h2>Inicia sesión con tu cuenta</h2>
           </div>
@@ -84,8 +84,10 @@ function LoginPage() {
             </button>
           </form>
         </div>
-        <div className="col-6 d-none d-md-block login-img text-right pr-0">
-          <img src={loginImg} alt="Login page img" className="img-fluid" />
+
+        {/* //quiero que este div tenga una imagen de fondo */}
+        <div className="col-6 d-none d-lg-block login-img text-right pr-0">
+          {/* <img src={loginImg} alt="Login page img" className="img-fluid" /> */}
         </div>
       </div>
     </div>

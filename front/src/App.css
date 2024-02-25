@@ -1479,3 +1479,42 @@ section {
   padding: 10px;
   border-radius: 5px;
 }
+
+.no-results img {
+  max-width: 40%;
+}
+
+.no-results p {
+  font-size: 20px;
+  font-weight: 600;
+  color: #454545;
+  max-width: 50%;
+  margin: auto;
+}
+
+.login-img {
+  background: url("assets/img/login.jpg") no-repeat right center;
+  background-size: cover;
+  height: 100vh;
+  position: relative;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.login-page {
+  margin-top: 0px !important;
+}
+
+/* @media (max-width: 992px) {
+  .caja-login {
+    margin-top: 100px;
+  }
+} */
+
+.caja-login {
+  margin-top: 100px;
+}
