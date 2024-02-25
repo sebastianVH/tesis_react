@@ -1458,3 +1458,24 @@ section {
   /* padding: 10px; */
   color: #454545a8;
 }
+
+.aparecio-true {
+  opacity: 0.5;
+}
+
+.card-perro {
+  position: relative;
+}
+
+.encontrado-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  background-color: #d3980fbc;
+  /* Para que el texto sea legible en imágenes claras */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}

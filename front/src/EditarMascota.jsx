@@ -26,12 +26,24 @@ function EditarMascota({ idMascota }) {
       });
   }, [idMascota]);
 
+  // const handleInputChange = (name, value) => {
+  //   setFormData({ ...formData, [name]: value });
+  // };
+
   const handleInputChange = (name, value) => {
-    setFormData({ ...formData, [name]: value });
+    if (name === "aparecio") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        aparecio: value === "Sí, ya apareció",
+      }));
+    } else {
+      setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    }
   };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    console.log(formData);
     if (imgMascota) {
       formData.imagen = imgMascota;
     }
@@ -75,7 +87,24 @@ function EditarMascota({ idMascota }) {
   return (
     <div className="row justify-content-center">
       <div className="formulario-carga col-12 col-sm-10 col-md-10 col-lg-8">
+        {/* <div className="aparecio-question">
+          <p>¿Ya apareció?</p>
+          <button type="button">No, todavía no</button>
+          <button type="button" onClick={handleAparecio}>
+            Sí, apareció
+          </button>
+        </div> */}
         <form id="form-crear_encontrado" onSubmit={handleFormSubmit}>
+          {/* <div className="form-group">
+        <label htmlFor="aparecio">¿Ya apareció?</label>
+        <input
+          type="checkbox"
+          id="aparecio"
+          name="aparecio"
+          checked={formData.aparecio}
+          onChange={(event) => handleInputChange('aparecio', event.target.checked)}
+        />
+      </div> */}
           <div className="row form_carga justify-content-center seccion-form-carga">
             <div className="col-lg-10">
               <h4>1. Para empezar</h4>
@@ -87,6 +116,21 @@ function EditarMascota({ idMascota }) {
                 options={["Perdido", "Encontrado"]}
                 onChange={handleInputChange}
               />{" "}
+              <CustomInput
+                label="¿Ya apareció la mascota?"
+                initialValue={
+                  mascota.aparecio ? "Sí, ya apareció" : "Todavía no"
+                }
+                name="aparecio"
+                type="select"
+                options={["Todavía no", "Sí, ya apareció"]}
+                onChange={(event) =>
+                  handleInputChange(
+                    "aparecio",
+                    event.target.value === "Sí, ya apareció"
+                  )
+                }
+              />
             </div>
           </div>
 
