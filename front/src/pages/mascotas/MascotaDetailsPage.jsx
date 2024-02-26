@@ -55,6 +55,16 @@ function MascotaDetailsPage() {
                 {mascota?.nombre}
               </Link>
             </div>
+            <div className="w-100 btn btn-naranja text-white py-2 my-2">
+              <Link
+                to={`mailto:${mascota?.mail}`}
+                target="_blank"
+                className="text-white"
+              >
+                <i className="bi bi-envelope"></i> Avisar que ví a{" "}
+                {mascota?.nombre}
+              </Link>
+            </div>
           </div>
 
           <div className="col-xs-6 col-md-6 col-lg-5">

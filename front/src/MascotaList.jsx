@@ -460,13 +460,15 @@ function MascotasList({ categoria, account }) {
                   </div>
                 ) : (
                   <div className="perrosencontrados row mascota-list__list px-xxl-5">
-                    {currentItems.map((mascota) => (
-                      <MascotaListItem
-                        key={mascota._id}
-                        mascota={mascota}
-                        account={account}
-                      />
-                    ))}
+                    {[...currentItems]
+                      .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+                      .map((mascota) => (
+                        <MascotaListItem
+                          key={mascota._id}
+                          mascota={mascota}
+                          account={account}
+                        />
+                      ))}
 
                     {/* Renderiza los enlaces de paginación */}
                     <div className="col-12 mx-auto botones-paginacion">

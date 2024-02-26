@@ -9,7 +9,7 @@ const mascota = yup.object({
   imagen: yup.string().optional(),
   raza: yup.string().optional(),
   edad: yup.string().optional(),
-  zona_perdida: yup.string().required(),
+  zona_perdida: yup.string().optional(),
   fecha: yup.string().required(),
   descripcion: yup.string().optional(),
   celular: yup.string().required(),

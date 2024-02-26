@@ -89,6 +89,25 @@ function CrearMascota() {
 
   const imgMascotaRender = cld.image(previewMascota);
 
+  const comunaToBarrio = {
+    "Comuna 1": "Barrio 1",
+    "Comuna 2": "Barrio 2",
+    "Comuna 3": "Barrio 2",
+    "Comuna 4": "Barrio 2",
+    "Comuna 5": "Almagro",
+    "Comuna 6": "Villa Crespo",
+    "Comuna 7": "Barrio 2",
+    "Comuna 8": "Barrio 2",
+    "Comuna 9": "Barrio 2",
+    "Comuna 10": "Barrio 2",
+    "Comuna 11": "Barrio 2",
+    "Comuna 12": "Barrio 2",
+    "Comuna 13": "Barrio 2",
+    "Comuna 14": "Palermo",
+    "Comuna 15": "Recoleta",
+    // Agrega el resto de las comunas y sus correspondientes barrios aquí
+  };
+
   return (
     <div className="row justify-content-center">
       <div className="formulario-carga col-12 col-sm-10 col-md-10 col-lg-8">
@@ -140,14 +159,6 @@ function CrearMascota() {
               />{" "}
             </div>
 
-            {/* <div className="col-lg-10">
-              <CustomInput
-                label="Color (obligatorio)"
-                name="color"
-                type="text"
-                onChange={handleInputChange}
-              />{" "}
-            </div> */}
             <div className="col-lg-10">
               <CustomInput
                 label="Sexo (obligatorio)"
@@ -169,6 +180,14 @@ function CrearMascota() {
               <CustomInput
                 label="Raza"
                 name="raza"
+                type="text"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Color"
+                name="color"
                 type="text"
                 onChange={handleInputChange}
               />{" "}
@@ -245,7 +264,7 @@ function CrearMascota() {
             </div>
             <div className="col-lg-10">
               <CustomInput
-                label="Zona (obligatorio)"
+                label="Más detalles del lugar (opcional)"
                 name="zona_perdida"
                 type="text"
                 onChange={handleInputChange}

@@ -32,7 +32,7 @@ function MascotaListItem({ mascota }) {
               <div className="div-ubicacion d-flex justify-content-around align-items-center">
                 <p>
                   <i className="icofont-location-pin icofont-2x ml-auto"></i>
-                  {mascota.zona_perdida}
+                  {mascota.provincia}
                 </p>
               </div>
               {userData && userData._id && userData._id == mascota.account ? (
