@@ -507,10 +507,17 @@ success crear perrito
   transition: all ease-in-out 0.3s;
 }
 
-.btn-naranja:hover {
+.btn-naranja:hover,
+.btn-naranja-outline:hover {
   background-color: #d3970f !important;
   color: white !important;
   opacity: 0.8;
+}
+
+.btn-naranja-outline {
+  color: #d3970f !important;
+  border: 1px solid #d3970f !important;
+  transition: all ease-in-out 0.3s;
 }
 
 .btn-azul {
@@ -1438,7 +1445,8 @@ section {
   border-radius: 25px;
 }
 
-.select-provincias-filtro select {
+.select-provincias-filtro select,
+.select-provincias-filtro input {
   font-size: 16px;
   padding: 10px;
   color: #d3970f;
@@ -1465,6 +1473,13 @@ section {
 
 .card-perro {
   position: relative;
+}
+
+@media (max-width: 768px) {
+  .encontrado-label {
+    font-size: 14px;
+    top: 15% !important;
+  }
 }
 
 .encontrado-label {
@@ -1517,4 +1532,34 @@ section {
 
 .caja-login {
   margin-top: 100px;
+}
+
+.botones-paginacion button {
+  margin: 10px;
+}
+
+.barra-filtros.sidebar-hidden {
+  display: none;
+}
+
+.barra-filtros.sidebar-visible {
+  display: block;
+  z-index: 1000;
+}
+
+@media (min-width: 768px) {
+  .barra-filtros {
+    display: block;
+  }
+}
+
+.btn-toggle-filtros {
+  color: #d3970f;
+  font-size: 14px;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.btn-toggle-filtros:hover {
+  color: #a27206;
 }

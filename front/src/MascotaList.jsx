@@ -15,6 +15,23 @@ function MascotasList({ categoria, account }) {
   const [filtroNombre, setFiltroNombre] = useState("");
   const [provincias, setProvincias] = useState([]);
   const [municipios, setMunicipios] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const itemsPerPage = 12;
+  const [isSidebarVisible, setSidebarVisible] = useState(
+    window.innerWidth > 768
+  );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = mascotas.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(mascotas.length / itemsPerPage);
+
+  const handleClick = (event, page) => {
+    event.preventDefault();
+    setCurrentPage(page);
+  };
 
   const cambiarFiltro = (categoria, account) => {
     const filtro = categoria ? `categoria=${categoria}` : "";
@@ -47,6 +64,8 @@ function MascotasList({ categoria, account }) {
         !filtros.provincia || mascota?.provincia === filtros.provincia;
       const municipioCoincide =
         !filtros.municipio || mascota?.municipio === filtros.municipio;
+      const fechaCoincide =
+        !selectedDate || new Date(mascota.fecha) > new Date(selectedDate);
 
       return (
         nombreCoincide &&
@@ -55,7 +74,8 @@ function MascotasList({ categoria, account }) {
         tamanioCoincide &&
         collarCoincide &&
         provinciaCoincide &&
-        municipioCoincide
+        municipioCoincide &&
+        fechaCoincide
       );
     });
 
@@ -76,6 +96,19 @@ function MascotasList({ categoria, account }) {
     setFiltros({ ...filtros, [name]: value == filtros[name] ? "" : value });
     aplicarFiltros();
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSidebarVisible(window.innerWidth > 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Limpiar el controlador de eventos cuando el componente se desmonte
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const getProvincias = async () => {
@@ -113,6 +146,10 @@ function MascotasList({ categoria, account }) {
   useEffect(() => {
     aplicarFiltros();
   }, [filtroNombre, filtros]);
+
+  useEffect(() => {
+    aplicarFiltros();
+  }, [selectedDate]);
 
   const { userData } = useContext(UserContext);
 
@@ -201,7 +238,20 @@ function MascotasList({ categoria, account }) {
         <div className="col-12 py-3">
           <div className="container-fluid">
             <div className="row justify-content-center">
-              <div className="col-3 barra-filtros align-items-center justify-content-center py-4 text-left">
+              <div className="d-md-none text-left">
+                <button
+                  className="btn-toggle-filtros"
+                  onClick={() => setSidebarVisible(!isSidebarVisible)}
+                >
+                  Filtrar <i class="bi bi-chevron-down"></i>
+                </button>
+              </div>
+
+              <div
+                className={`col-12 col-md-3 barra-filtros align-items-center justify-content-center py-4 text-left ${
+                  isSidebarVisible ? "sidebar-visible" : "sidebar-hidden"
+                }`}
+              >
                 <p className="filtros-title">Filtros de búsqueda</p>
                 <div className="px-0 pb-4">
                   <form className="mascota-list__form">
@@ -261,6 +311,16 @@ function MascotasList({ categoria, account }) {
                       options={municipios}
                       onChange={handleInputChange}
                     />{" "}
+                  </div>
+                </div>
+                <div className="filter-container text-left pb-4">
+                  <p>Fecha</p>
+                  <div className="overflow-hidden btns-filters flex-wrap select-provincias-filtro py-1">
+                    <input
+                      type="date"
+                      value={selectedDate}
+                      onChange={(e) => setSelectedDate(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="filter-container text-left pb-4">
@@ -383,7 +443,7 @@ function MascotasList({ categoria, account }) {
                 </div> */}
               </div>
 
-              <div className="col-9 listado-perros px-lg-3 px-xl-4 px-xxl-5 py-3">
+              <div className="col-md-9 listado-perros px-lg-3 px-xl-4 px-xxl-5 py-3">
                 {mascotas.length === 0 ? (
                   <div className="no-results text-center">
                     <p>
@@ -400,13 +460,30 @@ function MascotasList({ categoria, account }) {
                   </div>
                 ) : (
                   <div className="perrosencontrados row mascota-list__list px-xxl-5">
-                    {mascotas.map((mascota) => (
+                    {currentItems.map((mascota) => (
                       <MascotaListItem
                         key={mascota._id}
                         mascota={mascota}
                         account={account}
                       />
                     ))}
+
+                    {/* Renderiza los enlaces de paginación */}
+                    <div className="col-12 mx-auto botones-paginacion">
+                      {[...Array(totalPages)].map((e, i) => (
+                        <button
+                          key={i}
+                          onClick={(event) => handleClick(event, i + 1)}
+                          className={
+                            currentPage === i + 1
+                              ? "btn btn-naranja"
+                              : "btn btn-naranja-outline"
+                          }
+                        >
+                          {i + 1}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>

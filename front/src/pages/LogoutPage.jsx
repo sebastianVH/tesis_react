@@ -28,8 +28,8 @@ function LogoutPage() {
   }, [setToken, setUserData]);
 
   return (
-    <section className="container login-page">
-      <div className="row justify-content-center">
+    <section className="container">
+      <div className="row justify-content-center div-portada py-5">
         {success ? (
           <>
             <div className="col-12 titulo-seccion sesion-cerrada">
@@ -44,8 +44,17 @@ function LogoutPage() {
           </>
         ) : (
           <>
-            <div className="col-12 titulo-seccion text-center">
+            <div className="col-12 titulo-seccion text-center pb-1">
               <h2>¿Desea cerrar la sesión?</h2>
+            </div>
+            <div className="col-12">
+              <div className="col-10 col-md-5 col-lg-3 mx-auto">
+                <img
+                  src="https://res.cloudinary.com/huellasacasa/image/upload/v1708914197/huellasacasa/tuosipmko94l1nydyrdu.png"
+                  alt="Hamster"
+                  className="img-fluid"
+                />
+              </div>
             </div>
 
             <div className="col-6 col-md-5 col-lg-4">
