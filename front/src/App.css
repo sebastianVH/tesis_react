@@ -1563,3 +1563,8 @@ section {
 .btn-toggle-filtros:hover {
   color: #a27206;
 }
+.card-perro img {
+  object-fit: cover;
+  aspect-ratio: 1/1;
+  width: 100%;
+}
