@@ -255,7 +255,7 @@ function MascotasList({ categoria, account }) {
                 <p className="filtros-title">Filtros de búsqueda</p>
                 <div className="px-0 pb-4">
                   <form className="mascota-list__form">
-                    Buscar:{" "}
+                    Buscar{" "}
                     <input
                       id="filtro"
                       className="mascota-list__filter"
@@ -293,8 +293,8 @@ function MascotasList({ categoria, account }) {
                   </div>
                 </div>
                 <div className="filter-container text-left pb-4">
-                  <p>Ubicacion</p>
-                  <div className="overflow-hidden btns-filters d-flex flex-wrap select-provincias-filtro py-1">
+                  <p>Ubicación</p>
+                  <div className="overflow-hidden btns-filters d-flex flex-wrap select-provincias-filtro py-1 pl-4px">
                     <label>Provincia </label>
                     <CustomInput
                       name="provincia"
@@ -303,7 +303,7 @@ function MascotasList({ categoria, account }) {
                       onChange={handleInputChange}
                     />{" "}
                   </div>
-                  <div className="overflow-hidden btns-filters flex-wrap select-provincias-filtro py-1">
+                  <div className="overflow-hidden btns-filters flex-wrap select-provincias-filtro py-1 pl-4px">
                     <label>Localidad </label>
                     <CustomInput
                       name="municipio"
@@ -326,7 +326,7 @@ function MascotasList({ categoria, account }) {
                 <div className="filter-container text-left pb-4">
                   <p>Sexo</p>
                   <div className="btns-filters d-flex flex-wrap">
-                    <div className="botones-choice px-1 pb-2">
+                    <div className="botones-choice pr-1 pb-2">
                       <label className={getButtonClassName("machos")}>
                         <input
                           type="checkbox"
@@ -354,7 +354,7 @@ function MascotasList({ categoria, account }) {
                 <div className="filter-container text-left pb-4">
                   <p>Tamaño</p>
                   <div className="btns-filters d-flex flex-wrap">
-                    <div className="botones-choice px-1 pb-2">
+                    <div className="botones-choice pr-2 pb-2">
                       <label className={getButtonClassName("chicos")}>
                         <input
                           type="checkbox"
@@ -365,7 +365,7 @@ function MascotasList({ categoria, account }) {
                         Chicos
                       </label>
                     </div>
-                    <div className="botones-choice px-1 pb-2">
+                    <div className="botones-choice pr-2 pb-2">
                       <label className={getButtonClassName("medianos")}>
                         <input
                           type="checkbox"
@@ -376,7 +376,7 @@ function MascotasList({ categoria, account }) {
                         Medianos
                       </label>
                     </div>
-                    <div className="botones-choice px-1">
+                    <div className="botones-choice pr-2">
                       <label className={getButtonClassName("grandes")}>
                         <input
                           type="checkbox"
@@ -393,7 +393,7 @@ function MascotasList({ categoria, account }) {
                 <div className="filter-container text-left pb-4">
                   <p>Collar</p>
                   <div className="btns-filters d-flex flex-wrap">
-                    <div className="botones-choice px-1 pb-2">
+                    <div className="botones-choice pr-2 pb-2">
                       <label
                         className={getButtonClassName(
                           "Tiene collar con chapita"
@@ -408,7 +408,7 @@ function MascotasList({ categoria, account }) {
                         Con collar (chapa)
                       </label>
                     </div>
-                    <div className="botones-choice px-1 pb-2">
+                    <div className="botones-choice pr-2 pb-2">
                       <label
                         className={getButtonClassName(
                           "Tiene collar sin chapita"
@@ -423,7 +423,7 @@ function MascotasList({ categoria, account }) {
                         Con collar (sin chapa)
                       </label>
                     </div>
-                    <div className="botones-choice px-1 pb-2">
+                    <div className="botones-choice pr-2 pb-2">
                       <label className={getButtonClassName("No tiene collar")}>
                         <input
                           type="checkbox"

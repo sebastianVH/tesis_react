@@ -39,21 +39,21 @@ function MascotaListItem({ mascota }) {
                 <div className="botones row">
                   <div className="col-6 p-1">
                     <Link
-                      to={`/mascotas/${mascota.categoria}s/eliminar/${mascota._id}`}
-                    >
-                      <button className="btn btn-naranja btn-block w-100 px-0 px-lg-1">
-                        <span className="d-none d-md-block">Eliminar</span>{" "}
-                        <i className="bi bi-trash-fill d-md-none"></i>
-                      </button>
-                    </Link>
-                  </div>
-                  <div className="col-6 p-1">
-                    <Link
                       to={`/mascotas/${mascota.categoria}s/editar/${mascota._id}`}
                     >
                       <button className="btn btn-azul btn-block w-100 px-0 px-lg-1">
                         <span className="d-none d-md-block">Editar</span>{" "}
                         <i className="bi bi-pencil-fill d-md-none"></i>
+                      </button>
+                    </Link>
+                  </div>
+                  <div className="col-6 p-1">
+                    <Link
+                      to={`/mascotas/${mascota.categoria}s/eliminar/${mascota._id}`}
+                    >
+                      <button className="btn btn-naranja btn-block w-100 px-0 px-lg-1">
+                        <span className="d-none d-md-block">Eliminar</span>{" "}
+                        <i className="bi bi-trash-fill d-md-none"></i>
                       </button>
                     </Link>
                   </div>
