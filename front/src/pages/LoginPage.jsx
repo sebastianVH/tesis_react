@@ -5,12 +5,16 @@ import { AuthContext } from "../AuthContext";
 import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
 import loginImg from "../assets/img/login2.png";
+// import { BiEye, BiEyeOff } from "react-icons/bi";
+import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 
 function LoginPage() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const { setToken } = useContext(AuthContext);
   const { setUserData } = useContext(UserContext);
@@ -37,6 +41,7 @@ function LoginPage() {
         })
         .catch((err) => {
           console.log(err);
+          setError("Los datos ingresados no son correctos"); // set error message on failed login
         });
     },
     [navigate, setError, userName, password, setToken, setUserData]
@@ -61,14 +66,24 @@ function LoginPage() {
             />
 
             <label className="col-12 form-login__field">Contraseña</label>
-            <input
-              className="form-login__password w-100"
-              type="password"
-              onChange={(event) => onChangeField(event, setPassword)}
-              value={password}
-            />
-
-            <p>{error}</p>
+            <div className="password-wrapper" style={{ position: "relative" }}>
+              <input
+                className="form-login__password w-100 "
+                style={{ paddingRight: "30px" }} // make room for the icon
+                type={showPassword ? "text" : "password"}
+                onChange={(event) => onChangeField(event, setPassword)}
+                value={password}
+              />
+              <i
+                onClick={() => setShowPassword(!showPassword)}
+                className="password-toggle-icon"
+              >
+                {showPassword ? <EyeSlashFill /> : <EyeFill />}
+              </i>
+            </div>
+            {/* Show error message below password input */}
+            {error && <p className="error-message">{error}</p>}
+            {/* <p>{error}</p> */}
             <p className="todavia">
               ¿Todavía no tenés cuenta?{" "}
               <Link className="registrate" to="/register">

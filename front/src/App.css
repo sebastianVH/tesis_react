@@ -1594,7 +1594,8 @@ section {
   top: 35%;
   transform: translateY(-50%);
   cursor: pointer;
-  fill: #d3970f;
+  fill: #d3970f !important;
+  color: #d3970f !important;
 }
 
 .naranja {
