@@ -48,7 +48,6 @@ async function login(req, res) {
       return { token: token, account };
     })
     .then((token) => {
-      console.log(token);
       res.cookie('accessToken', token.token, { maxAge: 360000, httpOnly: true,domain:'localhost' });
       res.status(200).json(token);
     })

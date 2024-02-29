@@ -14,6 +14,7 @@ const mascota = yup.object({
   descripcion: yup.string().optional(),
   celular: yup.string().required(),
   whatsapp: yup.string().optional(),
+  email: yup.string().optional(),
   categoria: yup.string().oneOf(["Perdido", "Encontrado"]).required(),
   aparecio: yup.boolean().required().default(false),
   collar: yup
@@ -44,6 +45,7 @@ const editMascota = yup.object({
   fecha: yup.string().optional(),
   descripcion: yup.string().optional(),
   celular: yup.string().optional(),
+  email: yup.string().optional(),
   whatsapp: yup.string().optional(),
   categoria: yup.string().oneOf(["Perdido", "Encontrado"]).optional(),
   aparecio: yup.boolean().required().default(false),

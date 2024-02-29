@@ -38,19 +38,11 @@ function EditarMascota({ idMascota }) {
   // };
 
   const handleInputChange = (name, value) => {
-    if (name === "aparecio") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        aparecio: value === "Sí, ya apareció",
-      }));
-    } else {
       setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-    }
   };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log(formData);
     if (imgMascota) {
       formData.imagen = imgMascota;
     }
@@ -91,13 +83,21 @@ function EditarMascota({ idMascota }) {
 
   useEffect(() => {
     const getMunicipios = async (provincia) => {
+      if (provincia == 'Ciudad Autónoma de Buenos Aires') {
+        const { data } = await axios.get(
+          `https://apis.datos.gob.ar/georef/api/localidades?provincia=caba&max=200`
+        )
+        const localidadesNombre = data.localidades.map((loc) => loc.nombre);
+        localidadesNombre.sort();
+        setMunicipios(localidadesNombre);
+      } else { 
       const { data } = await axios.get(
         `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&max=200`
       );
       const municipiosNombre = data.municipios.map((muni) => muni.nombre);
       municipiosNombre.sort();
-
       setMunicipios(municipiosNombre);
+    }
     };
     if (formData.provincia) {
       getMunicipios(formData.provincia);
@@ -155,11 +155,12 @@ function EditarMascota({ idMascota }) {
                 name="aparecio"
                 type="select"
                 options={["Todavía no", "Sí, ya apareció"]}
-                onChange={(event) =>
+                onChange={(name,value) =>{
+                  let state = value !== "Todavía no"
                   handleInputChange(
-                    "aparecio",
-                    event.target.value === "Sí, ya apareció"
-                  )
+                    name
+                    ,state
+                  )}
                 }
               />
             </div>
