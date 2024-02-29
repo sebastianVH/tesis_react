@@ -72,42 +72,73 @@ function MascotaDetailsPage() {
                 </span>
               </h2>
               <ul className="ml-0">
-                <li>
-                  <strong>Nombre</strong>: {mascota?.nombre}
-                </li>
+                {mascota?.nombre && (
+                  <li>
+                    <strong>Nombre</strong>: {mascota.nombre}
+                  </li>
+                )}
                 <li>
                   <strong>Sexo</strong>: {mascota?.sexo}
                 </li>
                 <li>
                   <strong>Tamaño</strong>: {mascota?.tamano}
                 </li>
+                {mascota?.color && (
+                  <li>
+                    <strong>Color</strong>: {mascota.color}
+                  </li>
+                )}
+                {mascota?.raza && (
+                  <li>
+                    <strong>Raza</strong>: {mascota.raza}
+                  </li>
+                )}
+                {mascota?.edad && (
+                  <li>
+                    <strong>Edad</strong>: {mascota.edad}
+                  </li>
+                )}
+                {mascota?.collar && (
+                  <li>
+                    <strong>Collar</strong>: {mascota.collar}
+                  </li>
+                )}
+
                 <li>
-                  <strong>Color</strong>: {mascota?.color}
+                  <strong>Fecha en la que se perdió</strong>: {mascota?.fecha}
                 </li>
-                <li>
-                  <strong>Raza</strong>: {mascota?.raza}
-                </li>
-                <li>
-                  <strong>Edad</strong>: {mascota?.edad}
-                </li>
+
                 <li>
                   <strong>Provincia</strong>: {mascota?.provincia}
                 </li>
                 <li>
                   <strong>Localidad</strong>: {mascota?.municipio}
                 </li>
-                <li>
-                  <strong>Fecha en la que se perdió</strong>: {mascota?.fecha}
-                </li>
-                <li>
-                  <strong>Descripción</strong>: {mascota?.descripcion}
-                </li>
+                {mascota?.zona_perdida && (
+                  <li>
+                    <strong>Zona donde se perdió</strong>:{" "}
+                    {mascota.zona_perdida}
+                  </li>
+                )}
+
+                {mascota?.descripcion && (
+                  <li>
+                    <strong>Descripción</strong>: {mascota.descripcion}
+                  </li>
+                )}
                 <li>
                   <strong>Celular de contacto</strong>: {mascota?.celular}
                 </li>
-                <li>
-                  <strong>WhatsApp de contacto</strong>: {mascota?.whatsapp}
-                </li>
+                {mascota?.whatsapp && (
+                  <li>
+                    <strong>WhatsApp de contacto</strong>: {mascota?.whatsapp}
+                  </li>
+                )}
+                {mascota?.mail && (
+                  <li>
+                    <strong>Mail de contacto</strong>: {mascota?.mail}
+                  </li>
+                )}
               </ul>
             </div>
             <div className="info-detalle-perrito">
