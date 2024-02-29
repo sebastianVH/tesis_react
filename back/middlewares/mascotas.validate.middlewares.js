@@ -1,4 +1,4 @@
-import * as mascotaScheme from "../schemes/mascotas.schemes.js";
+import * as mascotaScheme from "../schemas/mascotas.schemas.js";
 
 function validateMascota(req, res, next) {
   mascotaScheme.mascota

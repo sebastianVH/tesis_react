@@ -47,11 +47,11 @@ function LoginPage() {
       <div className="row justify-content-center justify-content-lg-between align-items-center h-100">
         <div className="col-12 col-md-10 col-lg-6 col-xl-6 caja-login px-lg-5 py-4 py-md-5 py-lg-2">
           <div className="col-12 titulo-seccion text-center pb-0">
-            <h2>Inicia sesión con tu cuenta</h2>
+            <h2>Iniciá sesión con tu cuenta</h2>
           </div>
           <form className="form-login" onSubmit={onSubmit}>
             <label className="col-12 form-login__field">
-              Nombre de usuario:
+              Nombre de usuario
             </label>
             <input
               className="form-login__username w-100"
@@ -60,7 +60,7 @@ function LoginPage() {
               value={userName}
             />
 
-            <label className="col-12 form-login__field">Contraseña:</label>
+            <label className="col-12 form-login__field">Contraseña</label>
             <input
               className="form-login__password w-100"
               type="password"

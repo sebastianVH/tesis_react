@@ -16,6 +16,7 @@ function CrearMascotaPage() {
             </div>
           </div>
         </div>
+
         <div className="container">
           <CrearMascota />
         </div>

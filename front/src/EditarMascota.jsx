@@ -7,10 +7,12 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import CloudinaryUploadWidget from "./microcomponents/cloudinaryWidget";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import GoogleMapComponent from "./GoogleMaps";
+import axios from "axios";
 
 function EditarMascota({ idMascota }) {
   const [mascota, setMascota] = useState({});
   const [provincias, setProvincias] = useState([]);
+  const [municipios, setMunicipios] = useState([]);
   const [formData, setFormData] = useState({});
   const [success, setSuccess] = useState(false);
   const [imgMascota, setImgMascota] = useState("");
@@ -22,6 +24,11 @@ function EditarMascota({ idMascota }) {
       .then((data) => {
         if (data) {
           setMascota(data);
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            provincia: data.provincia,
+            municipio: data.municipio,
+          }));
         }
       });
   }, [idMascota]);
@@ -82,7 +89,31 @@ function EditarMascota({ idMascota }) {
     getProvincias();
   }, []);
 
+  useEffect(() => {
+    const getMunicipios = async (provincia) => {
+      const { data } = await axios.get(
+        `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&max=200`
+      );
+      const municipiosNombre = data.municipios.map((muni) => muni.nombre);
+      municipiosNombre.sort();
+
+      setMunicipios(municipiosNombre);
+    };
+    if (formData.provincia) {
+      getMunicipios(formData.provincia);
+    }
+  }, [formData.provincia]);
+
   const imgMascotaRender = cld.image(previewMascota);
+
+  // Función para renderizar el mapa con las coordenadas de la mascota
+  const renderizarMapa = () => {
+    if (mascota?.ubicacion) {
+      return <GoogleMapComponent coordenadas={mascota?.ubicacion} />;
+    } else {
+      return <GoogleMapComponent />;
+    }
+  };
 
   return (
     <div className="row justify-content-center">
@@ -217,6 +248,15 @@ function EditarMascota({ idMascota }) {
             </div>
             <div className="col-lg-10">
               <CustomInput
+                label="Color"
+                initialValue={mascota.color}
+                name="color"
+                type="text"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
                 label="Collar"
                 initialValue={mascota.collar}
                 name="collar"
@@ -298,7 +338,17 @@ function EditarMascota({ idMascota }) {
             </div>
             <div className="col-lg-10">
               <CustomInput
-                label="Zona (obligatorio)"
+                label="Localidad (obligatorio)"
+                initialValue={mascota.municipio}
+                name="municipio"
+                type="select"
+                options={municipios}
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="col-lg-10">
+              <CustomInput
+                label="Más detalles del lugar (opcional)"
                 initialValue={mascota.zona_perdida}
                 name="zona_perdida"
                 type="text"
@@ -307,7 +357,7 @@ function EditarMascota({ idMascota }) {
             </div>
             <div className="mapa col-lg-10 py-4">
               <p>Marcá en el mapa donde se perdió o encontró la mascota</p>
-              <GoogleMapComponent />
+              {renderizarMapa()}
             </div>
           </div>
 
@@ -355,7 +405,7 @@ function EditarMascota({ idMascota }) {
           ) : (
             <button
               id="boton-crear_encontrado"
-              className="btn btn-primary redbtn float-right my-2 text-white text-center my-5 col-md-2 boton-color"
+              className="btn btn-primary redbtn float-right my-2 text-white text-center w-100 my-5 boton-color"
               type="submit"
             >
               Editar
