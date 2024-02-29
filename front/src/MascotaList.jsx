@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { UserContext } from "./UserContext";
 import MascotaListItem from "./MascotaListItem";
 import "./MascotaList.css";
-import GoogleMapComponent from "./GoogleMaps";
 import CustomInput from "./microcomponents/CustomInput";
 import axios from "axios";
 
@@ -126,13 +125,21 @@ function MascotasList({ categoria, account }) {
 
   useEffect(() => {
     const getMunicipios = async (provincia) => {
+      if (provincia == 'Ciudad Autónoma de Buenos Aires') {
+        const { data } = await axios.get(
+          `https://apis.datos.gob.ar/georef/api/localidades?provincia=caba&max=200`
+        )
+        const localidadesNombre = data.localidades.map((loc) => loc.nombre);
+        localidadesNombre.sort();
+        setMunicipios(localidadesNombre);
+      } else { 
       const { data } = await axios.get(
         `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&max=200`
       );
       const municipiosNombre = data.municipios.map((muni) => muni.nombre);
       municipiosNombre.sort();
-
       setMunicipios(municipiosNombre);
+    }
     };
 
     if (filtros.provincia) {

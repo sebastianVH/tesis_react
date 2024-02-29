@@ -2,6 +2,7 @@ import express from "express";
 import MascotaRouteApi from "./api/routes/mascotas.api.routes.js";
 import AccountRouteApi from "./api/routes/account.api.routes.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import {v2 as cloudinary} from 'cloudinary';
           
 cloudinary.config({ 
@@ -12,6 +13,7 @@ cloudinary.config({
 
 const app = express();
 app.use(cors());
+app.use(cookieParser())
 
 app.use(express.urlencoded({ extended: true }));
 app.use("/api", express.json());

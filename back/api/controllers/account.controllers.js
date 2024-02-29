@@ -44,9 +44,12 @@ async function login(req, res) {
   return service
     .login(req.body)
     .then(async (account) => {
-      return { token: await tokenService.createToken(account), account };
+      const token = await tokenService.createToken(account)
+      return { token: token, account };
     })
     .then((token) => {
+      console.log(token);
+      res.cookie('accessToken', token.token, { maxAge: 360000, httpOnly: true,domain:'localhost' });
       res.status(200).json(token);
     })
     .catch((err) => {

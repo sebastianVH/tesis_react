@@ -17,15 +17,15 @@ async function createAccount(account) {
     throw new Error("El nombre usuario ya se encuentra en uso.");
   }
 
-  const newAccoutn = {
+  const newAccount = {
     ...account,
   };
 
   const salt = await bcrypt.genSalt(10);
 
-  newAccoutn.password = await bcrypt.hash(account.password, salt);
+  newAccount.password = await bcrypt.hash(account.password, salt);
 
-  await accounts.insertOne(newAccoutn);
+  await accounts.insertOne(newAccount);
 }
 
 async function login(account) {
