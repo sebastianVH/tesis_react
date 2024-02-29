@@ -186,14 +186,14 @@ function MascotasList({ categoria, account }) {
 
   return (
     <div className="mascota-list container-fluid">
-      <div className="text-center col-12 titulo-seccion mx-auto pb-0">
+      <header className="text-center col-12 titulo-seccion mx-auto pb-0">
         <h2 className="titulo-listado">
           <span className="light lowercase">Listado de</span> mascotas{" "}
           {categoria ? categoria.toLowerCase().slice(0, -1) + "as" : ""}
         </h2>
-      </div>
+      </header>
 
-      <div className="row justify-content-center justify-content-md-between text-center container-filtros px-md-1 px-lg-2 px-xxl-5">
+      <section className="row justify-content-center justify-content-md-between text-center container-filtros px-md-1 px-lg-2 px-xxl-5">
         {/* <div className="col-12 col-md-9 px-0">
           <form className="mascota-list__form">
             Buscar:{" "}
@@ -492,7 +492,7 @@ function MascotasList({ categoria, account }) {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

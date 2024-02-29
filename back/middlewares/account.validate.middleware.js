@@ -1,4 +1,4 @@
-import * as scheme from "../schemes/account.schemes.js";
+import * as scheme from "../schemas/account.schemas.js";
 
 async function validateAccount(req, res, next) {
   return scheme.account

@@ -5,7 +5,7 @@ function EditarMascotaPage() {
   const { idMascota } = useParams();
   return (
     <>
-      <div className="header-section-bg">
+      <section className="header-section-bg">
         <div className="header-section container-fluid mx-0">
           <div className="row justify-content-center">
             <div className="col-12 title-section px-md-5">
@@ -18,10 +18,11 @@ function EditarMascotaPage() {
             </div>
           </div>
         </div>
+
         <div className="container">
           <EditarMascota idMascota={idMascota} />
         </div>
-      </div>
+      </section>
     </>
   );
 }

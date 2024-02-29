@@ -316,7 +316,7 @@ function CrearMascota() {
           ) : (
             <button
               id="boton-crear_encontrado"
-              className="btn btn-primary redbtn text-white text-center col-lg-12 boton-color"
+              className="btn btn-primary redbtn text-white text-center w-100 col-lg-12 boton-color"
               type="submit"
             >
               Crear

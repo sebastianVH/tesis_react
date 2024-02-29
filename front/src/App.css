@@ -1604,3 +1604,7 @@ section {
 .btn-success-login {
   font-size: 20px;
 }
+
+#header {
+  z-index: 1100 !important;
+}
