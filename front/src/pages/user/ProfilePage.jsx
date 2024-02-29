@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MascotasList from "../MascotaList";
+import MascotasList from "../mascotas/MascotaList";
 
 function ProfilePage() {
   const [profile, setProfile] = useState({});

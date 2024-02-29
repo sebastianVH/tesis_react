@@ -1,4 +1,4 @@
-import MascotaList from "../../MascotaList";
+import MascotaList from "./MascotaList";
 import PropTypes from "prop-types";
 
 function MascotaListPage({ categoria }) {

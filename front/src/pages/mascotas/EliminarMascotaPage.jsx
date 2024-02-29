@@ -1,4 +1,4 @@
-import EliminarMascota from "../../EliminarMascota";
+import EliminarMascota from "./EliminarMascota";
 import { useParams } from "react-router-dom";
 
 function EliminarMascotaPage() {
@@ -6,7 +6,7 @@ function EliminarMascotaPage() {
   return (
     <>
       <div className="header-section-bg">
-        <div className="header-section container-fluid mx-0">
+        <div className="header-section mt-1 container-fluid mx-0">
           <div className="row justify-content-center">
             <div className="col-12 title-section px-md-5">
               <h2>Eliminar mascota</h2>

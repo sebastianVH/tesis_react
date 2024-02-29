@@ -1,10 +1,10 @@
 import { useCallback, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import * as authService from "../services/auth.service";
-import { AuthContext } from "../AuthContext";
-import { UserContext } from "../UserContext";
+import * as authService from "../../services/auth.service";
+import { AuthContext } from "./AuthContext";
+import { UserContext } from "./UserContext";
 import { Link } from "react-router-dom";
-import loginImg from "../assets/img/login2.png";
+
 // import { BiEye, BiEyeOff } from "react-icons/bi";
 import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 

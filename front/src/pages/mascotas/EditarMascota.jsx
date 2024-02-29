@@ -1,12 +1,12 @@
 import { useState } from "react";
-import CustomInput from "./microcomponents/CustomInput";
-import CreadoConExito from "./microcomponents/CreadoConExito";
+import CustomInput from "../../microcomponents/CustomInput";
+import CreadoConExito from "../../microcomponents/CreadoConExito";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Cloudinary } from "@cloudinary/url-gen";
-import CloudinaryUploadWidget from "./microcomponents/cloudinaryWidget";
+import CloudinaryUploadWidget from "../../microcomponents/cloudinaryWidget";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
-import GoogleMapComponent from "./GoogleMaps";
+import GoogleMapComponent from "../../microcomponents/GoogleMaps";
 import axios from "axios";
 
 function EditarMascota({ idMascota }) {
@@ -38,7 +38,7 @@ function EditarMascota({ idMascota }) {
   // };
 
   const handleInputChange = (name, value) => {
-      setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
   const handleFormSubmit = (event) => {
@@ -83,21 +83,21 @@ function EditarMascota({ idMascota }) {
 
   useEffect(() => {
     const getMunicipios = async (provincia) => {
-      if (provincia == 'Ciudad Autónoma de Buenos Aires') {
+      if (provincia == "Ciudad Autónoma de Buenos Aires") {
         const { data } = await axios.get(
           `https://apis.datos.gob.ar/georef/api/localidades?provincia=caba&max=200`
-        )
+        );
         const localidadesNombre = data.localidades.map((loc) => loc.nombre);
         localidadesNombre.sort();
         setMunicipios(localidadesNombre);
-      } else { 
-      const { data } = await axios.get(
-        `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&max=200`
-      );
-      const municipiosNombre = data.municipios.map((muni) => muni.nombre);
-      municipiosNombre.sort();
-      setMunicipios(municipiosNombre);
-    }
+      } else {
+        const { data } = await axios.get(
+          `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&max=200`
+        );
+        const municipiosNombre = data.municipios.map((muni) => muni.nombre);
+        municipiosNombre.sort();
+        setMunicipios(municipiosNombre);
+      }
     };
     if (formData.provincia) {
       getMunicipios(formData.provincia);
@@ -155,13 +155,10 @@ function EditarMascota({ idMascota }) {
                 name="aparecio"
                 type="select"
                 options={["Todavía no", "Sí, ya apareció"]}
-                onChange={(name,value) =>{
-                  let state = value !== "Todavía no"
-                  handleInputChange(
-                    name
-                    ,state
-                  )}
-                }
+                onChange={(name, value) => {
+                  let state = value !== "Todavía no";
+                  handleInputChange(name, state);
+                }}
               />
             </div>
           </div>

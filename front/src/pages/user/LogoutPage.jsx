@@ -1,7 +1,7 @@
 import { useState, useCallback, useContext } from "react";
-import * as authService from "../services/auth.service";
-import { AuthContext } from "../AuthContext";
-import { UserContext } from "../UserContext";
+import * as authService from "../../services/auth.service";
+import { AuthContext } from "./AuthContext";
+import { UserContext } from "./UserContext";
 import { Link } from "react-router-dom";
 
 function LogoutPage() {

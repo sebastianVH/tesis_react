@@ -1,4 +1,4 @@
-import CrearMascota from "../../CrearMascota";
+import CrearMascota from "./CrearMascota";
 
 function CrearMascotaPage() {
   return (

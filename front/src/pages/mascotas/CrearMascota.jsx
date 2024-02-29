@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import CustomInput from "./microcomponents/CustomInput";
-import CreadoConExito from "./microcomponents/CreadoConExito";
+import CustomInput from "../../microcomponents/CustomInput";
+import CreadoConExito from "../../microcomponents/CreadoConExito";
 import axios from "axios";
 import { Cloudinary } from "@cloudinary/url-gen";
-import CloudinaryUploadWidget from "./microcomponents/cloudinaryWidget";
+import CloudinaryUploadWidget from "../../microcomponents/cloudinaryWidget";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
-import GoogleMapComponent from "./GoogleMaps";
+import GoogleMapComponent from "../../microcomponents/GoogleMaps";
 
 function CrearMascota() {
   const [mascota, setMascota] = useState({});
@@ -57,30 +57,64 @@ function CrearMascota() {
     },
   });
 
+  // useEffect(() => {
+  //   const getProvincias = async () => {
+  //     const { data } = await axios.get(
+  //       "https://apis.datos.gob.ar/georef/api/provincias"
+  //     );
+  //     const provinciasNombre = data.provincias.map((prov) => prov.nombre);
+  //     provinciasNombre.sort();
+  //     setProvincias(provinciasNombre);
+  //   };
+  //   getProvincias();
+  // }, []);
+
+  // //quiero que se actualice cada vez que cambia el valor de formData.provincia
+  // //quiero que se ordenen alfabeticamente
+
+  // useEffect(() => {
+  //   const getMunicipios = async (provincia) => {
+  //     const { data } = await axios.get(
+  //       `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&max=200`
+  //     );
+  //     const municipiosNombre = data.municipios.map((muni) => muni.nombre);
+  //     municipiosNombre.sort();
+
+  //     setMunicipios(municipiosNombre);
+  //   };
+  //   if (formData.provincia) {
+  //     getMunicipios(formData.provincia);
+  //   }
+  // }, [formData.provincia]);
+
   useEffect(() => {
     const getProvincias = async () => {
       const { data } = await axios.get(
         "https://apis.datos.gob.ar/georef/api/provincias"
       );
       const provinciasNombre = data.provincias.map((prov) => prov.nombre);
-      provinciasNombre.sort();
       setProvincias(provinciasNombre);
     };
     getProvincias();
   }, []);
 
-  //quiero que se actualice cada vez que cambia el valor de formData.provincia
-  //quiero que se ordenen alfabeticamente
-
   useEffect(() => {
     const getMunicipios = async (provincia) => {
-      const { data } = await axios.get(
-        `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&max=200`
-      );
-      const municipiosNombre = data.municipios.map((muni) => muni.nombre);
-      municipiosNombre.sort();
-
-      setMunicipios(municipiosNombre);
+      if (provincia == "Ciudad Autónoma de Buenos Aires") {
+        const { data } = await axios.get(
+          `https://apis.datos.gob.ar/georef/api/localidades?provincia=caba&max=200`
+        );
+        const localidadesNombre = data.localidades.map((loc) => loc.nombre);
+        localidadesNombre.sort();
+        setMunicipios(localidadesNombre);
+      } else {
+        const { data } = await axios.get(
+          `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&max=200`
+        );
+        const municipiosNombre = data.municipios.map((muni) => muni.nombre);
+        municipiosNombre.sort();
+        setMunicipios(municipiosNombre);
+      }
     };
     if (formData.provincia) {
       getMunicipios(formData.provincia);

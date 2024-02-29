@@ -8,15 +8,15 @@ import MascotaDetailsPage from "./pages/mascotas/MascotaDetailsPage";
 import CrearMascotaPage from "./pages/mascotas/CrearMascotaPage";
 import EditarMascotaPage from "./pages/mascotas/EditarMascotaPage";
 import EliminarMascotaPage from "./pages/mascotas/EliminarMascotaPage";
-import LoginPage from "./pages/LoginPage";
-import ProfilePage from "./pages/ProfilePage";
-import RegisterPage from "./pages/RegisterPage";
-import LogoutPage from "./pages/LogoutPage";
+import LoginPage from "./pages/user/LoginPage";
+import ProfilePage from "./pages/user/ProfilePage";
+import RegisterPage from "./pages/user/RegisterPage";
+import LogoutPage from "./pages/user/LogoutPage";
 import InicioPage from "./pages/InicioPage";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { AuthProvider } from "./AuthContext";
-import { UserProvider } from "./UserContext";
+import { AuthProvider } from "./pages/user/AuthContext";
+import { UserProvider } from "./pages/user/UserContext";
 
 const router = createBrowserRouter([
   {

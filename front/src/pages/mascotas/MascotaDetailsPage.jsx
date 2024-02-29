@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams,Link } from "react-router-dom";
-import GoogleMapComponent from "../../GoogleMaps";
-
+import { useParams, Link } from "react-router-dom";
+import GoogleMapComponent from "../../microcomponents/GoogleMaps";
 
 function MascotaDetailsPage() {
   const [mascota, setMascota] = useState({});
@@ -56,8 +55,8 @@ function MascotaDetailsPage() {
               </Link>
             </div>
             <div className="w-100 btn btn-naranja text-white py-2 my-2">
-                <i className="bi bi-envelope"></i> Avisar que ví a{" "}
-                {mascota?.nombre}
+              <i className="bi bi-envelope"></i> Avisar que ví a{" "}
+              {mascota?.nombre}
             </div>
           </div>
 

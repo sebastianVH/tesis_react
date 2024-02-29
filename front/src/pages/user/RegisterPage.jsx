@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import * as authService from "../services/auth.service";
+import * as authService from "../../services/auth.service";
 import { Link } from "react-router-dom";
 import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 

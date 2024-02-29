@@ -1,4 +1,4 @@
-import EditarMascota from "../../EditarMascota";
+import EditarMascota from "./EditarMascota";
 import { useParams } from "react-router-dom";
 
 function EditarMascotaPage() {

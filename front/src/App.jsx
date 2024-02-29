@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "./pages/user/AuthContext";
 
 import "minireset.css";
 import "bootstrap/dist/css/bootstrap.css";

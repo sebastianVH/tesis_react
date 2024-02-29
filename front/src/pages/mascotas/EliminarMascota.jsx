@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./MascotaListItem.css";
-import "./App.css";
+import "../../App.css";
 
 function EliminarMascota({ idMascota }) {
   const [mascota, setMascota] = useState({});
@@ -33,7 +33,7 @@ function EliminarMascota({ idMascota }) {
   return (
     <div className="row justify-content-center">
       {/* card de la mascota */}
-      <div className="col-md-10 col-12 d-flex align-items-stretch px-2 px-md-3 mb-4 ">
+      <div className="col-md-10 col-12 d-flex align-items-stretch px-2 px-md-3 mb-4 justify-content-center">
         <Link to={`/mascotas/${mascota._id}`} className="mascota-view">
           <div className="card-perro eliminarpubli row justify-content-start align-items-stretch">
             <div className="col-5 px-0">

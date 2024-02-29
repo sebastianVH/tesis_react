@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./MascotaListItem.css";
 import { useContext } from "react";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../user/UserContext";
 
 ("C:/Users/lucia/Documents/Diseño Web/4to Cuatrimestre/Proyecto Final/Huellas a Casa- App programación/Desarrollo/Tesis 1_8");
 
