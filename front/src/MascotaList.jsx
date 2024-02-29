@@ -22,6 +22,14 @@ function MascotasList({ categoria, account }) {
     window.innerWidth > 768
   );
 
+  // Estado inicial de los filtros
+  const [initialFiltros, setInitialFiltros] = useState({});
+
+  // Guardar el estado inicial de los filtros
+  useEffect(() => {
+    setInitialFiltros(filtros);
+  }, []);
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = mascotas.slice(indexOfFirstItem, indexOfLastItem);
@@ -122,8 +130,6 @@ function MascotasList({ categoria, account }) {
     getProvincias();
   }, [categoria, account]);
 
-  //quiero corregir el error de que no se muestre el listado de municipios segun la provincia seleccionada
-
   useEffect(() => {
     const getMunicipios = async (provincia) => {
       const { data } = await axios.get(
@@ -138,9 +144,6 @@ function MascotasList({ categoria, account }) {
     if (filtros.provincia) {
       getMunicipios(filtros.provincia);
     }
-
-    // cambiarFiltro(categoria, account);
-    // getMunicipios();
   }, [categoria, account, filtros.provincia]);
 
   useEffect(() => {
@@ -182,6 +185,14 @@ function MascotasList({ categoria, account }) {
       default:
         return "";
     }
+  };
+
+  // Función para limpiar los filtros
+  const limpiarFiltros = () => {
+    setFiltros(initialFiltros);
+    setFiltroNombre("");
+    setSelectedDate(null);
+    // Asegúrate de limpiar también los campos de selección de provincia y municipio si es necesario
   };
 
   return (
@@ -252,7 +263,10 @@ function MascotasList({ categoria, account }) {
                   isSidebarVisible ? "sidebar-visible" : "sidebar-hidden"
                 }`}
               >
-                <p className="filtros-title">Filtros de búsqueda</p>
+                <p className="filtros-title mb-1">Filtros de búsqueda</p>
+                <div className="btn-limpiar mb-4">
+                  <button onClick={limpiarFiltros}>Limpiar filtros</button>
+                </div>
                 <div className="px-0 pb-4">
                   <form className="mascota-list__form">
                     Buscar{" "}

@@ -1608,3 +1608,11 @@ section {
 #header {
   z-index: 1100 !important;
 }
+
+.btn-limpiar button {
+  border: none !important;
+  color: #d3970f !important;
+  font-size: 15px;
+  background-color: transparent !important;
+  padding-left: 0 !important;
+}
