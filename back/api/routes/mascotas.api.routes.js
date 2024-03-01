@@ -40,6 +40,10 @@ route.post(
   [tokenVerify, upload.single(), validateMascota],
   controller.createMascota
 );
+route.post(
+  "/mascotas/enviarmail",
+  controller.sendMascotaEmail
+);
 
 route.patch(
   "/mascotas/:idMascota",

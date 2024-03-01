@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import GoogleMapComponent from "../../microcomponents/GoogleMaps";
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
 function MascotaDetailsPage() {
   const [mascota, setMascota] = useState({});
@@ -24,6 +26,59 @@ function MascotaDetailsPage() {
       return <p>Ubicación no disponible</p>;
     }
   };
+
+  //Funcion sendmail para enviar un mail al usuario que encontro/perdio la mascota
+  const sendmail = () => {
+    Swal.fire(
+      {
+      titleText:`Informar que viste a ${mascota.nombre}`,
+      text: "Escribe en esta casilla tu mensaje y le enviaremos al usuario un correo!",
+      icon: 'info',
+      input:'textarea',
+      inputLabel:'Dejanos tu mensaje con tus datos aqui :)',
+      showCancelButton:true,
+      confirmButtonText:'Enviar',
+      confirmButtonColor:'green',
+      cancelButtonText:'Cancelar',
+      cancelButtonColor:'red',
+    }).then( async (response) => {
+      if (response.isConfirmed) {
+        try {
+          const {data,status}= await axios.post(
+            `http://localhost:2023/api/mascotas/enviarmail`,
+            {mascota ,mensaje:response.value},
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem("token"),
+              },
+            }
+          )
+          if (status === 201) {
+            Swal.fire(
+            { 
+              titleText: data.message,
+              text: "Ya enviamos tu mensaje al usuario. Muchas gracias :)",
+              icon: 'success'
+            }
+            )
+          } else {
+            Swal.fire(
+              { 
+              titleText: "Ups!",
+              text: `Ha ocurrido un error! Puede que el usuario no tenga un mail para notificar, o su mail estaba incorrecto 
+              (${data.message}). Trata de comunicarte por otras vias (como WhatsApp)`,
+              icon: 'error'
+              }
+            )
+          }
+          
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    })
+  }
 
   return (
     <section className="container detalle-perrito px-lg-5 mx-lg-5 pt-0">
@@ -54,7 +109,7 @@ function MascotaDetailsPage() {
                 {mascota?.nombre}
               </Link>
             </div>
-            <div className="w-100 btn btn-naranja text-white py-2 my-2">
+            <div className="w-100 btn btn-naranja text-white py-2 my-2" onClick={sendmail}>
               <i className="bi bi-envelope"></i> Avisar que ví a{" "}
               {mascota?.nombre}
             </div>
