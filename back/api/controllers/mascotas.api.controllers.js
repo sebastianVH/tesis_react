@@ -1,3 +1,4 @@
+import { SendEmailMascota } from "../../services/mail.services.js";
 import * as service from "../../services/mascotas.services.js";
 import fs from 'fs'
 
@@ -74,6 +75,18 @@ function deleteMascota(req, res) {
   });
 }
 
+async function sendMascotaEmail(req,res){
+
+    const {mascota,mensaje} = req.body
+    try {
+        const {rejected} = await SendEmailMascota(mascota,mensaje)
+        if (rejected.length) return res.status(400).json({message: rejected[0] })
+        return res.status(201).json({message: 'Email enviado!!!'})
+    } catch (error) {
+        return res.status(500).json(error)
+    } 
+}
+
 export {
   getMascotas,
   createMascota,
@@ -81,4 +94,5 @@ export {
   getImagenMascota,
   editMascota,
   deleteMascota,
+  sendMascotaEmail
 };
