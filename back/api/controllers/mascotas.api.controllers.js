@@ -47,8 +47,9 @@ function createMascota(req, res) {
 
     service
       .createMascota( req.body , req.account._id)
-      .then(function (mascota) {
-        return res.status(201).json(mascota);
+      .then(async function (mascota) {
+        const coincidencias = await service.findMatchingMascotas(mascota)
+        return res.status(201).json({mascota, coincidencias});
       })
       .catch(function (error) {
         return res.status(500).json({ error: error.message });

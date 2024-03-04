@@ -45,6 +45,19 @@ async function createMascota(mascota, account) {
   return mascota;
 }
 
+async function findMatchingMascotas({sexo, especie, collar, provincia,categoria}) {
+  await client.connect();
+  const query = {
+    sexo,
+    especie,
+    collar,
+    provincia,
+    categoria: categoria === 'Perdido' ? 'Encontrado' : 'Perdido',
+  };
+  const result = await db.collection("mascotas").find(query).toArray();
+  return result;
+}
+
 async function editMascota(idMascota, mascota) {
   await client.connect();
   const documentoExistente = await db
@@ -83,4 +96,5 @@ export {
   deleteMascota,
   replaceMascota,
   getMascotasDeUsuario,
+  findMatchingMascotas
 };

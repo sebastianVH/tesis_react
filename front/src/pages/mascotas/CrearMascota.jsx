@@ -6,6 +6,9 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import CloudinaryUploadWidget from "../../microcomponents/cloudinaryWidget";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import GoogleMapComponent from "../../microcomponents/GoogleMaps";
+import Swal from "sweetalert2";
+import MascotaListItem from "./MascotaListItem";
+
 
 function CrearMascota() {
   const [mascota, setMascota] = useState({});
@@ -15,6 +18,7 @@ function CrearMascota() {
   const [formData, setFormData] = useState({});
   const [imgMascota, setImgMascota] = useState("");
   const [previewMascota, setPreviewMascota] = useState("");
+  const [coincidencias,setCoincidencias] = useState([])
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -26,7 +30,7 @@ function CrearMascota() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
+
 
     if (imgMascota) {
       formData.imagen = imgMascota;
@@ -43,8 +47,16 @@ function CrearMascota() {
           },
         }
       );
-
-      setMascota(response.data);
+      setMascota(response.data.mascota);
+      if(response.data?.coincidencias.length) {
+        setCoincidencias(response.data.coincidencias)
+        Swal.fire({
+        titleText: `Hemos encontrado ${response.data?.coincidencias?.length} mascotas con las mismas caracteristicas que ${response.data?.mascota?.nombre}!`,
+        text: "¿Deseas verlas? Al final de la pagina, tendras el listado de coincidencias.",
+        icon: "info",
+        showConfirmButton: true
+      })
+    }
       setSuccess(true);
     } catch (error) {
       console.error("Error:", error);
@@ -357,6 +369,7 @@ function CrearMascota() {
             </button>
           )}
         </form>
+      {coincidencias && coincidencias.map((mascota) => <MascotaListItem key={mascota._id} mascota={mascota} />)}
       </div>
     </div>
   );
