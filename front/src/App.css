@@ -1685,7 +1685,6 @@ section {
   height: 100%;
 }
 
-/* Esto se aplicará a las pantallas con un ancho máximo de 1400px */
 @media (max-width: 1400px) {
   .embed-responsive .embed-responsive-1by1 {
     /* Aquí puedes ajustar el tamaño del mapa como prefieras */
