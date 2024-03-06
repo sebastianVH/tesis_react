@@ -46,8 +46,12 @@ function MascotasList({ categoria, account }) {
     fetch(`http://localhost:2023/api/mascotas?${filtro}&${filtro2}`)
       .then((response) => response.json())
       .then((data) => {
-        setMascotasAll(data);
-        setMascotas(data);
+        // Ordenar las mascotas por fecha antes de establecerlas en el estado
+        const mascotasOrdenadas = data.sort(
+          (a, b) => new Date(b.fecha) - new Date(a.fecha)
+        );
+        setMascotasAll(mascotasOrdenadas);
+        setMascotas(mascotasOrdenadas);
       });
   };
 

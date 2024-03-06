@@ -17,6 +17,7 @@ function EditarMascota({ idMascota }) {
   const [success, setSuccess] = useState(false);
   const [imgMascota, setImgMascota] = useState("");
   const [previewMascota, setPreviewMascota] = useState("");
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     fetch(`http://localhost:2023/api/mascotas/${idMascota}`)
@@ -61,6 +62,7 @@ function EditarMascota({ idMascota }) {
       })
       .catch((error) => {
         console.error("Error:", error);
+        setErrors(error.response.data.err.errors);
       });
   };
 
@@ -401,13 +403,31 @@ function EditarMascota({ idMascota }) {
               categoria={mascota.categoria}
             />
           ) : (
-            <button
-              id="boton-crear_encontrado"
-              className="btn btn-primary redbtn float-right my-2 text-white text-center w-100 my-5 boton-color"
-              type="submit"
-            >
-              Editar
-            </button>
+            <>
+              {errors && (
+                <div className="row justify-content-center container-alertas">
+                  <div className="col-lg-10">
+                    <div className="alertas">
+                      <ul>
+                        {errors.map((error, index) => (
+                          <li key={index}>
+                            <i class="bi bi-exclamation-circle-fill p-1"></i>
+                            {error}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <button
+                id="boton-crear_encontrado"
+                className="btn btn-primary redbtn text-white text-center w-100 col-lg-12 boton-color"
+                type="submit"
+              >
+                Crear
+              </button>
+            </>
           )}
         </form>
       </div>

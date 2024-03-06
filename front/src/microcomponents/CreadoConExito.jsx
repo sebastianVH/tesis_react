@@ -5,26 +5,30 @@ import PropTypes from "prop-types";
 
 function CreadoConExito({ especie, categoria }) {
   return (
-    <div className="exito row justify-content-center py-3">
-      <div className="col-12 col-md-10 titulo-seccion text-center ">
-        <h3>
-          Tu {especie.toLowerCase()} {categoria.toLowerCase()} fue cargado con
-          éxito{" "}
-        </h3>
-        {categoria === "Perdido" ? (
-          <p>¡Esperamos que aparezca pronto!</p>
-        ) : (
-          <p>¡Esperamos que encuentres a sus dueños pronto!</p>
-        )}
-        <div className="check">
-          <i className="bi bi-check-circle"></i>
+    <div className="exito row justify-content-center py-3 mb-5 p-5">
+      <div className="titulo-seccion text-center d-flex justify-content-between align-items-center">
+        <div className="col-md-5 col-lg-3 text-left">
+          <div className="check">
+            <i className="bi bi-check-circle"></i>
+          </div>
         </div>
-        <Link
-          className="btn btn-naranja w-100"
-          to={`../mascotas/${categoria}s`}
-        >
-          Volver al listado
-        </Link>
+        <div className="col-md-7 col-lg-8 mascota-exito">
+          <h3>
+            Tu {especie.toLowerCase()} {categoria.toLowerCase()} fue cargado con
+            éxito{" "}
+          </h3>
+          {categoria === "Perdido" ? (
+            <p>¡Esperamos que aparezca pronto!</p>
+          ) : (
+            <p>¡Esperamos que encuentres a sus dueños pronto!</p>
+          )}
+          <Link
+            className="btn btn-naranja w-100 mt-4"
+            to={`../mascotas/${categoria}s`}
+          >
+            Volver al listado
+          </Link>
+        </div>
       </div>
     </div>
   );

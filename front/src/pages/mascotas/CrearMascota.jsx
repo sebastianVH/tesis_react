@@ -9,7 +9,6 @@ import GoogleMapComponent from "../../microcomponents/GoogleMaps";
 import Swal from "sweetalert2";
 import MascotaListItem from "./MascotaListItem";
 
-
 function CrearMascota() {
   const [mascota, setMascota] = useState({});
   const [success, setSuccess] = useState(false);
@@ -18,7 +17,8 @@ function CrearMascota() {
   const [formData, setFormData] = useState({});
   const [imgMascota, setImgMascota] = useState("");
   const [previewMascota, setPreviewMascota] = useState("");
-  const [coincidencias,setCoincidencias] = useState([])
+  const [coincidencias, setCoincidencias] = useState([]);
+  const [errors, setErrors] = useState([]);
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -30,7 +30,6 @@ function CrearMascota() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
 
     if (imgMascota) {
       formData.imagen = imgMascota;
@@ -48,18 +47,28 @@ function CrearMascota() {
         }
       );
       setMascota(response.data.mascota);
-      if(response.data?.coincidencias.length) {
-        setCoincidencias(response.data.coincidencias)
+      if (response.data?.coincidencias.length) {
+        setCoincidencias(response.data.coincidencias);
         Swal.fire({
-        titleText: `Hemos encontrado ${response.data?.coincidencias?.length} mascotas con las mismas caracteristicas que ${response.data?.mascota?.nombre}!`,
-        text: "¿Deseas verlas? Al final de la pagina, tendras el listado de coincidencias.",
-        icon: "info",
-        showConfirmButton: true
-      })
-    }
+          titleText: `Hemos encontrado ${
+            response.data?.coincidencias?.length
+          } ${
+            response.data?.coincidencias?.length === 1 ? "mascota" : "mascotas"
+          } con las mismas caracteristicas que ${
+            response.data?.mascota?.nombre
+              ? response.data?.mascota?.nombre
+              : "la tuya"
+          }`,
+          text: "Al final de la pagina podés ver el listado de coincidencias.",
+          icon: "info",
+          showConfirmButton: true,
+        });
+      }
       setSuccess(true);
     } catch (error) {
       console.error("Error:", error);
+
+      setErrors(error.response.data.err.errors);
     }
   };
 
@@ -68,36 +77,6 @@ function CrearMascota() {
       cloudName: "huellasacasa",
     },
   });
-
-  // useEffect(() => {
-  //   const getProvincias = async () => {
-  //     const { data } = await axios.get(
-  //       "https://apis.datos.gob.ar/georef/api/provincias"
-  //     );
-  //     const provinciasNombre = data.provincias.map((prov) => prov.nombre);
-  //     provinciasNombre.sort();
-  //     setProvincias(provinciasNombre);
-  //   };
-  //   getProvincias();
-  // }, []);
-
-  // //quiero que se actualice cada vez que cambia el valor de formData.provincia
-  // //quiero que se ordenen alfabeticamente
-
-  // useEffect(() => {
-  //   const getMunicipios = async (provincia) => {
-  //     const { data } = await axios.get(
-  //       `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&max=200`
-  //     );
-  //     const municipiosNombre = data.municipios.map((muni) => muni.nombre);
-  //     municipiosNombre.sort();
-
-  //     setMunicipios(municipiosNombre);
-  //   };
-  //   if (formData.provincia) {
-  //     getMunicipios(formData.provincia);
-  //   }
-  // }, [formData.provincia]);
 
   useEffect(() => {
     const getProvincias = async () => {
@@ -135,242 +114,268 @@ function CrearMascota() {
 
   const imgMascotaRender = cld.image(previewMascota);
 
-  const comunaToBarrio = {
-    "Comuna 1": "Barrio 1",
-    "Comuna 2": "Barrio 2",
-    "Comuna 3": "Barrio 2",
-    "Comuna 4": "Barrio 2",
-    "Comuna 5": "Almagro",
-    "Comuna 6": "Villa Crespo",
-    "Comuna 7": "Barrio 2",
-    "Comuna 8": "Barrio 2",
-    "Comuna 9": "Barrio 2",
-    "Comuna 10": "Barrio 2",
-    "Comuna 11": "Barrio 2",
-    "Comuna 12": "Barrio 2",
-    "Comuna 13": "Barrio 2",
-    "Comuna 14": "Palermo",
-    "Comuna 15": "Recoleta",
-    // Agrega el resto de las comunas y sus correspondientes barrios aquí
-  };
-
   return (
     <div className="row justify-content-center">
-      <div className="formulario-carga col-12 col-sm-10 col-md-10 col-lg-8">
-        <form
-          id="form-crear_encontrado"
-          onSubmit={handleFormSubmit}
-          encType="multipart/form-data"
-        >
-          <div className="row form_carga justify-content-center seccion-form-carga">
-            <div className="col-lg-10">
-              <h4>1. Para empezar</h4>
-              <CustomInput
-                label="¿Se perdió tu mascota o la encontraste perdida? (obligatorio)"
-                name="categoria"
-                type="select"
-                options={["Perdido", "Encontrado"]}
-                onChange={handleInputChange}
-              />
-            </div>
+      {success ? (
+        <>
+          <CreadoConExito
+            especie={mascota.especie}
+            categoria={mascota.categoria}
+          />
+          <div className="listado-perros coincidencias justify-content-center text-center row">
+            {coincidencias && coincidencias.length > 0 && (
+              <div className="col-12">
+                <div className="col-md-10 mx-auto pb-4">
+                  <p>
+                    Hemos encontrado las siguientes mascotas cerca de tu
+                    ubicación. Podés consultar el listado completo para ver
+                    todos los resultados
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {coincidencias &&
+              coincidencias.map((mascota) => (
+                <MascotaListItem key={mascota._id} mascota={mascota} />
+              ))}
           </div>
-          <div className="row form_carga justify-content-center seccion-form-carga">
-            <div className="col-lg-10">
-              <h4>2. Datos de la mascota</h4>
-            </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Especie (obligatorio)"
-                name="especie"
-                type="select"
-                options={["Perro", "Gato"]}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Nombre"
-                name="nombre"
-                type="text"
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Tamaño (obligatorio)"
-                name="tamano"
-                type="select"
-                options={["Chico", "Mediano", "Grande"]}
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-
-            <div className="col-lg-10">
-              <CustomInput
-                label="Sexo (obligatorio)"
-                name="sexo"
-                type="select"
-                options={["Macho", "Hembra"]}
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Edad"
-                name="edad"
-                type="text"
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Raza"
-                name="raza"
-                type="text"
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Color"
-                name="color"
-                type="text"
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Collar"
-                name="collar"
-                type="select"
-                options={[
-                  "Tiene collar con chapita",
-                  "Tiene collar sin chapita",
-                  "No tiene collar",
-                ]}
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-            <div className="col-lg-10 mapa pt-4">
-              <p>
-                ¿Nos compartis una foto de tu peludo? Seguro tenés un montón :)
-              </p>
-              <CloudinaryUploadWidget
-                setImgMascota={setImgMascota}
-                setPreviewMascota={setPreviewMascota}
-              />
-
-              <div className="foto-cloudinary">
-                <AdvancedImage
-                  // style={{ maxWidth: "100px" }}
-                  className="img-fluid"
-                  cldImg={imgMascotaRender}
-                  plugins={[responsive(), placeholder()]}
+        </>
+      ) : (
+        <div className="formulario-carga col-12 col-sm-10 col-md-10 col-lg-8">
+          <form
+            id="form-crear_encontrado"
+            onSubmit={handleFormSubmit}
+            encType="multipart/form-data"
+          >
+            <div className="row form_carga justify-content-center seccion-form-carga">
+              <div className="col-lg-10">
+                <h4>1. Para empezar</h4>
+                <CustomInput
+                  label="¿Se perdió tu mascota o la encontraste perdida? (obligatorio)"
+                  name="categoria"
+                  type="select"
+                  options={["Perdido", "Encontrado"]}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
-          </div>
-          <div className="row form_carga justify-content-center seccion-form-carga">
-            <div className="col-lg-10">
-              <h4>3. Ubicación y fecha</h4>
+            <div className="row form_carga justify-content-center seccion-form-carga">
+              <div className="col-lg-10">
+                <h4>2. Datos de la mascota</h4>
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Especie (obligatorio)"
+                  name="especie"
+                  type="select"
+                  options={["Perro", "Gato"]}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Nombre"
+                  name="nombre"
+                  type="text"
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Tamaño (obligatorio)"
+                  name="tamano"
+                  type="select"
+                  options={["Chico", "Mediano", "Grande"]}
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Sexo (obligatorio)"
+                  name="sexo"
+                  type="select"
+                  options={["Macho", "Hembra"]}
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Edad"
+                  name="edad"
+                  type="text"
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Raza"
+                  name="raza"
+                  type="text"
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Color"
+                  name="color"
+                  type="text"
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Collar"
+                  name="collar"
+                  type="select"
+                  options={[
+                    "Tiene collar con chapita",
+                    "Tiene collar sin chapita",
+                    "No tiene collar",
+                  ]}
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+              <div className="col-lg-10 mapa pt-4">
+                <p>
+                  ¿Nos compartis una foto de tu peludo? Seguro tenés un montón
+                  :)
+                </p>
+                <CloudinaryUploadWidget
+                  setImgMascota={setImgMascota}
+                  setPreviewMascota={setPreviewMascota}
+                />
+
+                <div className="foto-cloudinary">
+                  <AdvancedImage
+                    // style={{ maxWidth: "100px" }}
+                    className="img-fluid"
+                    cldImg={imgMascotaRender}
+                    plugins={[responsive(), placeholder()]}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Fecha en la que se perdió o encontró la mascota (obligatorio)"
-                name="fecha"
-                type="date"
-                onChange={handleInputChange}
-              />{" "}
+            <div className="row form_carga justify-content-center seccion-form-carga">
+              <div className="col-lg-10">
+                <h4>3. Ubicación y fecha</h4>
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Fecha en la que se perdió o encontró la mascota (obligatorio)"
+                  name="fecha"
+                  type="date"
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Descripción: ¿Cómo se perdió o encontró? (obligatorio)"
+                  name="descripcion"
+                  type="textarea"
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Provincia (obligatorio)"
+                  name="provincia"
+                  type="select"
+                  options={provincias}
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Localidad (obligatorio)"
+                  name="municipio"
+                  type="select"
+                  options={municipios}
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Más detalles del lugar (opcional)"
+                  name="zona_perdida"
+                  type="text"
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+              <div className="mapa col-lg-10 py-4">
+                <p>Marcá en el mapa donde se perdió o encontró la mascota</p>
+                <GoogleMapComponent setCoordenadas={setCoordenadas} />
+              </div>
             </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Descripción: ¿Cómo se perdió o encontró? (obligatorio)"
-                name="descripcion"
-                type="textarea"
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Provincia (obligatorio)"
-                name="provincia"
-                type="select"
-                options={provincias}
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Localidad (obligatorio)"
-                name="municipio"
-                type="select"
-                options={municipios}
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-            <div className="col-lg-10">
-              <CustomInput
-                label="Más detalles del lugar (opcional)"
-                name="zona_perdida"
-                type="text"
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-            <div className="mapa col-lg-10 py-4">
-              <p>Marcá en el mapa donde se perdió o encontró la mascota</p>
-              <GoogleMapComponent setCoordenadas={setCoordenadas} />
-            </div>
-          </div>
-          <div className="row form_carga justify-content-center seccion-form-carga">
-            <div className="col-lg-10">
-              <h4>4. Datos de contacto</h4>
+            <div className="row form_carga justify-content-center seccion-form-carga">
+              <div className="col-lg-10">
+                <h4>4. Datos de contacto</h4>
+              </div>
+
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Celular (obligatorio)"
+                  name="celular"
+                  type="text"
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+
+              <div className="col-lg-10">
+                <CustomInput
+                  label="WhatsApp"
+                  name="whatsapp"
+                  type="text"
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
+
+              <div className="col-lg-10">
+                <CustomInput
+                  label="Email"
+                  name="email"
+                  type="text"
+                  onChange={handleInputChange}
+                />{" "}
+              </div>
             </div>
 
-            <div className="col-lg-10">
-              <CustomInput
-                label="Celular (obligatorio)"
-                name="celular"
-                type="text"
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-
-            <div className="col-lg-10">
-              <CustomInput
-                label="WhatsApp"
-                name="whatsapp"
-                type="text"
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-
-            <div className="col-lg-10">
-              <CustomInput
-                label="Email"
-                name="email"
-                type="text"
-                onChange={handleInputChange}
-              />{" "}
-            </div>
-          </div>
-
-          {success ? (
-            <CreadoConExito
-              especie={mascota.especie}
-              categoria={mascota.categoria}
-            />
-          ) : (
-            <button
-              id="boton-crear_encontrado"
-              className="btn btn-primary redbtn text-white text-center w-100 col-lg-12 boton-color"
-              type="submit"
-            >
-              Crear
-            </button>
-          )}
-        </form>
-      {coincidencias && coincidencias.map((mascota) => <MascotaListItem key={mascota._id} mascota={mascota} />)}
-      </div>
+            {success ? (
+              <CreadoConExito
+                especie={mascota.especie}
+                categoria={mascota.categoria}
+              />
+            ) : (
+              <>
+                {errors && (
+                  <div className="row justify-content-center container-alertas">
+                    <div className="col-lg-10">
+                      <div className="alertas">
+                        <ul>
+                          {errors.map((error, index) => (
+                            <li key={index}>
+                              <i class="bi bi-exclamation-circle-fill p-1"></i>
+                              {error}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <button
+                  id="boton-crear_encontrado"
+                  className="btn btn-primary redbtn text-white text-center w-100 col-lg-12 boton-color"
+                  type="submit"
+                >
+                  Crear
+                </button>
+              </>
+            )}
+          </form>
+        </div>
+      )}
     </div>
   );
 }

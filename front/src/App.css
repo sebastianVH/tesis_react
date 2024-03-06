@@ -416,7 +416,8 @@ Inicio
   transform: scale(1.05);
 }
 
-.div-portada {
+.div-portada,
+.exito {
   box-shadow: 0px 0 25px 0 rgba(0, 0, 0, 0.1);
   padding: 0;
   transition: all ease-in-out 0.4s;
@@ -1123,11 +1124,15 @@ a.data-letra {
   font-size: 18px;
 }
 
+.mascota-exito h3 {
+  font-weight: 700 !important;
+}
+
 /* Cerrar sesión */
 .sesion-cerrada i,
 .check i {
   color: #d3970f;
-  font-size: 4rem;
+  font-size: 7rem;
 }
 
 /* Login */
@@ -1616,4 +1621,94 @@ section {
   font-size: 15px;
   background-color: transparent !important;
   padding-left: 0 !important;
+}
+
+.swal2-container {
+  z-index: 999999;
+}
+
+.swal2-modal {
+  border-radius: 20px !important;
+}
+
+.swal2-container h2 {
+  font-size: 26px !important;
+  color: #a27206;
+  padding-top: 30px;
+}
+
+.swal2-container div {
+  font-size: 18px;
+}
+
+.swal2-confirm {
+  background-color: #d3970f !important;
+  color: white !important;
+  transition: all ease-in-out 0.3s;
+  border-radius: 15px !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  padding: 10px 35px !important;
+}
+
+.swal2-cancel:hover,
+.swal2-confirm {
+  background-color: #d3970f !important;
+  color: white !important;
+  opacity: 0.8;
+}
+
+.swal2-cancel {
+  color: #d3970f !important;
+  border: 1px solid #d3970f !important;
+  transition: all ease-in-out 0.3s;
+  background-color: transparent !important;
+  border-radius: 15px !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  padding: 10px 25px !important;
+}
+
+.embed-responsive {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 75%; /* Para un aspecto de 4:3, usa 75%. Para 16:9, usa 56.25% */
+  overflow: hidden;
+}
+
+.embed-responsive .embed-responsive-1by1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Esto se aplicará a las pantallas con un ancho máximo de 1400px */
+@media (max-width: 1400px) {
+  .embed-responsive .embed-responsive-1by1 {
+    /* Aquí puedes ajustar el tamaño del mapa como prefieras */
+    width: 80%;
+    height: auto;
+  }
+}
+
+.swal2-info {
+  color: #1bb1dc !important;
+  border-color: #1bb1dc !important;
+}
+
+.alertas {
+  color: #d3970f;
+  font-size: 18px;
+}
+
+.container-alertas {
+  padding: 30px;
+}
+
+.alertas ul {
+  list-style: none;
+  padding: 0;
 }

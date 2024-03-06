@@ -1,6 +1,6 @@
 import { SendEmailMascota } from "../../services/mail.services.js";
 import * as service from "../../services/mascotas.services.js";
-import fs from 'fs'
+import fs from "fs";
 
 function getMascotas(req, res) {
   const filter = req.query;
@@ -26,18 +26,18 @@ function getMascotaById(req, res) {
 
 function getImagenMascota(req, res) {
   const nombreImagen = req.params.imagen;
-  fs.exists('./public/' + nombreImagen, (existe) => {
-      if (!existe) {
-          res.status(500).json({
-              message: 'No existe la imgen'
-          })
-      } else {
-          fs.readFile('./public/' + nombreImagen, (err, content) => {
-              res.writeHead(200, {'Content-Type': 'image/jpeg'});
-              res.write(content)
-          });
-      }
-  })
+  fs.exists("./public/" + nombreImagen, (existe) => {
+    if (!existe) {
+      res.status(500).json({
+        message: "No existe la imgen",
+      });
+    } else {
+      fs.readFile("./public/" + nombreImagen, (err, content) => {
+        res.writeHead(200, { "Content-Type": "image/jpeg" });
+        res.write(content);
+      });
+    }
+  });
 }
 
 function createMascota(req, res) {
@@ -46,10 +46,10 @@ function createMascota(req, res) {
     //const imagenPath = req.file.path.replace(/\\/g, "/");
 
     service
-      .createMascota( req.body , req.account._id)
+      .createMascota(req.body, req.account._id)
       .then(async function (mascota) {
-        const coincidencias = await service.findMatchingMascotas(mascota)
-        return res.status(201).json({mascota, coincidencias});
+        const coincidencias = await service.findMatchingMascotas(mascota);
+        return res.status(201).json({ mascota, coincidencias });
       })
       .catch(function (error) {
         return res.status(500).json({ error: error.message });
@@ -76,16 +76,15 @@ function deleteMascota(req, res) {
   });
 }
 
-async function sendMascotaEmail(req,res){
-
-    const {mascota,mensaje} = req.body
-    try {
-        const {rejected} = await SendEmailMascota(mascota,mensaje)
-        if (rejected.length) return res.status(400).json({message: rejected[0] })
-        return res.status(201).json({message: 'Email enviado!!!'})
-    } catch (error) {
-        return res.status(500).json(error)
-    } 
+async function sendMascotaEmail(req, res) {
+  const { mascota, mensaje } = req.body;
+  try {
+    const { rejected } = await SendEmailMascota(mascota, mensaje);
+    if (rejected.length) return res.status(400).json({ message: rejected[0] });
+    return res.status(201).json({ message: "¡Email enviado!" });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
 }
 
 export {
@@ -95,5 +94,5 @@ export {
   getImagenMascota,
   editMascota,
   deleteMascota,
-  sendMascotaEmail
+  sendMascotaEmail,
 };

@@ -5,12 +5,10 @@ import * as accountService from "../../services/account.services.js";
 import * as mascotaService from "../../services/mascotas.services.js";
 import { SendUserEmail } from "../../services/mail.services.js";
 
-
-
 async function createAccount(req, res) {
   return service
     .createAccount(req.body)
-    .then(()=>SendUserEmail(req.body.email))
+    .then(() => SendUserEmail(req.body.email))
     .then(() => {
       res.status(201).json({ message: "La cuenta fue creado correctamente" });
     })
@@ -44,11 +42,15 @@ async function login(req, res) {
   return service
     .login(req.body)
     .then(async (account) => {
-      const token = await tokenService.createToken(account)
+      const token = await tokenService.createToken(account);
       return { token: token, account };
     })
     .then((token) => {
-      res.cookie('accessToken', token.token, { maxAge: 360000, httpOnly: true,domain:'localhost' });
+      res.cookie("accessToken", token.token, {
+        maxAge: 360000,
+        httpOnly: true,
+        domain: "localhost",
+      });
       res.status(200).json(token);
     })
     .catch((err) => {

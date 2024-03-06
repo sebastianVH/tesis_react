@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 // Create a context to manage the script loading state
 const CloudinaryScriptContext = createContext();
 
-function CloudinaryUploadWidget({ setImgMascota ,setPreviewMascota}) {
+function CloudinaryUploadWidget({ setImgMascota, setPreviewMascota }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -29,21 +29,45 @@ function CloudinaryUploadWidget({ setImgMascota ,setPreviewMascota}) {
     if (loaded) {
       var myWidget = window.cloudinary.createUploadWidget(
         {
-            cloudName: "huellasacasa",
-            folder: "huellasacasa",
-            uploadPreset: "o3xexmhp",
-            cropping:true,
-            multiple:false,
-            sources:["local"],
-            maxImageFileSize: 2000000,
-
+          cloudName: "huellasacasa",
+          folder: "huellasacasa",
+          uploadPreset: "o3xexmhp",
+          cropping: true,
+          multiple: false,
+          sources: ["local"],
+          maxImageFileSize: 2000000,
+          language: "es",
+          text: {
+            es: {
+              actions: "Cargar",
+              or: "O",
+              local: {
+                browse: "Buscar",
+                dd_title_single: "Arrastre una imagen aqui",
+              },
+              queue: {
+                done: "Cargado",
+                statuses: {
+                  uploaded: "Cargado",
+                },
+              },
+              menu: {
+                files: "Mis archivos",
+              },
+              crop: {
+                title: "Recortar",
+                skip_btn: "Saltar paso",
+                reset_btn: "Resetear",
+                crop_btn: "Recortar",
+              },
+            },
+          },
         },
 
         (error, result) => {
           if (!error && result && result.event === "success") {
-            setPreviewMascota(result.info.public_id)
+            setPreviewMascota(result.info.public_id);
             setImgMascota(result.info.secure_url);
-            
           }
         }
       );
@@ -66,7 +90,7 @@ function CloudinaryUploadWidget({ setImgMascota ,setPreviewMascota}) {
         type="button"
         onClick={initializeCloudinaryWidget}
       >
-        Upload
+        Subir imagen
       </button>
     </CloudinaryScriptContext.Provider>
   );
