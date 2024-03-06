@@ -1687,7 +1687,6 @@ section {
 
 @media (max-width: 1400px) {
   .embed-responsive .embed-responsive-1by1 {
-    /* Aquí puedes ajustar el tamaño del mapa como prefieras */
     width: 80%;
     height: auto;
   }
