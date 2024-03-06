@@ -553,7 +553,12 @@ success crear perrito
 }
 
 .naranja.volver {
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 0.8 !important;
+}
+
+.detalle-perdidos_body a {
+  line-height: 0.8 !important;
 }
 
 .eliminar {
@@ -1170,17 +1175,32 @@ a.data-letra {
 .form-login input {
   margin-bottom: 15px;
 }
+@media (max-width: 767px) {
+  .header-section-bg {
+    margin-top: 0 !important;
+  }
+}
 
 /* crear y editar */
 .header-section-bg {
-  margin-top: 60px !important;
+  margin-top: 60px;
 }
 .header-section {
   background-color: #1bb1dc;
-  margin-top: -40px !important;
+  /* margin-top: -40px !important; */
   margin-bottom: 30px;
   padding-top: 40px;
   padding-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+  .header-section h2 {
+    font-size: 15px !important;
+  }
+
+  .header-section h3 {
+    font-size: 25px !important;
+  }
 }
 
 .header-section .title-section h2 {
@@ -1410,6 +1430,14 @@ section {
   text-align: left;
 }
 
+@media (max-width: 768px) {
+  .formulario-carga {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    margin-bottom: 20px;
+  }
+}
+
 .formulario-carga {
   /* box-shadow: 0px 0 30px rgba(65, 62, 102, 0.08); */
   padding: 30px;
@@ -1417,6 +1445,12 @@ section {
   /* background-color: #f8f8f8; */
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .seccion-form-carga {
+    padding: 30px 10px !important;
+  }
 }
 
 .seccion-form-carga {
@@ -1431,6 +1465,10 @@ section {
   font-weight: 300;
   color: #232323c3;
   font-size: 18px;
+}
+
+.mapa div {
+  max-width: 100% !important;
 }
 
 .cloudinary-upload {
@@ -1709,4 +1747,11 @@ section {
 .alertas ul {
   list-style: none;
   padding: 0;
+}
+
+@media (max-width: 768px) {
+  .listado-perros .card-perro p {
+    font-size: 12px !important;
+    padding-bottom: 10px;
+  }
 }

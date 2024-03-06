@@ -215,7 +215,7 @@ function MascotasList({ categoria, account }) {
         </h2>
       </header>
 
-      <section className="row justify-content-center justify-content-md-between text-center container-filtros px-md-1 px-lg-2 px-xxl-5">
+      <section className="row justify-content-center justify-content-md-between text-center container-filtros px-md-1 px-lg-2 px-xxl-5 pt-0">
         {/* <div className="col-12 col-md-9 px-0">
           <form className="mascota-list__form">
             Buscar:{" "}
@@ -468,7 +468,7 @@ function MascotasList({ categoria, account }) {
                 </div> */}
               </div>
 
-              <div className="col-md-9 listado-perros px-lg-3 px-xl-4 px-xxl-5 py-3">
+              <div className="col-md-9 listado-perros px-0 px-lg-3 px-xl-4 px-xxl-5 py-3">
                 {mascotas.length === 0 ? (
                   <div className="no-results text-center">
                     <p>
