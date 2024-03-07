@@ -6,6 +6,7 @@ import MascotaListItem from "./MascotaListItem";
 // import "./MascotaList.css";
 import CustomInput from "../../microcomponents/CustomInput";
 import axios from "axios";
+import {LoadStart , LoadRemove} from "../../microcomponents/Loading";
 
 function MascotasList({ categoria, account }) {
   const [mascotas, setMascotas] = useState([]);
@@ -132,13 +133,16 @@ function MascotasList({ categoria, account }) {
       const provinciasNombre = data.provincias.map((prov) => prov.nombre);
       setProvincias(provinciasNombre);
     };
-
+    LoadStart()
     //aca va a ir el init loader
     setIsLoading(true);
     cambiarFiltro(categoria, account);
-    getProvincias();
-    //aca va a ir el remove loader
-    setIsLoading(false);
+    getProvincias().finally(() => {
+      //aca va a ir el finally loader
+      setIsLoading(false);
+      LoadRemove()
+    });
+
   }, [categoria, account]);
 
   useEffect(() => {
@@ -213,7 +217,7 @@ function MascotasList({ categoria, account }) {
   return (
     <div>
       {isLoading ? (
-        <div>Loading...</div> // Aquí puedes reemplazar esto con tu componente de loader
+        <div>{LoadStart()}</div> // Aquí puedes reemplazar esto con tu componente de loader
       ) : (
         <div className="mascota-list container-fluid">
           <header className="text-center col-12 titulo-seccion mx-auto pb-0">
