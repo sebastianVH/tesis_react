@@ -1745,3 +1745,7 @@ section {
     padding-bottom: 10px;
   }
 }
+
+.coincidencias p {
+  font-size: 18px !important;
+}

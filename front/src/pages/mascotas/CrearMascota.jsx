@@ -54,7 +54,7 @@ function CrearMascota() {
             response.data?.coincidencias?.length
           } ${
             response.data?.coincidencias?.length === 1 ? "mascota" : "mascotas"
-          } con las mismas caracteristicas que ${
+          } de la misma especie, sexo y localización que ${
             response.data?.mascota?.nombre
               ? response.data?.mascota?.nombre
               : "la tuya"
@@ -115,7 +115,7 @@ function CrearMascota() {
   const imgMascotaRender = cld.image(previewMascota);
 
   return (
-    <div className="row justify-content-center">
+    <div className="justify-content-center">
       {success ? (
         <>
           <CreadoConExito
