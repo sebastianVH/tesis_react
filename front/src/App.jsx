@@ -1,4 +1,4 @@
-import { Outlet, Link, useRef } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./pages/user/AuthContext";
 
@@ -12,14 +12,14 @@ import "./App.css";
 export function App() {
   const { token } = useContext(AuthContext);
 
-  const navBarRef = useRef(null);
+  // const navBarRef = useRef(null);
 
-  const collapseNav = () => {
-    const bsCollapse = new bootstrap.Collapse(navBarRef.current, {
-      toggle: false,
-    });
-    bsCollapse.hide();
-  };
+  // const collapseNav = () => {
+  //   const bsCollapse = new bootstrap.Collapse(navBarRef.current, {
+  //     toggle: false,
+  //   });
+  //   bsCollapse.hide();
+  // };
 
   return (
     <div className="App">
