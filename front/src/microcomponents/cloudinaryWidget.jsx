@@ -35,7 +35,6 @@ function CloudinaryUploadWidget({ setImgMascota, setPreviewMascota }) {
           cropping: true,
           multiple: false,
           sources: ["local"],
-          maxImageFileSize: 2000000,
           language: "es",
           text: {
             es: {
@@ -72,13 +71,8 @@ function CloudinaryUploadWidget({ setImgMascota, setPreviewMascota }) {
         }
       );
 
-      document.getElementById("upload_widget").addEventListener(
-        "click",
-        function () {
-          myWidget.open();
-        },
-        false
-      );
+      myWidget.open();
+
     }
   };
 
