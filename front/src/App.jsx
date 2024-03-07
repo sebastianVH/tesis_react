@@ -21,7 +21,7 @@ export function App() {
               <div className="logo mx-auto mx-lg-1 mr-lg-auto">
                 <img
                   src={appLogo}
-                  alt="Logo Hoggo"
+                  alt="Logo Huellas a Casa"
                   className="img-fluid"
                   id="logo-header"
                 />{" "}
