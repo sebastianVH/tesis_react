@@ -32,7 +32,7 @@ function LoginPage() {
           setError("");
           localStorage.setItem("token", data.token);
           setToken(data.token);
-          fetch(`http://localhost:2023/api/profile`, {
+          fetch(`https://tesis-react-backend.vercel.app/api/profile`, {
             headers: { "auth-token": data.token },
           })
             .then((response) => response.json())

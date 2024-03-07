@@ -8,7 +8,7 @@ function EliminarMascota({ idMascota }) {
   const [mascota, setMascota] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:2023/api/mascotas/${idMascota}`)
+    fetch(`https://tesis-react-backend.vercel.app/api/mascotas/${idMascota}`)
       .then((response) => response.json())
       .then((data) => {
         if (data) {
@@ -18,7 +18,7 @@ function EliminarMascota({ idMascota }) {
   }, [idMascota]);
 
   const handleEliminar = () => {
-    fetch(`http://localhost:2023/api/mascotas/${idMascota}`, {
+    fetch(`https://tesis-react-backend.vercel.app/api/mascotas/${idMascota}`, {
       method: "DELETE",
     })
       .then((response) => {

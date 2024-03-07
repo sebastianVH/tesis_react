@@ -13,7 +13,7 @@ function LogoutPage() {
     return authService
       .logout()
       .then((data) => {
-        fetch(`http://localhost:2023/api/profile`, {
+        fetch(`https://tesis-react-backend.vercel.app/api/profile`, {
           headers: { "auth-token": data.token },
         }).then(() => {
           setToken(null);

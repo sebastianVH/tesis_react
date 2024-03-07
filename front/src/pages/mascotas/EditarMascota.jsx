@@ -20,7 +20,7 @@ function EditarMascota({ idMascota }) {
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:2023/api/mascotas/${idMascota}`)
+    fetch(`https://tesis-react-backend.vercel.app/api/mascotas/${idMascota}`)
       .then((response) => response.json())
       .then((data) => {
         if (data) {
@@ -48,7 +48,7 @@ function EditarMascota({ idMascota }) {
       formData.imagen = imgMascota;
     }
 
-    fetch(`http://localhost:2023/api/mascotas/${mascota._id}`, {
+    fetch(`https://tesis-react-backend.vercel.app/api/mascotas/${mascota._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
