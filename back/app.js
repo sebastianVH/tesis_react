@@ -14,13 +14,13 @@ cloudinary.config({
 const app = express();
 app.use(cors(
   {
-    origin: ["https://tesis-react-sebastianvh.vercel.app"],
+    origin: ["https://www.huellasacasa.com"],
     methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
   }
 ))
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'www.huellasacasa.com');
+  res.setHeader('Access-Control-Allow-Origin', 'https://www.huellasacasa.com');
   next();
 });
 
