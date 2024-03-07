@@ -1,5 +1,5 @@
 async function call({ uri, method = "GET", body = undefined }) {
-  return fetch(`http://localhost:2023/api/${uri}`, {
+  return fetch(`https://tesis-react-backend.vercel.app/api/${uri}`, {
     headers: {
       "auth-token": localStorage.getItem("token"),
       "Content-Type": "application/json",
