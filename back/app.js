@@ -18,6 +18,7 @@ app.use(cors(
     methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
   }
 ))
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'www.huellasacasa.com');
   next();
