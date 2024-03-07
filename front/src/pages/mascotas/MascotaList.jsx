@@ -137,10 +137,12 @@ function MascotasList({ categoria, account }) {
     //aca va a ir el init loader
     setIsLoading(true);
     cambiarFiltro(categoria, account);
-    getProvincias();
-    //aca va a ir el remove loader
-    setIsLoading(false);
-    LoadRemove()
+    getProvincias().finally(() => {
+      //aca va a ir el finally loader
+      setIsLoading(false);
+      LoadRemove()
+    });
+
   }, [categoria, account]);
 
   useEffect(() => {
