@@ -12,7 +12,18 @@ cloudinary.config({
 });
 
 const app = express();
-app.use(cors());
+app.use(cors(
+  {
+    origin: ["https://www.huellasacasa.com"],
+    methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
+  }
+))
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://www.huellasacasa.com');
+  next();
+});
+
 app.use(cookieParser())
 
 app.use(express.urlencoded({ extended: true }));

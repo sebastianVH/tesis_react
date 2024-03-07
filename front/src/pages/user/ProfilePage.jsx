@@ -10,7 +10,7 @@ function ProfilePage() {
     if (!token) {
       navigate("/login");
     }
-    fetch(`http://localhost:2023/api/profile`, {
+    fetch(`https://tesis-react-backend.vercel.app/api/profile`, {
       headers: { "auth-token": token },
     })
       .then((response) => response.json())

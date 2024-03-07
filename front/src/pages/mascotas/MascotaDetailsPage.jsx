@@ -9,7 +9,7 @@ function MascotaDetailsPage() {
   const { idMascota } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:2023/api/mascotas/${idMascota}`)
+    fetch(`https://tesis-react-backend.vercel.app/api/mascotas/${idMascota}`)
       .then((response) => response.json())
       .then((data) => {
         if (data) {
@@ -46,7 +46,7 @@ function MascotaDetailsPage() {
       if (response.isConfirmed) {
         try {
           const { data, status } = await axios.post(
-            `http://localhost:2023/api/mascotas/enviarmail`,
+            `https://tesis-react-backend.vercel.app/api/mascotas/enviarmail`,
             { mascota, mensaje: response.value },
             {
               headers: {
