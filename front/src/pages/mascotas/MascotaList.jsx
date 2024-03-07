@@ -129,8 +129,11 @@ function MascotasList({ categoria, account }) {
       const provinciasNombre = data.provincias.map((prov) => prov.nombre);
       setProvincias(provinciasNombre);
     };
+
+    //aca va a ir el init loader
     cambiarFiltro(categoria, account);
     getProvincias();
+    //aca va a ir el remove loader
   }, [categoria, account]);
 
   useEffect(() => {
@@ -159,11 +162,7 @@ function MascotasList({ categoria, account }) {
 
   useEffect(() => {
     aplicarFiltros();
-  }, [filtroNombre, filtros]);
-
-  useEffect(() => {
-    aplicarFiltros();
-  }, [selectedDate]);
+  }, [filtroNombre, filtros, selectedDate]);
 
   const { userData } = useContext(UserContext);
 
