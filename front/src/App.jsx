@@ -11,30 +11,21 @@ import appLogo from "./assets/img/logo_horizontal.png";
 import "./App.css";
 export function App() {
   const { token } = useContext(AuthContext);
-
-  // const navBarRef = useRef(null);
-
-  // const collapseNav = () => {
-  //   const bsCollapse = new bootstrap.Collapse(navBarRef.current, {
-  //     toggle: false,
-  //   });
-  //   bsCollapse.hide();
-  // };
-
   return (
     <div className="App">
       <header id="header" className="fixed-top mb-5">
         <nav className="navbar navbar-expand-lg py-0 px-md-4">
           <div className="container-fluid">
             <Link to="/">
+              {" "}
               <div className="logo mx-auto mx-lg-1 mr-lg-auto">
                 <img
                   src={appLogo}
-                  alt="Logo Huellas a Casa"
+                  alt="Logo Hoggo"
                   className="img-fluid"
                   id="logo-header"
-                />
-              </div>
+                />{" "}
+              </div>{" "}
               <h1 className="d-none">Huellas a Casa</h1>
             </Link>
             <button
@@ -48,55 +39,42 @@ export function App() {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div
-              className="collapse navbar-collapse nav-menu"
-              id="navbarNav"
-              ref={navBarRef}
-            >
+            <div className="collapse navbar-collapse nav-menu" id="navbarNav">
               <ul className="navbar-nav justify-content-center me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link to="/" onClick={collapseNav}>
-                    Inicio
-                  </Link>
+                  <Link to="/">Inicio</Link>
                 </li>
                 <li className="nav-item">
                   <li>
-                    <Link to="/mascotas/perdidos" onClick={collapseNav}>
-                      Perdidos
-                    </Link>
+                    <Link to="/mascotas/perdidos">Perdidos</Link>
                   </li>
                 </li>
                 <li className="nav-item">
-                  <Link to="/mascotas/encontrados" onClick={collapseNav}>
-                    Encontrados
-                  </Link>
+                  {" "}
+                  <Link to="/mascotas/encontrados">Encontrados</Link>
                 </li>
               </ul>
               <ul className="navbar-nav justify-content-center ml-auto mb-2 mb-lg-0">
                 {token ? (
                   <>
                     <li className="nav-item">
-                      <Link to="/profile" onClick={collapseNav}>
-                        Cuenta
-                      </Link>
+                      {" "}
+                      <Link to="/profile">Cuenta</Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/logout" onClick={collapseNav}>
-                        Cerrar sesión
-                      </Link>
+                      {" "}
+                      <Link to="/logout">Cerrar sesión</Link>
                     </li>
                   </>
                 ) : (
                   <>
                     <li className="nav-item">
-                      <Link to="/register" onClick={collapseNav}>
-                        Registrate
-                      </Link>
+                      {" "}
+                      <Link to="/register">Registrate</Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/login" onClick={collapseNav}>
-                        Iniciar sesión
-                      </Link>
+                      {" "}
+                      <Link to="/login">Iniciar sesión</Link>
                     </li>
                   </>
                 )}
