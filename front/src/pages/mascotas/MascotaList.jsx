@@ -6,6 +6,7 @@ import MascotaListItem from "./MascotaListItem";
 // import "./MascotaList.css";
 import CustomInput from "../../microcomponents/CustomInput";
 import axios from "axios";
+import {LoadStart , LoadRemove} from "../../microcomponents/Loading";
 
 function MascotasList({ categoria, account }) {
   const [mascotas, setMascotas] = useState([]);
@@ -132,13 +133,14 @@ function MascotasList({ categoria, account }) {
       const provinciasNombre = data.provincias.map((prov) => prov.nombre);
       setProvincias(provinciasNombre);
     };
-
+    LoadStart()
     //aca va a ir el init loader
     setIsLoading(true);
     cambiarFiltro(categoria, account);
     getProvincias();
     //aca va a ir el remove loader
     setIsLoading(false);
+    LoadRemove()
   }, [categoria, account]);
 
   useEffect(() => {
