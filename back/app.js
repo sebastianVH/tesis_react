@@ -14,7 +14,7 @@ cloudinary.config({
 const app = express();
 app.use(cors(
   {
-    origin: ["www.huellasacasa.com"],
+    origin: ["https://tesis-react-sebastianvh.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
   }
 ))
