@@ -5,9 +5,9 @@ import PropTypes from "prop-types";
 
 function CreadoConExito({ especie, categoria }) {
   return (
-    <div className="exito row justify-content-center py-3 mb-5 p-5">
-      <div className="titulo-seccion text-center d-flex justify-content-between align-items-center">
-        <div className="col-md-5 col-lg-3 text-left">
+    <div className="exito row justify-content-center py-3 mb-5 p-md-5">
+      <div className="titulo-seccion text-center d-md-flex justify-content-between align-items-center">
+        <div className="col-md-5 col-lg-3 text-center text-md-left">
           <div className="check">
             <i className="bi bi-check-circle"></i>
           </div>

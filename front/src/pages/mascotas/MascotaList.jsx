@@ -6,6 +6,7 @@ import MascotaListItem from "./MascotaListItem";
 // import "./MascotaList.css";
 import CustomInput from "../../microcomponents/CustomInput";
 import axios from "axios";
+import {LoadStart , LoadRemove} from "../../microcomponents/Loading";
 
 function MascotasList({ categoria, account }) {
   const [mascotas, setMascotas] = useState([]);
@@ -20,6 +21,7 @@ function MascotasList({ categoria, account }) {
   const [isSidebarVisible, setSidebarVisible] = useState(
     window.innerWidth > 768
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   // Estado inicial de los filtros
   const [initialFiltros, setInitialFiltros] = useState({});
@@ -43,7 +45,9 @@ function MascotasList({ categoria, account }) {
   const cambiarFiltro = (categoria, account) => {
     const filtro = categoria ? `categoria=${categoria}` : "";
     const filtro2 = account ? `account=${account}` : "";
-    fetch(`https://tesis-react-backend.vercel.app/api/mascotas?${filtro}&${filtro2}`)
+    fetch(
+      `https://tesis-react-backend.vercel.app/api/mascotas?${filtro}&${filtro2}`
+    )
       .then((response) => response.json())
       .then((data) => {
         // Ordenar las mascotas por fecha antes de establecerlas en el estado
@@ -129,8 +133,16 @@ function MascotasList({ categoria, account }) {
       const provinciasNombre = data.provincias.map((prov) => prov.nombre);
       setProvincias(provinciasNombre);
     };
+    LoadStart()
+    //aca va a ir el init loader
+    setIsLoading(true);
     cambiarFiltro(categoria, account);
-    getProvincias();
+    getProvincias().finally(() => {
+      //aca va a ir el finally loader
+      setIsLoading(false);
+      LoadRemove()
+    });
+
   }, [categoria, account]);
 
   useEffect(() => {
@@ -159,11 +171,7 @@ function MascotasList({ categoria, account }) {
 
   useEffect(() => {
     aplicarFiltros();
-  }, [filtroNombre, filtros]);
-
-  useEffect(() => {
-    aplicarFiltros();
-  }, [selectedDate]);
+  }, [filtroNombre, filtros, selectedDate]);
 
   const { userData } = useContext(UserContext);
 
@@ -207,16 +215,20 @@ function MascotasList({ categoria, account }) {
   };
 
   return (
-    <div className="mascota-list container-fluid">
-      <header className="text-center col-12 titulo-seccion mx-auto pb-0">
-        <h2 className="titulo-listado">
-          <span className="light lowercase">Listado de</span> mascotas{" "}
-          {categoria ? categoria.toLowerCase().slice(0, -1) + "as" : ""}
-        </h2>
-      </header>
+    <div>
+      {isLoading ? (
+        <div>{LoadStart()}</div> // Aquí puedes reemplazar esto con tu componente de loader
+      ) : (
+        <div className="mascota-list container-fluid">
+          <header className="text-center col-12 titulo-seccion mx-auto pb-0">
+            <h2 className="titulo-listado">
+              <span className="light lowercase">Listado de</span> mascotas{" "}
+              {categoria ? categoria.toLowerCase().slice(0, -1) + "as" : ""}
+            </h2>
+          </header>
 
-      <section className="row justify-content-center justify-content-md-between text-center container-filtros px-md-1 px-lg-2 px-xxl-5 pt-0">
-        {/* <div className="col-12 col-md-9 px-0">
+          <section className="row justify-content-center justify-content-md-between text-center container-filtros px-md-1 px-lg-2 px-xxl-5 pt-0">
+            {/* <div className="col-12 col-md-9 px-0">
           <form className="mascota-list__form">
             Buscar:{" "}
             <input
@@ -229,295 +241,302 @@ function MascotasList({ categoria, account }) {
           </form>
         </div> */}
 
-        {userData && userData._id ? (
-          <div className="col-4 col-md-3">
-            <Link
-              className="btn btn-azul d-none d-md-block"
-              to="/mascotas/nuevo"
-            >
-              Agregar mascota
-            </Link>
-
-            <Link
-              className="btn btn-azul btn-flotante d-md-none"
-              to="/mascotas/nuevo"
-            >
-              <i className="bi bi-plus"></i>
-            </Link>
-          </div>
-        ) : (
-          <div className="col-4 col-md-3 col-lg-2">
-            <Link className="btn btn-azul d-none d-md-block" to="/login">
-              Agregar
-            </Link>
-
-            <Link className="btn btn-azul btn-flotante d-md-none" to="/login">
-              <i className="bi bi-plus"></i>
-            </Link>
-          </div>
-        )}
-
-        <div className="col-12 py-3">
-          <div className="container-fluid">
-            <div className="row justify-content-center">
-              <div className="d-md-none text-left">
-                <button
-                  className="btn-toggle-filtros"
-                  onClick={() => setSidebarVisible(!isSidebarVisible)}
+            {userData && userData._id ? (
+              <div className="col-4 col-md-3">
+                <Link
+                  className="btn btn-azul d-none d-md-block"
+                  to="/mascotas/nuevo"
                 >
-                  Filtrar <i class="bi bi-chevron-down"></i>
-                </button>
+                  Agregar mascota
+                </Link>
+
+                <Link
+                  className="btn btn-azul btn-flotante d-md-none"
+                  to="/mascotas/nuevo"
+                >
+                  <i className="bi bi-plus"></i>
+                </Link>
               </div>
+            ) : (
+              <div className="col-4 col-md-3 col-lg-2">
+                <Link className="btn btn-azul d-none d-md-block" to="/login">
+                  Agregar
+                </Link>
 
-              <div
-                className={`col-12 col-md-3 barra-filtros align-items-center justify-content-center py-4 text-left ${
-                  isSidebarVisible ? "sidebar-visible" : "sidebar-hidden"
-                }`}
-              >
-                <p className="filtros-title mb-1">Filtros de búsqueda</p>
-                <div className="btn-limpiar mb-4">
-                  <button onClick={limpiarFiltros}>Limpiar filtros</button>
-                </div>
-                <div className="px-0 pb-4">
-                  <form className="mascota-list__form">
-                    Buscar{" "}
-                    <input
-                      id="filtro"
-                      className="mascota-list__filter"
-                      type="text"
-                      onInput={onChangeFilter}
-                      placeholder="Escribí el nombre de la mascota"
-                    />
-                  </form>
-                </div>
-                <div className="filter-container text-left pb-4">
-                  <p>Especie</p>
-                  <div className="btns-filters d-flex flex-wrap">
-                    <div className="botones-choice">
-                      <label className={getButtonClassName("perros")}>
-                        <input
-                          type="checkbox"
-                          name="especie"
-                          value={"Perro"}
-                          onChange={onCheckboxChange}
-                        />
-                        Perros
-                      </label>
-                    </div>
-                    <div className="botones-choice px-2">
-                      <label className={getButtonClassName("gatos")}>
-                        <input
-                          type="checkbox"
-                          name="especie"
-                          value={"Gato"}
-                          onChange={onCheckboxChange}
-                        />
-                        Gatos
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div className="filter-container text-left pb-4">
-                  <p>Ubicación</p>
-                  <div className="overflow-hidden btns-filters d-flex flex-wrap select-provincias-filtro py-1 pl-4px">
-                    <label>Provincia </label>
-                    <CustomInput
-                      name="provincia"
-                      type="select"
-                      options={provincias}
-                      onChange={handleInputChange}
-                    />{" "}
-                  </div>
-                  <div className="overflow-hidden btns-filters flex-wrap select-provincias-filtro py-1 pl-4px">
-                    <label>Localidad </label>
-                    <CustomInput
-                      name="municipio"
-                      type="select"
-                      options={municipios}
-                      onChange={handleInputChange}
-                    />{" "}
-                  </div>
-                </div>
-                <div className="filter-container text-left pb-4">
-                  <p>Fecha</p>
-                  <div className="overflow-hidden btns-filters flex-wrap select-provincias-filtro py-1">
-                    <input
-                      type="date"
-                      value={selectedDate}
-                      onChange={(e) => setSelectedDate(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="filter-container text-left pb-4">
-                  <p>Sexo</p>
-                  <div className="btns-filters d-flex flex-wrap">
-                    <div className="botones-choice pr-1 pb-2">
-                      <label className={getButtonClassName("machos")}>
-                        <input
-                          type="checkbox"
-                          name="sexo"
-                          value={"Macho"}
-                          onChange={onCheckboxChange}
-                        />
-                        Machos
-                      </label>
-                    </div>
-                    <div className="botones-choice px-1 pb-2">
-                      <label className={getButtonClassName("hembras")}>
-                        <input
-                          type="checkbox"
-                          name="sexo"
-                          value={"Hembra"}
-                          onChange={onCheckboxChange}
-                        />
-                        Hembras
-                      </label>
-                    </div>
-                  </div>
-                </div>
+                <Link
+                  className="btn btn-azul btn-flotante d-md-none"
+                  to="/login"
+                >
+                  <i className="bi bi-plus"></i>
+                </Link>
+              </div>
+            )}
 
-                <div className="filter-container text-left pb-4">
-                  <p>Tamaño</p>
-                  <div className="btns-filters d-flex flex-wrap">
-                    <div className="botones-choice pr-2 pb-2">
-                      <label className={getButtonClassName("chicos")}>
-                        <input
-                          type="checkbox"
-                          name="tamanio"
-                          value="Chico"
-                          onChange={onCheckboxChange}
-                        />
-                        Chicos
-                      </label>
-                    </div>
-                    <div className="botones-choice pr-2 pb-2">
-                      <label className={getButtonClassName("medianos")}>
-                        <input
-                          type="checkbox"
-                          name="tamanio"
-                          value="Mediano"
-                          onChange={onCheckboxChange}
-                        />
-                        Medianos
-                      </label>
-                    </div>
-                    <div className="botones-choice pr-2">
-                      <label className={getButtonClassName("grandes")}>
-                        <input
-                          type="checkbox"
-                          name="tamanio"
-                          value="Grande"
-                          onChange={onCheckboxChange}
-                        />
-                        Grandes
-                      </label>
-                    </div>
+            <div className="col-12 py-3">
+              <div className="container-fluid">
+                <div className="row justify-content-center">
+                  <div className="d-md-none text-left">
+                    <button
+                      className="btn-toggle-filtros"
+                      onClick={() => setSidebarVisible(!isSidebarVisible)}
+                    >
+                      Filtrar <i class="bi bi-chevron-down"></i>
+                    </button>
                   </div>
-                </div>
 
-                <div className="filter-container text-left pb-4">
-                  <p>Collar</p>
-                  <div className="btns-filters d-flex flex-wrap">
-                    <div className="botones-choice pr-2 pb-2">
-                      <label
-                        className={getButtonClassName(
-                          "Tiene collar con chapita"
-                        )}
-                      >
-                        <input
-                          type="checkbox"
-                          name="collar"
-                          value="Tiene collar con chapita"
-                          onChange={onCheckboxChange}
-                        />
-                        Con collar (chapa)
-                      </label>
+                  <div
+                    className={`col-12 col-md-3 barra-filtros align-items-center justify-content-center py-4 text-left ${
+                      isSidebarVisible ? "sidebar-visible" : "sidebar-hidden"
+                    }`}
+                  >
+                    <p className="filtros-title mb-1">Filtros de búsqueda</p>
+                    <div className="btn-limpiar mb-4">
+                      <button onClick={limpiarFiltros}>Limpiar filtros</button>
                     </div>
-                    <div className="botones-choice pr-2 pb-2">
-                      <label
-                        className={getButtonClassName(
-                          "Tiene collar sin chapita"
-                        )}
-                      >
+                    <div className="px-0 pb-4">
+                      <form className="mascota-list__form">
+                        Buscar{" "}
                         <input
-                          type="checkbox"
-                          name="collar"
-                          value="Tiene collar sin chapita"
-                          onChange={onCheckboxChange}
+                          id="filtro"
+                          className="mascota-list__filter"
+                          type="text"
+                          onInput={onChangeFilter}
+                          placeholder="Escribí el nombre de la mascota"
                         />
-                        Con collar (sin chapa)
-                      </label>
+                      </form>
                     </div>
-                    <div className="botones-choice pr-2 pb-2">
-                      <label className={getButtonClassName("No tiene collar")}>
+                    <div className="filter-container text-left pb-4">
+                      <p>Especie</p>
+                      <div className="btns-filters d-flex flex-wrap">
+                        <div className="botones-choice">
+                          <label className={getButtonClassName("perros")}>
+                            <input
+                              type="checkbox"
+                              name="especie"
+                              value={"Perro"}
+                              onChange={onCheckboxChange}
+                            />
+                            Perros
+                          </label>
+                        </div>
+                        <div className="botones-choice px-2">
+                          <label className={getButtonClassName("gatos")}>
+                            <input
+                              type="checkbox"
+                              name="especie"
+                              value={"Gato"}
+                              onChange={onCheckboxChange}
+                            />
+                            Gatos
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="filter-container text-left pb-4">
+                      <p>Ubicación</p>
+                      <div className="overflow-hidden btns-filters d-flex flex-wrap select-provincias-filtro py-1 pl-4px">
+                        <label>Provincia </label>
+                        <CustomInput
+                          name="provincia"
+                          type="select"
+                          options={provincias}
+                          onChange={handleInputChange}
+                        />{" "}
+                      </div>
+                      <div className="overflow-hidden btns-filters flex-wrap select-provincias-filtro py-1 pl-4px">
+                        <label>Localidad </label>
+                        <CustomInput
+                          name="municipio"
+                          type="select"
+                          options={municipios}
+                          onChange={handleInputChange}
+                        />{" "}
+                      </div>
+                    </div>
+                    <div className="filter-container text-left pb-4">
+                      <p>Fecha</p>
+                      <div className="overflow-hidden btns-filters flex-wrap select-provincias-filtro py-1">
                         <input
-                          type="checkbox"
-                          name="collar"
-                          value="No tiene collar"
-                          onChange={onCheckboxChange}
+                          type="date"
+                          value={selectedDate}
+                          onChange={(e) => setSelectedDate(e.target.value)}
                         />
-                        Sin collar
-                      </label>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                    <div className="filter-container text-left pb-4">
+                      <p>Sexo</p>
+                      <div className="btns-filters d-flex flex-wrap">
+                        <div className="botones-choice pr-1 pb-2">
+                          <label className={getButtonClassName("machos")}>
+                            <input
+                              type="checkbox"
+                              name="sexo"
+                              value={"Macho"}
+                              onChange={onCheckboxChange}
+                            />
+                            Machos
+                          </label>
+                        </div>
+                        <div className="botones-choice px-1 pb-2">
+                          <label className={getButtonClassName("hembras")}>
+                            <input
+                              type="checkbox"
+                              name="sexo"
+                              value={"Hembra"}
+                              onChange={onCheckboxChange}
+                            />
+                            Hembras
+                          </label>
+                        </div>
+                      </div>
+                    </div>
 
-                {/* <div className="filter-container text-left pb-4">
+                    <div className="filter-container text-left pb-4">
+                      <p>Tamaño</p>
+                      <div className="btns-filters d-flex flex-wrap">
+                        <div className="botones-choice pr-2 pb-2">
+                          <label className={getButtonClassName("chicos")}>
+                            <input
+                              type="checkbox"
+                              name="tamanio"
+                              value="Chico"
+                              onChange={onCheckboxChange}
+                            />
+                            Chicos
+                          </label>
+                        </div>
+                        <div className="botones-choice pr-2 pb-2">
+                          <label className={getButtonClassName("medianos")}>
+                            <input
+                              type="checkbox"
+                              name="tamanio"
+                              value="Mediano"
+                              onChange={onCheckboxChange}
+                            />
+                            Medianos
+                          </label>
+                        </div>
+                        <div className="botones-choice pr-2">
+                          <label className={getButtonClassName("grandes")}>
+                            <input
+                              type="checkbox"
+                              name="tamanio"
+                              value="Grande"
+                              onChange={onCheckboxChange}
+                            />
+                            Grandes
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="filter-container text-left pb-4">
+                      <p>Collar</p>
+                      <div className="btns-filters d-flex flex-wrap">
+                        <div className="botones-choice pr-2 pb-2">
+                          <label
+                            className={getButtonClassName(
+                              "Tiene collar con chapita"
+                            )}
+                          >
+                            <input
+                              type="checkbox"
+                              name="collar"
+                              value="Tiene collar con chapita"
+                              onChange={onCheckboxChange}
+                            />
+                            Con collar (chapa)
+                          </label>
+                        </div>
+                        <div className="botones-choice pr-2 pb-2">
+                          <label
+                            className={getButtonClassName(
+                              "Tiene collar sin chapita"
+                            )}
+                          >
+                            <input
+                              type="checkbox"
+                              name="collar"
+                              value="Tiene collar sin chapita"
+                              onChange={onCheckboxChange}
+                            />
+                            Con collar (sin chapa)
+                          </label>
+                        </div>
+                        <div className="botones-choice pr-2 pb-2">
+                          <label
+                            className={getButtonClassName("No tiene collar")}
+                          >
+                            <input
+                              type="checkbox"
+                              name="collar"
+                              value="No tiene collar"
+                              onChange={onCheckboxChange}
+                            />
+                            Sin collar
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* <div className="filter-container text-left pb-4">
                   <p>Ubicacion</p>
                   <GoogleMapComponent />
                 </div> */}
-              </div>
-
-              <div className="col-md-9 listado-perros px-0 px-lg-3 px-xl-4 px-xxl-5 py-3">
-                {mascotas.length === 0 ? (
-                  <div className="no-results text-center">
-                    <p>
-                      ¡Lo sentimos! No hay resultados para mostrar con estos
-                      parametros de búsqueda
-                    </p>
-                    <div className="img-sorry">
-                      <img
-                        src="https://res.cloudinary.com/huellasacasa/image/upload/v1708899250/huellasacasa/jtxzs8ejiqu2miyhygqi.png"
-                        alt=""
-                        className="img-fluid"
-                      />
-                    </div>
                   </div>
-                ) : (
-                  <div className="perrosencontrados row mascota-list__list px-xxl-5">
-                    {[...currentItems]
-                      .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
-                      .map((mascota) => (
-                        <MascotaListItem
-                          key={mascota._id}
-                          mascota={mascota}
-                          account={account}
-                        />
-                      ))}
 
-                    {/* Renderiza los enlaces de paginación */}
-                    <div className="col-12 mx-auto botones-paginacion">
-                      {[...Array(totalPages)].map((e, i) => (
-                        <button
-                          key={i}
-                          onClick={(event) => handleClick(event, i + 1)}
-                          className={
-                            currentPage === i + 1
-                              ? "btn btn-naranja"
-                              : "btn btn-naranja-outline"
-                          }
-                        >
-                          {i + 1}
-                        </button>
-                      ))}
-                    </div>
+                  <div className="col-md-9 listado-perros px-0 px-lg-3 px-xl-4 px-xxl-5 py-3">
+                    {mascotas.length === 0 ? (
+                      <div className="no-results text-center">
+                        <p>
+                          ¡Lo sentimos! No hay resultados para mostrar con estos
+                          parametros de búsqueda
+                        </p>
+                        <div className="img-sorry">
+                          <img
+                            src="https://res.cloudinary.com/huellasacasa/image/upload/v1708899250/huellasacasa/jtxzs8ejiqu2miyhygqi.png"
+                            alt=""
+                            className="img-fluid"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="perrosencontrados row mascota-list__list px-xxl-5">
+                        {[...currentItems]
+                          .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+                          .map((mascota) => (
+                            <MascotaListItem
+                              key={mascota._id}
+                              mascota={mascota}
+                              account={account}
+                            />
+                          ))}
+
+                        {/* Renderiza los enlaces de paginación */}
+                        <div className="col-12 mx-auto botones-paginacion">
+                          {[...Array(totalPages)].map((e, i) => (
+                            <button
+                              key={i}
+                              onClick={(event) => handleClick(event, i + 1)}
+                              className={
+                                currentPage === i + 1
+                                  ? "btn btn-naranja"
+                                  : "btn btn-naranja-outline"
+                              }
+                            >
+                              {i + 1}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
-      </section>
+      )}
     </div>
   );
 }

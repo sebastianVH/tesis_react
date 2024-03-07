@@ -163,16 +163,6 @@ section {
   }
 }
 
-.hero:before {
-  content: "";
-  /*    background: rgba(13, 20, 26, 0.3);*/
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
 .hero .hero-container {
   position: absolute;
   bottom: 0;
@@ -1754,4 +1744,8 @@ section {
     font-size: 12px !important;
     padding-bottom: 10px;
   }
+}
+
+.coincidencias p {
+  font-size: 18px !important;
 }

@@ -164,11 +164,11 @@ function InicioPage() {
                   sus mascotas de publicar una foto de ellas junto con los datos
                   de contacto. De esta manera, si alguien encuentra un perro en
                   la calle y no sabe quién es su dueño, podrá entrar al
-                  <em>listado de perros perdidos</em>, ver si coinciden los
+                  <em> listado de perros perdidos</em>, ver si coinciden los
                   rasgos con alguno de los publicados y contactar así a sus
                   dueños. Si no halla ningún perrito parecido, también podrá
                   publicar al que encontró en la sección de
-                  <em>encontrados</em>, a la que van a poder acceder los dueños
+                  <em> encontrados</em>, a la que van a poder acceder los dueños
                   que están buscando a sus perros para ver si alguien los ha
                   encontrado.
                 </p>

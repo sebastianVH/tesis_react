@@ -30,7 +30,7 @@ const mascota = yup.object({
     .string()
     .required("El campo de celular es obligatorio")
     .matches(/^[0-9]+$/, "El campo de celular solo puede contener números")
-    .length(8, "El campo de celular debe tener 8 dígitos"),
+    .length(10, "El campo de celular debe tener 10 dígitos"),
   whatsapp: yup
     .string()
     .optional()
@@ -91,7 +91,7 @@ const editMascota = yup.object({
     .string()
     .required("El campo de celular es obligatorio")
     .matches(/^[0-9]+$/, "El campo de celular solo puede contener números")
-    .length(8, "El campo de celular debe tener 8 dígitos"),
+    .length(10, "El campo de celular debe tener 10 dígitos"),
   whatsapp: yup
     .string()
     .optional()
