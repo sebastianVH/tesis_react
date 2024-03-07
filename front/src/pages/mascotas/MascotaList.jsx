@@ -43,7 +43,7 @@ function MascotasList({ categoria, account }) {
   const cambiarFiltro = (categoria, account) => {
     const filtro = categoria ? `categoria=${categoria}` : "";
     const filtro2 = account ? `account=${account}` : "";
-    fetch(`http://localhost:2023/api/mascotas?${filtro}&${filtro2}`)
+    fetch(`https://tesis-react-backend.vercel.app/api/mascotas?${filtro}&${filtro2}`)
       .then((response) => response.json())
       .then((data) => {
         // Ordenar las mascotas por fecha antes de establecerlas en el estado

@@ -6,7 +6,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   useEffect(() => {
-    fetch(`http://localhost:2023/api/profile`, {
+    fetch(`https://tesis-react-backend.vercel.app/api/profile`, {
       headers: { "auth-token": localStorage.getItem("token") },
     })
       .then((response) => response.json())
