@@ -48,13 +48,16 @@ function EditarMascota({ idMascota }) {
       formData.imagen = imgMascota;
     }
 
-    fetch(`https://tesis-react-backend.vercel.app/api/mascotas/${mascota._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
+    fetch(
+      `https://tesis-react-backend.vercel.app/api/mascotas/${mascota._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         setMascota({ ...mascota, ...data });
@@ -425,7 +428,7 @@ function EditarMascota({ idMascota }) {
                 className="btn btn-primary redbtn text-white text-center w-100 col-lg-12 boton-color"
                 type="submit"
               >
-                Crear
+                Editar
               </button>
             </>
           )}

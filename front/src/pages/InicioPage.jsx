@@ -139,7 +139,7 @@ function InicioPage() {
               <div>
                 <div className="titulo-seccion text-center pb-3 mb-0">
                   <h2 className="pb-0 mb-0 text-lg-left ml-0 pl-0">
-                    ¿Qué es <em>Huellas a Casa</em>?
+                    ¿Qué es <em>HUELLAS A CASA</em>?
                   </h2>
                 </div>
 
@@ -154,7 +154,7 @@ function InicioPage() {
                 </p>
                 <p>
                   <strong>
-                    Huellas a Casa es una plataforma que ayuda a conectar a los
+                    HUELLAS A CASA es una plataforma que ayuda a conectar a los
                     dueños de las mascotas perdidas con las personas que las
                     encontraron.
                   </strong>

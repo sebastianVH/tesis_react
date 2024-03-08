@@ -6,7 +6,7 @@ import MascotaListItem from "./MascotaListItem";
 // import "./MascotaList.css";
 import CustomInput from "../../microcomponents/CustomInput";
 import axios from "axios";
-import {LoadStart , LoadRemove} from "../../microcomponents/Loading";
+import { LoadStart, LoadRemove } from "../../microcomponents/Loading";
 
 function MascotasList({ categoria, account }) {
   const [mascotas, setMascotas] = useState([]);
@@ -26,6 +26,9 @@ function MascotasList({ categoria, account }) {
   // Estado inicial de los filtros
   const [initialFiltros, setInitialFiltros] = useState({});
 
+  const [hasLoadedData, setHasLoadedData] = useState(false); // Nuevo estado para rastrear si los datos ya han sido intentados de cargar
+  const [hasAttemptedLoad, setHasAttemptedLoad] = useState(false);
+
   // Guardar el estado inicial de los filtros
   useEffect(() => {
     setInitialFiltros(filtros);
@@ -42,21 +45,28 @@ function MascotasList({ categoria, account }) {
     setCurrentPage(page);
   };
 
-  const cambiarFiltro = (categoria, account) => {
+  const cambiarFiltro = async (categoria, account) => {
+    setIsLoading(true); // Asegúrate de que el loader se muestre al inicio
+    setHasAttemptedLoad(true); // Indica que se ha intentado cargar los datos
+
+    setHasLoadedData(true); // Marcar que se ha intentado cargar los datos
     const filtro = categoria ? `categoria=${categoria}` : "";
     const filtro2 = account ? `account=${account}` : "";
-    fetch(
-      `https://tesis-react-backend.vercel.app/api/mascotas?${filtro}&${filtro2}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        // Ordenar las mascotas por fecha antes de establecerlas en el estado
-        const mascotasOrdenadas = data.sort(
-          (a, b) => new Date(b.fecha) - new Date(a.fecha)
-        );
-        setMascotasAll(mascotasOrdenadas);
-        setMascotas(mascotasOrdenadas);
-      });
+    try {
+      const response = await fetch(
+        `https://tesis-react-backend.vercel.app/api/mascotas?${filtro}&${filtro2}`
+      );
+      const data = await response.json();
+      const mascotasOrdenadas = data.sort(
+        (a, b) => new Date(b.fecha) - new Date(a.fecha)
+      );
+      setMascotasAll(mascotasOrdenadas);
+      setMascotas(mascotasOrdenadas);
+    } catch (error) {
+      console.error("Error al cargar las mascotas:", error);
+    } finally {
+      setIsLoading(false); // Asegúrate de que el loader se oculte al final
+    }
   };
 
   const aplicarFiltros = () => {
@@ -133,16 +143,16 @@ function MascotasList({ categoria, account }) {
       const provinciasNombre = data.provincias.map((prov) => prov.nombre);
       setProvincias(provinciasNombre);
     };
-    LoadStart()
+    LoadStart();
     //aca va a ir el init loader
     setIsLoading(true);
+
     cambiarFiltro(categoria, account);
     getProvincias().finally(() => {
       //aca va a ir el finally loader
       setIsLoading(false);
-      LoadRemove()
+      LoadRemove();
     });
-
   }, [categoria, account]);
 
   useEffect(() => {
@@ -164,13 +174,23 @@ function MascotasList({ categoria, account }) {
       }
     };
 
+    // LoadStart();
+
     if (filtros.provincia) {
       getMunicipios(filtros.provincia);
     }
+
+    getMunicipios().finally(() => {
+      //aca va a ir el finally loader
+      setIsLoading(false);
+      // LoadRemove();
+    });
   }, [categoria, account, filtros.provincia]);
 
   useEffect(() => {
+    // LoadStart();
     aplicarFiltros();
+    LoadRemove();
   }, [filtroNombre, filtros, selectedDate]);
 
   const { userData } = useContext(UserContext);
@@ -217,7 +237,7 @@ function MascotasList({ categoria, account }) {
   return (
     <div>
       {isLoading ? (
-        <div>{LoadStart()}</div> // Aquí puedes reemplazar esto con tu componente de loader
+        <LoadStart />
       ) : (
         <div className="mascota-list container-fluid">
           <header className="text-center col-12 titulo-seccion mx-auto pb-0">
@@ -486,8 +506,8 @@ function MascotasList({ categoria, account }) {
                   </div>
 
                   <div className="col-md-9 listado-perros px-0 px-lg-3 px-xl-4 px-xxl-5 py-3">
-                    {mascotas.length === 0 ? (
-                      <div className="no-results text-center">
+                    {mascotas.length === 0 && hasAttemptedLoad ? (
+                      <div className="no-results txt-center">
                         <p>
                           ¡Lo sentimos! No hay resultados para mostrar con estos
                           parametros de búsqueda
@@ -517,7 +537,10 @@ function MascotasList({ categoria, account }) {
                           {[...Array(totalPages)].map((e, i) => (
                             <button
                               key={i}
-                              onClick={(event) => handleClick(event, i + 1)}
+                              onClick={(event) => {
+                                handleClick(event, i + 1);
+                                window.scrollTo(0, 0); // Añade esta línea
+                              }}
                               className={
                                 currentPage === i + 1
                                   ? "btn btn-naranja"

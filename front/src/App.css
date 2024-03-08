@@ -1749,3 +1749,38 @@ section {
 .coincidencias p {
   font-size: 18px !important;
 }
+
+.loader {
+  position: fixed;
+  z-index: 9999;
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader p {
+  font-size: 20px;
+  color: #d3970f;
+}
+
+.title-footer {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  padding-bottom: 10px;
+}
+
+.swal2-input-label {
+  text-align: center;
+  margin-left: 32px;
+  margin-right: 32px;
+}
+
+@media (max-width: 768px) {
+  .swal2-html-container {
+    font-size: 18px !important;
+  }
+}
