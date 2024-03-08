@@ -1765,3 +1765,10 @@ section {
   font-size: 20px;
   color: #d3970f;
 }
+
+.title-footer {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  padding-bottom: 10px;
+}

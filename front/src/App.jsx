@@ -94,11 +94,11 @@ export function App() {
         integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
         crossOrigin="anonymous"
       ></script> */}
-      <footer className="footer bg-dark text-white mt-5 p-4">
+      <footer className="footer text-white mt-5 p-4">
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-md-6 mb-4 mb-md-0">
-              <h5 className="text-uppercase">Enlaces</h5>
+              <p className="title-footer">Enlaces</p>
 
               <ul className="list-unstyled mb-0">
                 <li>
@@ -111,36 +111,39 @@ export function App() {
                     Perdidos
                   </Link>
                 </li>
-                <li>
+                <li className="pb-3">
                   <Link to="/mascotas/encontrados" className="text-white">
                     Encontrados
                   </Link>
                 </li>
-                <li>
-                  <Link to="/profile" className="text-white">
-                    Cuenta
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/logout" className="text-white">
-                    Cerrar sesión
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/register" className="text-white">
-                    Registrate
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/login" className="text-white">
-                    Iniciar sesión
-                  </Link>
-                </li>
+                {token ? (
+                  <>
+                    <li>
+                      {" "}
+                      <Link to="/profile">Cuenta</Link>
+                    </li>
+                    <li>
+                      {" "}
+                      <Link to="/logout">Cerrar sesión</Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li>
+                      {" "}
+                      <Link to="/register">Registrate</Link>
+                    </li>
+                    <li>
+                      {" "}
+                      <Link to="/login">Iniciar sesión</Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
 
             <div className="col-lg-6 col-md-6 mb-4 mb-md-0">
-              <h5 className="text-uppercase">Contacto</h5>
+              <p className="title-footer">Contacto</p>
 
               <ul className="list-unstyled mb-0">
                 <li>
@@ -156,10 +159,7 @@ export function App() {
           </div>
         </div>
 
-        <div
-          className="text-center p-3"
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
-        >
+        <div className="text-center pt-4 pb-2">
           © {new Date().getFullYear()} HUELLAS A CASA
         </div>
       </footer>
