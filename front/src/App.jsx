@@ -96,26 +96,22 @@ export function App() {
       ></script> */}
       <footer className="footer text-white mt-5 p-4">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-6 col-md-6 mb-4 mb-md-0 d-flex">
-              <p className="mb-0 text-white">
-                <i class="bi bi-envelope"></i> huellasacasa@gmail.com
-              </p>
-              <p className="mb-0 text-white">
-                <i class="bi bi-telephone"></i> +54 9 11 3865 4651
-              </p>
-            </div>
-
+          <div className="row align-items-center">
             <div className="col-lg-6 col-md-6 mb-4 mb-md-0">
-              <div className="pt-4 pb-2">
+              <div className="mr-3">
                 Copyright© {new Date().getFullYear()} HUELLAS A CASA
               </div>
             </div>
-          </div>
-        </div>
 
-        <div className="text-center pt-4 pb-2">
-          © {new Date().getFullYear()} HUELLAS A CASA
+            <div className="col-lg-6 col-md-6 mb-4 mb-md-0">
+              <p className="mb-0 text-white">
+                <i class="bi bi-envelope-fill px-1"></i> huellasacasa@gmail.com
+              </p>
+              <p className="mb-0 text-white">
+                <i class="bi bi-telephone-fill px-1"></i> +54 9 11 3865 4651
+              </p>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
