@@ -216,9 +216,7 @@ function MascotasList({ categoria, account }) {
   return (
     <div>
       {isLoading ? (
-        <div className="loader">
-          <p>Cargando...</p>
-        </div> // Aquí puedes reemplazar esto con tu componente de loader
+        <LoadStart />
       ) : (
         <div className="mascota-list container-fluid">
           <header className="text-center col-12 titulo-seccion mx-auto pb-0">
