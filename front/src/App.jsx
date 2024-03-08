@@ -14,14 +14,22 @@ export function App() {
   const { token } = useContext(AuthContext);
   const navbarRef = useRef(null); // Referencia al navbar
 
+  // Función para colapsar el navbar
+  const collapseNavbar = () => {
+    const navbar = navbarRef.current;
+    if (navbar) {
+      navbar.classList.remove("show"); // Esto colapsa el navbar
+    }
+  };
+
   useEffect(() => {
-    // Función para colapsar el navbar
-    const collapseNavbar = () => {
-      const navbar = navbarRef.current;
-      if (navbar) {
-        navbar.classList.remove("show"); // Esto colapsa el navbar
-      }
-    };
+    // // Función para colapsar el navbar
+    // const collapseNavbar = () => {
+    //   const navbar = navbarRef.current;
+    //   if (navbar) {
+    //     navbar.classList.remove("show"); // Esto colapsa el navbar
+    //   }
+    // };
 
     // Agregar el controlador de eventos para el clic fuera del navbar
     const handleClickOutside = (event) => {
