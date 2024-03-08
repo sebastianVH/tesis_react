@@ -94,7 +94,7 @@ export function App() {
         integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
         crossOrigin="anonymous"
       ></script> */}
-      <footer className="footer sticky-footer d-none">
+      <footer className="footer">
         <div className="container footer-bottom">
           <div className="row justify-content-center">
             <div className="col-12 menosp">
