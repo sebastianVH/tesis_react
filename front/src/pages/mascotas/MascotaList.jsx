@@ -537,7 +537,10 @@ function MascotasList({ categoria, account }) {
                           {[...Array(totalPages)].map((e, i) => (
                             <button
                               key={i}
-                              onClick={(event) => handleClick(event, i + 1)}
+                              onClick={(event) => {
+                                handleClick(event, i + 1);
+                                window.scrollTo(0, 0); // Añade esta línea
+                              }}
                               className={
                                 currentPage === i + 1
                                   ? "btn btn-naranja"
