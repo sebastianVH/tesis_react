@@ -29,8 +29,10 @@ function MascotaListItem({ mascota }) {
                 </p>
               </div>
 
-              <span>{mascota.raza}</span>
-              <h3 className="pt-2">{mascota.nombre}</h3>
+              <span className="py-1" style={{ whiteSpace: "pre" }}>
+                {mascota.raza || " "}
+              </span>
+              <h3>{mascota.nombre}</h3>
               {userData && userData._id && userData._id == mascota.account ? (
                 <div className="botones row">
                   <div className="col-6 p-1">
