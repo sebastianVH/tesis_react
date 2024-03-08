@@ -151,7 +151,7 @@ function MascotasList({ categoria, account }) {
     getProvincias().finally(() => {
       //aca va a ir el finally loader
       setIsLoading(false);
-      LoadRemove();
+      // LoadRemove();
     });
   }, [categoria, account]);
 
@@ -226,7 +226,7 @@ function MascotasList({ categoria, account }) {
 
   return (
     <div>
-      {isLoading && !hasAttemptedLoad ? (
+      {isLoading ? (
         <LoadStart />
       ) : (
         <div className="mascota-list container-fluid">
