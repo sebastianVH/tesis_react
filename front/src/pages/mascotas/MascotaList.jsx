@@ -226,7 +226,7 @@ function MascotasList({ categoria, account }) {
 
   return (
     <div>
-      {isLoading ? (
+      {isLoading && !hasAttemptedLoad ? (
         <LoadStart />
       ) : (
         <div className="mascota-list container-fluid">
@@ -497,7 +497,7 @@ function MascotasList({ categoria, account }) {
 
                   <div className="col-md-9 listado-perros px-0 px-lg-3 px-xl-4 px-xxl-5 py-3">
                     {mascotas.length === 0 && hasAttemptedLoad ? (
-                      <div className="no-results text-center">
+                      <div className="no-results txt-center">
                         <p>
                           ¡Lo sentimos! No hay resultados para mostrar con estos
                           parametros de búsqueda
