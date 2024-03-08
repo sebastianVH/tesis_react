@@ -20,21 +20,17 @@ function MascotaListItem({ mascota }) {
               mascota.aparecio ? "aparecio-true" : ""
             }`}
           >
-            <img
-              // TODO: Cambiar el url por el url posta (esto es re villero)
-              //src={`http://127.0.0.1:2023/api/mascotas/imagen/${mascota.imagen}`}
-              src={mascota.imagen}
-              className="img-fluid rounded-img"
-            />
+            <img src={mascota.imagen} className="img-fluid rounded-img" />
             <div className="card-perro-content pb-3 pt-2">
-              <h3>{mascota.nombre}</h3>
-              <span>{mascota.raza}</span>
               <div className="div-ubicacion d-flex justify-content-around align-items-center">
                 <p>
-                  <i className="icofont-location-pin icofont-2x ml-auto"></i>
-                  {mascota.provincia}
+                  <i class="bi bi-geo-alt-fill"></i>
+                  {mascota.municipio}
                 </p>
               </div>
+
+              <span>{mascota.raza}</span>
+              <h3>{mascota.nombre}</h3>
               {userData && userData._id && userData._id == mascota.account ? (
                 <div className="botones row">
                   <div className="col-6 p-1">
