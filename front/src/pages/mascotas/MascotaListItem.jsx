@@ -23,14 +23,14 @@ function MascotaListItem({ mascota }) {
             <img src={mascota.imagen} className="img-fluid rounded-img" />
             <div className="card-perro-content pb-3 pt-2">
               <div className="div-ubicacion d-flex justify-content-around align-items-center">
-                <p>
+                <p className="pt-0 pb-1">
                   <i class="bi bi-geo-alt-fill"></i>
                   {mascota.municipio}
                 </p>
               </div>
 
               <span>{mascota.raza}</span>
-              <h3>{mascota.nombre}</h3>
+              <h3 className="pt-2">{mascota.nombre}</h3>
               {userData && userData._id && userData._id == mascota.account ? (
                 <div className="botones row">
                   <div className="col-6 p-1">
