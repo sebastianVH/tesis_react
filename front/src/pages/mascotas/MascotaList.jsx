@@ -42,21 +42,25 @@ function MascotasList({ categoria, account }) {
     setCurrentPage(page);
   };
 
-  const cambiarFiltro = (categoria, account) => {
+  const cambiarFiltro = async (categoria, account) => {
+    setIsLoading(true); // Asegúrate de que el loader se muestre al inicio
     const filtro = categoria ? `categoria=${categoria}` : "";
     const filtro2 = account ? `account=${account}` : "";
-    fetch(
-      `https://tesis-react-backend.vercel.app/api/mascotas?${filtro}&${filtro2}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        // Ordenar las mascotas por fecha antes de establecerlas en el estado
-        const mascotasOrdenadas = data.sort(
-          (a, b) => new Date(b.fecha) - new Date(a.fecha)
-        );
-        setMascotasAll(mascotasOrdenadas);
-        setMascotas(mascotasOrdenadas);
-      });
+    try {
+      const response = await fetch(
+        `https://tesis-react-backend.vercel.app/api/mascotas?${filtro}&${filtro2}`
+      );
+      const data = await response.json();
+      const mascotasOrdenadas = data.sort(
+        (a, b) => new Date(b.fecha) - new Date(a.fecha)
+      );
+      setMascotasAll(mascotasOrdenadas);
+      setMascotas(mascotasOrdenadas);
+    } catch (error) {
+      console.error("Error al cargar las mascotas:", error);
+    } finally {
+      setIsLoading(false); // Asegúrate de que el loader se oculte al final
+    }
   };
 
   const aplicarFiltros = () => {
