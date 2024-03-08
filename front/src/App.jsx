@@ -78,7 +78,7 @@ export function App() {
             </button>
             <div className="collapse navbar-collapse nav-menu" id="navbarNav">
               <ul className="navbar-nav justify-content-center me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
+                <li className="nav-item" onClick={collapseNavbar}>
                   <Link to="/">Inicio</Link>
                 </li>
                 <li className="nav-item">
