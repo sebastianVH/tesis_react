@@ -174,7 +174,7 @@ function MascotasList({ categoria, account }) {
       }
     };
 
-    LoadStart();
+    // LoadStart();
 
     if (filtros.provincia) {
       getMunicipios(filtros.provincia);
@@ -188,7 +188,7 @@ function MascotasList({ categoria, account }) {
   }, [categoria, account, filtros.provincia]);
 
   useEffect(() => {
-    LoadStart();
+    // LoadStart();
     aplicarFiltros();
     LoadRemove();
   }, [filtroNombre, filtros, selectedDate]);
