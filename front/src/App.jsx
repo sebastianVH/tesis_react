@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react"; // Importa useEffect y useRef
 import { AuthContext } from "./pages/user/AuthContext";
 
 import "minireset.css";
@@ -9,12 +9,49 @@ import "bootstrap/dist/js/bootstrap.bundle.js";
 import appLogo from "./assets/img/logo_horizontal.png";
 
 import "./App.css";
+
 export function App() {
   const { token } = useContext(AuthContext);
+  const navbarRef = useRef(null); // Referencia al navbar
+
+  useEffect(() => {
+    // Función para colapsar el navbar
+    const collapseNavbar = () => {
+      const navbar = navbarRef.current;
+      if (navbar) {
+        navbar.classList.remove("show"); // Esto colapsa el navbar
+      }
+    };
+
+    // Agregar el controlador de eventos para el clic fuera del navbar
+    const handleClickOutside = (event) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+        collapseNavbar();
+      }
+    };
+
+    // Agregar el controlador de eventos para los enlaces del navbar
+    const navLinks = document.querySelectorAll(".nav-link");
+    navLinks.forEach((link) => {
+      link.addEventListener("click", collapseNavbar);
+    });
+
+    // Agregar el controlador de eventos para el clic fuera del navbar
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Limpiar los controladores de eventos al desmontar el componente
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      navLinks.forEach((link) => {
+        link.removeEventListener("click", collapseNavbar);
+      });
+    };
+  }, []);
+
   return (
     <div className="App">
       <header id="header" className="fixed-top mb-5">
-        <nav className="navbar navbar-expand-lg py-0 px-md-4">
+        <nav className="navbar navbar-expand-lg py-0 px-md-4" ref={navbarRef}>
           <div className="container-fluid">
             <Link to="/">
               {" "}
@@ -84,6 +121,7 @@ export function App() {
         </nav>
       </header>
       <Outlet />
+
       {/* <script
         src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
