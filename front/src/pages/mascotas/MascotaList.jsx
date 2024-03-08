@@ -151,7 +151,7 @@ function MascotasList({ categoria, account }) {
     getProvincias().finally(() => {
       //aca va a ir el finally loader
       setIsLoading(false);
-      LoadRemove();
+      // LoadRemove();
     });
   }, [categoria, account]);
 
