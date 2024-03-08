@@ -94,16 +94,16 @@ export function App() {
         integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
         crossOrigin="anonymous"
       ></script> */}
-      <footer className="footer text-white mt-5 p-4">
+      <footer className="footer text-white mt-5 p-lg-4">
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-6 col-md-6 mb-4 mb-md-0">
+          <div className="row align-items-center justify-content-between">
+            <div className="col-lg-4 col-md-6 mb-4 mb-md-0">
               <div className="mr-3">
                 Copyright© {new Date().getFullYear()} HUELLAS A CASA
               </div>
             </div>
 
-            <div className="col-lg-6 col-md-6 mb-4 mb-md-0">
+            <div className="col-lg-4 col-md-6 mb-4 mb-md-0">
               <p className="mb-0 text-white">
                 <i class="bi bi-envelope-fill px-1"></i> huellasacasa@gmail.com
               </p>
