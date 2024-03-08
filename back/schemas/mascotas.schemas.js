@@ -65,46 +65,21 @@ const mascota = yup.object({
 });
 const editMascota = yup.object({
   nombre: yup.string().optional(),
-  sexo: yup
-    .string()
-    .oneOf(["Macho", "Hembra"])
-    .required("El campo de sexo es obligatorio"),
-  especie: yup
-    .string()
-    .oneOf(["Perro", "Gato"])
-    .required("El campo de especie es obligatorio"),
-  tamano: yup
-    .string()
-    .oneOf(["Chico", "Mediano", "Grande"])
-    .required("El campo de tamaño es obligatorio"),
+  sexo: yup.string().oneOf(["Macho", "Hembra"]).optional(),
+  especie: yup.string().oneOf(["Perro", "Gato"]).optional(),
+  tamano: yup.string().oneOf(["Chico", "Mediano", "Grande"]).optional(),
   color: yup.string().optional(),
-  imagen: yup.string().required("Deber subir una imagen de la mascota"),
   raza: yup.string().optional(),
   edad: yup.string().optional(),
   zona_perdida: yup.string().optional(),
-  fecha: yup
-    .date()
-    .required("El campo de fecha es obligatorio")
-    .max(new Date(), "No puedes ingresar una fecha posterior al día actual"),
+  fecha: yup.string().optional(),
   descripcion: yup.string().optional(),
-  celular: yup
-    .string()
-    .required("El campo de celular es obligatorio")
-    .matches(/^[0-9]+$/, "El campo de celular solo puede contener números")
-    .length(10, "El campo de celular debe tener 10 dígitos"),
-  whatsapp: yup
-    .string()
-    .optional()
-    .matches(/^[0-9]*$/, "El campo de whatsapp solo puede contener números"),
-  email: yup
-    .string()
-    .optional()
-    .email("Debe ser una dirección de correo electrónico válida"),
-  categoria: yup
-    .string()
-    .oneOf(["Perdido", "Encontrado"])
-    .required("El campo de categoria es obligatorio"),
+  celular: yup.string().optional(),
+  email: yup.string().optional(),
+  whatsapp: yup.string().optional(),
+  categoria: yup.string().oneOf(["Perdido", "Encontrado"]).optional(),
   aparecio: yup.boolean().required().default(false),
+  imagen: yup.string().optional(),
   collar: yup
     .string()
     .oneOf([
