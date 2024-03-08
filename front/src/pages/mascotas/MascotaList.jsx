@@ -151,7 +151,7 @@ function MascotasList({ categoria, account }) {
     getProvincias().finally(() => {
       //aca va a ir el finally loader
       setIsLoading(false);
-      // LoadRemove();
+      LoadRemove();
     });
   }, [categoria, account]);
 
@@ -174,13 +174,23 @@ function MascotasList({ categoria, account }) {
       }
     };
 
+    LoadStart();
+
     if (filtros.provincia) {
       getMunicipios(filtros.provincia);
     }
+
+    getMunicipios().finally(() => {
+      //aca va a ir el finally loader
+      setIsLoading(false);
+      LoadRemove();
+    });
   }, [categoria, account, filtros.provincia]);
 
   useEffect(() => {
+    LoadStart();
     aplicarFiltros();
+    LoadRemove();
   }, [filtroNombre, filtros, selectedDate]);
 
   const { userData } = useContext(UserContext);
