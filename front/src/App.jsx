@@ -1,5 +1,5 @@
-import { Outlet, Link, useHistory } from "react-router-dom";
-import { useContext, useEffect, useRef, useState } from "react"; // Importa useState
+import { Outlet, Link } from "react-router-dom";
+import { useContext, useEffect, useRef } from "react"; // Importa useEffect y useRef
 import { AuthContext } from "./pages/user/AuthContext";
 
 import "minireset.css";
@@ -13,26 +13,40 @@ import "./App.css";
 export function App() {
   const { token } = useContext(AuthContext);
   const navbarRef = useRef(null); // Referencia al navbar
-  const history = useHistory(); // Importa useHistory para cambiar de ruta
-  const [isCollapsed, setIsCollapsed] = useState(true); // Estado para controlar si el navbar está colapsado
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
-        setIsCollapsed(true); // Colapsa el navbar al hacer clic fuera de él
+    // Función para colapsar el navbar
+    const collapseNavbar = () => {
+      const navbar = navbarRef.current;
+      if (navbar) {
+        navbar.classList.remove("show"); // Esto colapsa el navbar
       }
     };
 
+    // Agregar el controlador de eventos para el clic fuera del navbar
+    const handleClickOutside = (event) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+        collapseNavbar();
+      }
+    };
+
+    // Agregar el controlador de eventos para los enlaces del navbar
+    const navLinks = document.querySelectorAll(".nav-link");
+    navLinks.forEach((link) => {
+      link.addEventListener("click", collapseNavbar);
+    });
+
+    // Agregar el controlador de eventos para el clic fuera del navbar
     document.addEventListener("mousedown", handleClickOutside);
 
+    // Limpiar los controladores de eventos al desmontar el componente
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      navLinks.forEach((link) => {
+        link.removeEventListener("click", collapseNavbar);
+      });
     };
   }, []);
-
-  const handleNavLinkClick = () => {
-    setIsCollapsed(true); // Colapsa el navbar al hacer clic en un enlace del menú
-  };
 
   return (
     <div className="App">
@@ -54,34 +68,27 @@ export function App() {
             <button
               className="navbar-toggler navbar-dark"
               type="button"
-              onClick={() => setIsCollapsed(!isCollapsed)} // Alternar el estado de isCollapsed al hacer clic en el botón del navbar
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div
-              className={`collapse navbar-collapse nav-menu ${
-                isCollapsed ? "" : "show"
-              }`}
-              id="navbarNav"
-            >
+            <div className="collapse navbar-collapse nav-menu" id="navbarNav">
               <ul className="navbar-nav justify-content-center me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link to="/" onClick={handleNavLinkClick}>
-                    Inicio
-                  </Link>
+                  <Link to="/">Inicio</Link>
                 </li>
                 <li className="nav-item">
                   <li>
-                    <Link to="/mascotas/perdidos" onClick={handleNavLinkClick}>
-                      Perdidos
-                    </Link>
+                    <Link to="/mascotas/perdidos">Perdidos</Link>
                   </li>
                 </li>
                 <li className="nav-item">
                   {" "}
-                  <Link to="/mascotas/encontrados" onClick={handleNavLinkClick}>
-                    Encontrados
-                  </Link>
+                  <Link to="/mascotas/encontrados">Encontrados</Link>
                 </li>
               </ul>
               <ul className="navbar-nav justify-content-center ml-auto mb-2 mb-lg-0">
@@ -126,7 +133,7 @@ export function App() {
         crossOrigin="anonymous"
       ></script> */}
       <footer className="footer text-white mt-5 p-lg-4">
-        <div className="container pt-4 pt-md-2">
+        <div className="container pt-4">
           <div className="row align-items-center justify-content-between">
             <div className="col-lg-4 col-md-6 mb-4 mb-md-0">
               <div className="mr-3">
