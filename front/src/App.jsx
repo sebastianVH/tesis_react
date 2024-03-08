@@ -15,33 +15,32 @@ export function App() {
   const navbarRef = useRef(null); // Referencia al navbar
 
   useEffect(() => {
-    // Función para colapsar el navbar
     const collapseNavbar = () => {
       const navbar = navbarRef.current;
       if (navbar) {
-        navbar.classList.remove("show"); // Esto colapsa el navbar
+        navbar.classList.remove("show");
       }
     };
 
-    // Agregar el controlador de eventos para el clic fuera del navbar
     const handleClickOutside = (event) => {
       if (navbarRef.current && !navbarRef.current.contains(event.target)) {
         collapseNavbar();
       }
     };
 
-    // Agregar el controlador de eventos para los enlaces del navbar
-    const navLinks = document.querySelectorAll(".nav-link");
-    navLinks.forEach((link) => {
-      link.addEventListener("click", collapseNavbar);
-    });
+    const addNavLinkEvents = () => {
+      const navLinks = document.querySelectorAll(".nav-link");
+      navLinks.forEach((link) => {
+        link.addEventListener("click", collapseNavbar);
+      });
+    };
 
-    // Agregar el controlador de eventos para el clic fuera del navbar
     document.addEventListener("mousedown", handleClickOutside);
+    addNavLinkEvents();
 
-    // Limpiar los controladores de eventos al desmontar el componente
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      const navLinks = document.querySelectorAll(".nav-link");
       navLinks.forEach((link) => {
         link.removeEventListener("click", collapseNavbar);
       });
@@ -133,7 +132,7 @@ export function App() {
         crossOrigin="anonymous"
       ></script> */}
       <footer className="footer text-white mt-5 p-lg-4">
-        <div className="container">
+        <div className="container pt-4 pt-md-2">
           <div className="row align-items-center justify-content-between">
             <div className="col-lg-4 col-md-6 mb-4 mb-md-0">
               <div className="mr-3">
