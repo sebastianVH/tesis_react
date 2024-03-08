@@ -94,16 +94,73 @@ export function App() {
         integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
         crossOrigin="anonymous"
       ></script> */}
-      <footer className="footer">
-        <div className="container footer-bottom">
-          <div className="row justify-content-center">
-            <div className="col-12 menosp">
-              <div className="text-center">
-                <p className="mb-0">Coutinho Lucia - DWM4AV</p>
-                <p>Proyecto Final</p>
-              </div>
+      <footer className="footer bg-dark text-white mt-5 p-4">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6 col-md-6 mb-4 mb-md-0">
+              <h5 className="text-uppercase">Enlaces</h5>
+
+              <ul className="list-unstyled mb-0">
+                <li>
+                  <Link to="/" className="text-white">
+                    Inicio
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/mascotas/perdidos" className="text-white">
+                    Perdidos
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/mascotas/encontrados" className="text-white">
+                    Encontrados
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/profile" className="text-white">
+                    Cuenta
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/logout" className="text-white">
+                    Cerrar sesión
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/register" className="text-white">
+                    Registrate
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/login" className="text-white">
+                    Iniciar sesión
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div className="col-lg-6 col-md-6 mb-4 mb-md-0">
+              <h5 className="text-uppercase">Contacto</h5>
+
+              <ul className="list-unstyled mb-0">
+                <li>
+                  <p className="mb-0 text-white">
+                    Email: huellasacasa@gmail.com
+                  </p>
+                </li>
+                <li>
+                  <p className="mb-0 text-white">Celular: +54 9 11 3865 4651</p>
+                </li>
+              </ul>
             </div>
           </div>
+        </div>
+
+        <div
+          className="text-center p-3"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
+        >
+          © {new Date().getFullYear()} HUELLAS A CASA
         </div>
       </footer>
     </div>

@@ -1,10 +1,11 @@
 import { Loading } from "notiflix/build/notiflix-loading-aio";
 
 export const LoadStart = () => {
-  Loading.standard("Cargando...", {
+  Loading.dots("Cargando...", {
     backgroundColor: "rgba(255,255,255,0.8)",
+    svgColor: "#d3970f",
   });
 };
 export const LoadRemove = () => {
-  Loading.remove();
+  Loading.remove(3023);
 };
