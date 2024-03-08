@@ -26,6 +26,8 @@ function MascotasList({ categoria, account }) {
   // Estado inicial de los filtros
   const [initialFiltros, setInitialFiltros] = useState({});
 
+  const [hasLoadedData, setHasLoadedData] = useState(false); // Nuevo estado para rastrear si los datos ya han sido intentados de cargar
+
   // Guardar el estado inicial de los filtros
   useEffect(() => {
     setInitialFiltros(filtros);
@@ -44,6 +46,7 @@ function MascotasList({ categoria, account }) {
 
   const cambiarFiltro = async (categoria, account) => {
     setIsLoading(true); // Asegúrate de que el loader se muestre al inicio
+    setHasLoadedData(true); // Marcar que se ha intentado cargar los datos
     const filtro = categoria ? `categoria=${categoria}` : "";
     const filtro2 = account ? `account=${account}` : "";
     try {
@@ -140,6 +143,7 @@ function MascotasList({ categoria, account }) {
     LoadStart();
     //aca va a ir el init loader
     setIsLoading(true);
+
     cambiarFiltro(categoria, account);
     getProvincias().finally(() => {
       //aca va a ir el finally loader
@@ -489,7 +493,7 @@ function MascotasList({ categoria, account }) {
                   </div>
 
                   <div className="col-md-9 listado-perros px-0 px-lg-3 px-xl-4 px-xxl-5 py-3">
-                    {mascotas.length === 0 ? (
+                    {mascotas.length === 0 && hasLoadedData ? (
                       <div className="no-results text-center">
                         <p>
                           ¡Lo sentimos! No hay resultados para mostrar con estos
