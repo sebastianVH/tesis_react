@@ -1772,3 +1772,15 @@ section {
   color: #fff;
   padding-bottom: 10px;
 }
+
+.swal2-input-label {
+  text-align: center;
+  margin-left: 32px;
+  margin-right: 32px;
+}
+
+@media (max-width: 768px) {
+  .swal2-html-container {
+    font-size: 17px !important;
+  }
+}
