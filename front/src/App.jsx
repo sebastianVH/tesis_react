@@ -1,5 +1,5 @@
-import { Outlet, Link } from "react-router-dom";
-import { useContext, useEffect, useRef } from "react"; // Importa useEffect y useRef
+import { Outlet, Link, useHistory } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react"; // Importa useState
 import { AuthContext } from "./pages/user/AuthContext";
 
 import "minireset.css";
@@ -13,39 +13,26 @@ import "./App.css";
 export function App() {
   const { token } = useContext(AuthContext);
   const navbarRef = useRef(null); // Referencia al navbar
+  const history = useHistory(); // Importa useHistory para cambiar de ruta
+  const [isCollapsed, setIsCollapsed] = useState(true); // Estado para controlar si el navbar está colapsado
 
   useEffect(() => {
-    const collapseNavbar = () => {
-      const navbar = navbarRef.current;
-      if (navbar) {
-        navbar.classList.remove("show");
-      }
-    };
-
     const handleClickOutside = (event) => {
       if (navbarRef.current && !navbarRef.current.contains(event.target)) {
-        collapseNavbar();
+        setIsCollapsed(true); // Colapsa el navbar al hacer clic fuera de él
       }
-    };
-
-    const addNavLinkEvents = () => {
-      const navLinks = document.querySelectorAll(".nav-link");
-      navLinks.forEach((link) => {
-        link.addEventListener("click", collapseNavbar);
-      });
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    addNavLinkEvents();
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      const navLinks = document.querySelectorAll(".nav-link");
-      navLinks.forEach((link) => {
-        link.removeEventListener("click", collapseNavbar);
-      });
     };
   }, []);
+
+  const handleNavLinkClick = () => {
+    setIsCollapsed(true); // Colapsa el navbar al hacer clic en un enlace del menú
+  };
 
   return (
     <div className="App">
@@ -67,27 +54,34 @@ export function App() {
             <button
               className="navbar-toggler navbar-dark"
               type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+              onClick={() => setIsCollapsed(!isCollapsed)} // Alternar el estado de isCollapsed al hacer clic en el botón del navbar
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse nav-menu" id="navbarNav">
+            <div
+              className={`collapse navbar-collapse nav-menu ${
+                isCollapsed ? "" : "show"
+              }`}
+              id="navbarNav"
+            >
               <ul className="navbar-nav justify-content-center me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link to="/">Inicio</Link>
+                  <Link to="/" onClick={handleNavLinkClick}>
+                    Inicio
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <li>
-                    <Link to="/mascotas/perdidos">Perdidos</Link>
+                    <Link to="/mascotas/perdidos" onClick={handleNavLinkClick}>
+                      Perdidos
+                    </Link>
                   </li>
                 </li>
                 <li className="nav-item">
                   {" "}
-                  <Link to="/mascotas/encontrados">Encontrados</Link>
+                  <Link to="/mascotas/encontrados" onClick={handleNavLinkClick}>
+                    Encontrados
+                  </Link>
                 </li>
               </ul>
               <ul className="navbar-nav justify-content-center ml-auto mb-2 mb-lg-0">
