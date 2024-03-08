@@ -97,64 +97,19 @@ export function App() {
       <footer className="footer text-white mt-5 p-4">
         <div className="container">
           <div className="row">
-            <div className="col-lg-6 col-md-6 mb-4 mb-md-0">
-              <p className="title-footer">Enlaces</p>
-
-              <ul className="list-unstyled mb-0">
-                <li>
-                  <Link to="/" className="text-white">
-                    Inicio
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/mascotas/perdidos" className="text-white">
-                    Perdidos
-                  </Link>
-                </li>
-                <li className="pb-3">
-                  <Link to="/mascotas/encontrados" className="text-white">
-                    Encontrados
-                  </Link>
-                </li>
-                {token ? (
-                  <>
-                    <li>
-                      {" "}
-                      <Link to="/profile">Cuenta</Link>
-                    </li>
-                    <li>
-                      {" "}
-                      <Link to="/logout">Cerrar sesión</Link>
-                    </li>
-                  </>
-                ) : (
-                  <>
-                    <li>
-                      {" "}
-                      <Link to="/register">Registrate</Link>
-                    </li>
-                    <li>
-                      {" "}
-                      <Link to="/login">Iniciar sesión</Link>
-                    </li>
-                  </>
-                )}
-              </ul>
+            <div className="col-lg-6 col-md-6 mb-4 mb-md-0 d-flex">
+              <p className="mb-0 text-white">
+                <i class="bi bi-envelope"></i> huellasacasa@gmail.com
+              </p>
+              <p className="mb-0 text-white">
+                <i class="bi bi-telephone"></i> +54 9 11 3865 4651
+              </p>
             </div>
 
             <div className="col-lg-6 col-md-6 mb-4 mb-md-0">
-              <p className="title-footer">Contacto</p>
-
-              <ul className="list-unstyled mb-0">
-                <li>
-                  <p className="mb-0 text-white">
-                    Email: huellasacasa@gmail.com
-                  </p>
-                </li>
-                <li>
-                  <p className="mb-0 text-white">Celular: +54 9 11 3865 4651</p>
-                </li>
-              </ul>
+              <div className="pt-4 pb-2">
+                Copyright© {new Date().getFullYear()} HUELLAS A CASA
+              </div>
             </div>
           </div>
         </div>
