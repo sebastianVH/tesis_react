@@ -82,9 +82,7 @@ export function App() {
                 </li>
                 <li className="nav-item">
                   <li>
-                    <Link to="/mascotas/perdidos" onClick={collapseNavbar}>
-                      Perdidos
-                    </Link>
+                    <Link to="/mascotas/perdidos">Perdidos</Link>
                   </li>
                 </li>
                 <li className="nav-item">
