@@ -183,7 +183,7 @@ function MascotasList({ categoria, account }) {
     getMunicipios().finally(() => {
       //aca va a ir el finally loader
       setIsLoading(false);
-      LoadRemove();
+      // LoadRemove();
     });
   }, [categoria, account, filtros.provincia]);
 
